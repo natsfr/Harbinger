@@ -1,0 +1,413 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Dec 26 12:18:00 2022
+# Process ID: 13643
+# Current directory: /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1
+# Command line: vivado -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+# Log file: /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/top.vds
+# Journal file: /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/vivado.jou
+#-----------------------------------------------------------
+source top.tcl -notrace
+Command: synth_design -top top -part xc7s25csga225-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7s25'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s25'
+INFO: [Device 21-403] Loading part xc7s25csga225-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 13663
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2299.180 ; gain = 0.000 ; free physical = 18212 ; free virtual = 25737
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/nats/data/projects/Harbinger/HDL/src/top.v:3]
+	Parameter FREQ bound to: 24576000 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-13643-Hellgate/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-13643-Hellgate/realtime/clk_wiz_0_stub.v:5]
+WARNING: [Synth 8-7071] port 'locked' of module 'clk_wiz_0' is unconnected for instance 'audio_clk' [/home/nats/data/projects/Harbinger/HDL/src/top.v:36]
+WARNING: [Synth 8-7023] instance 'audio_clk' of module 'clk_wiz_0' has 3 connections declared, but only 2 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:36]
+INFO: [Synth 8-6157] synthesizing module 'UART_RX' [/home/nats/data/projects/Harbinger/HDL/src/uart_rx.v:3]
+	Parameter SPEED bound to: 31500 - type: integer 
+	Parameter CLKFREQ bound to: 24576000 - type: integer 
+	Parameter EX_PERIOD bound to: 779 - type: integer 
+	Parameter EX_PER_HALF bound to: 389 - type: integer 
+	Parameter IDLE bound to: 8'b00000000 
+	Parameter START bound to: 8'b00000001 
+	Parameter BITRX bound to: 8'b00000010 
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/uart_rx.v:46]
+INFO: [Synth 8-6155] done synthesizing module 'UART_RX' (2#1) [/home/nats/data/projects/Harbinger/HDL/src/uart_rx.v:3]
+INFO: [Synth 8-6157] synthesizing module 'midi_fsm' [/home/nats/data/projects/Harbinger/HDL/src/midi_parser.v:3]
+	Parameter NBNOTE bound to: 8'b00000110 
+	Parameter MIDI_CHAN bound to: 4'b0010 
+	Parameter TIME_CLOCK bound to: 8'b11111000 
+	Parameter TIME_START bound to: 8'b11111010 
+	Parameter TIME_CONT bound to: 8'b11111011 
+	Parameter TIME_STOP bound to: 8'b11111100 
+	Parameter MCLOCK_STOP bound to: 2'b00 
+	Parameter MCLOCK_RUN bound to: 2'b01 
+	Parameter NOTE_ON bound to: 4'b1001 
+	Parameter NOTE_OFF bound to: 4'b1000 
+	Parameter PKP bound to: 4'b1010 
+	Parameter CC bound to: 4'b1011 
+	Parameter PC bound to: 4'b1100 
+	Parameter CP bound to: 4'b1101 
+	Parameter PITCH_BEND bound to: 4'b1110 
+	Parameter IDLE bound to: 4'b0000 
+	Parameter NOTE_ON_STATE bound to: 4'b0001 
+	Parameter NOTE_OFF_STATE bound to: 4'b0010 
+	Parameter FETCH_NOTE bound to: 1'b0 
+	Parameter FETCH_VELO bound to: 1'b1 
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/midi_parser.v:71]
+INFO: [Synth 8-6155] done synthesizing module 'midi_fsm' (3#1) [/home/nats/data/projects/Harbinger/HDL/src/midi_parser.v:3]
+INFO: [Synth 8-6157] synthesizing module 'i2s' [/home/nats/data/projects/Harbinger/HDL/src/i2s.v:3]
+	Parameter ENABLE_SCK bound to: 1'b1 
+	Parameter LRCK_RATIO bound to: 16'b0000000100000000 
+	Parameter SCK_RATIO bound to: 16'b0000000000001000 
+INFO: [Synth 8-6155] done synthesizing module 'i2s' (4#1) [/home/nats/data/projects/Harbinger/HDL/src/i2s.v:3]
+INFO: [Synth 8-6157] synthesizing module 'operator' [/home/nats/data/projects/Harbinger/HDL/src/operator.v:3]
+	Parameter SIZE bound to: 26 - type: integer 
+	Parameter FC bound to: 26'b00000000001111111111111111 
+	Parameter IDLE bound to: 4'b0000 
+	Parameter ATTACK bound to: 4'b0001 
+	Parameter DECAY bound to: 4'b0010 
+	Parameter SUSTAIN bound to: 4'b0011 
+	Parameter RELEASE bound to: 4'b0100 
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL/src/operator.v:189]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/operator.v:121]
+INFO: [Synth 8-6155] done synthesizing module 'operator' (5#1) [/home/nats/data/projects/Harbinger/HDL/src/operator.v:3]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:66]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:66]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:66]
+WARNING: [Synth 8-7023] instance 'testi2s' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:66]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:71]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:71]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:71]
+WARNING: [Synth 8-7023] instance 'testi2s2' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:71]
+INFO: [Synth 8-6155] done synthesizing module 'top' (6#1) [/home/nats/data/projects/Harbinger/HDL/src/top.v:3]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2299.180 ; gain = 0.000 ; free physical = 18938 ; free virtual = 26470
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2299.180 ; gain = 0.000 ; free physical = 18987 ; free virtual = 26520
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2299.180 ; gain = 0.000 ; free physical = 18987 ; free virtual = 26520
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2299.180 ; gain = 0.000 ; free physical = 18980 ; free virtual = 26513
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'audio_clk'
+Finished Parsing XDC File [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'audio_clk'
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.082 ; gain = 0.000 ; free physical = 18872 ; free virtual = 26424
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2363.082 ; gain = 0.000 ; free physical = 18872 ; free virtual = 26424
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18980 ; free virtual = 26526
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7s25csga225-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18980 ; free virtual = 26526
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property IO_BUFFER_TYPE = NONE for clk. (constraint file  /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc, line 3).
+Applied set_property CLOCK_BUFFER_TYPE = NONE for clk. (constraint file  /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc, line 4).
+Applied set_property KEEP_HIERARCHY = SOFT for audio_clk. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18980 ; free virtual = 26526
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_RX'
+INFO: [Synth 8-802] inferred FSM for state register 'voice_state_reg' in module 'midi_fsm'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                         00000000
+                   START |                              010 |                         00000001
+                   BITRX |                              100 |                         00000010
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'UART_RX'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 |                             0000
+           NOTE_ON_STATE |                               01 |                             0001
+          NOTE_OFF_STATE |                               10 |                             0010
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'voice_state_reg' using encoding 'sequential' in module 'midi_fsm'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18968 ; free virtual = 26518
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   44 Bit       Adders := 2     
+	   2 Input   32 Bit       Adders := 6     
+	   2 Input   26 Bit       Adders := 4     
+	   3 Input   26 Bit       Adders := 2     
+	   2 Input   16 Bit       Adders := 4     
+	   2 Input    8 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 6     
+	               26 Bit    Registers := 2     
+	               18 Bit    Registers := 4     
+	               16 Bit    Registers := 8     
+	                9 Bit    Registers := 4     
+	                8 Bit    Registers := 11    
+	                6 Bit    Registers := 1     
+	                4 Bit    Registers := 3     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 9     
++---ROMs : 
+	                    ROMs := 4     
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 22    
+	   6 Input   32 Bit        Muxes := 4     
+	   2 Input   26 Bit        Muxes := 4     
+	   6 Input   26 Bit        Muxes := 2     
+	   3 Input   16 Bit        Muxes := 2     
+	   2 Input   16 Bit        Muxes := 3     
+	   3 Input    8 Bit        Muxes := 2     
+	   2 Input    8 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 4     
+	   6 Input    4 Bit        Muxes := 2     
+	   3 Input    3 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 5     
+	   3 Input    2 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 25    
+	   3 Input    1 Bit        Muxes := 9     
+	   6 Input    1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 90 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+DSP Report: Generating DSP interpolation0, operation Mode is: A''*B.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: (PCIN>>17)+A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP soundout_reg, operation Mode is: (A''*B)'.
+DSP Report: register fullamp_r_reg is absorbed into DSP soundout_reg.
+DSP Report: register fullamp_reg is absorbed into DSP soundout_reg.
+DSP Report: register soundout_reg is absorbed into DSP soundout_reg.
+DSP Report: operator amp_sample0 is absorbed into DSP soundout_reg.
+DSP Report: Generating DSP interpolation0, operation Mode is: A''*B.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: (PCIN>>17)+A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP soundout_reg, operation Mode is: (A''*B)'.
+DSP Report: register fullamp_r_reg is absorbed into DSP soundout_reg.
+DSP Report: register fullamp_reg is absorbed into DSP soundout_reg.
+DSP Report: register soundout_reg is absorbed into DSP soundout_reg.
+DSP Report: operator amp_sample0 is absorbed into DSP soundout_reg.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:11 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18942 ; free virtual = 26501
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping	Report
++------------+-------------------------------+---------------+----------------+
+|Module Name | RTL Object                    | Depth x Width | Implemented As | 
++------------+-------------------------------+---------------+----------------+
+|operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
++------------+-------------------------------+---------------+----------------+
+
+
+DSP: Preliminary Mapping	Report (see note below)
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping      | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 27     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
++------------+------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18775 ; free virtual = 26342
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18772 ; free virtual = 26339
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:16 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18758 ; free virtual = 26326
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18753 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18753 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18752 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18752 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18752 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18752 ; free virtual = 26321
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+--------------+----------+
+|      |BlackBox name |Instances |
++------+--------------+----------+
+|1     |clk_wiz_0     |         1|
++------+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |clk_wiz  |     1|
+|2     |CARRY4   |   128|
+|3     |DSP48E1  |     8|
+|7     |LUT1     |    70|
+|8     |LUT2     |   178|
+|9     |LUT3     |   120|
+|10    |LUT4     |    85|
+|11    |LUT5     |    75|
+|12    |LUT6     |    30|
+|13    |MUXF7    |     2|
+|14    |MUXF8    |     1|
+|15    |RAMB18E1 |     2|
+|17    |FDRE     |   295|
+|18    |FDSE     |     2|
+|19    |IBUF     |     1|
+|20    |OBUF     |    11|
+|21    |OBUFT    |     1|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18752 ; free virtual = 26321
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2363.082 ; gain = 0.000 ; free physical = 18812 ; free virtual = 26381
+Synthesis Optimization Complete : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2363.082 ; gain = 63.902 ; free physical = 18812 ; free virtual = 26381
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2363.082 ; gain = 0.000 ; free physical = 18899 ; free virtual = 26470
+INFO: [Netlist 29-17] Analyzing 141 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-140] Inserted 1 IBUFs to IO ports without IO buffers.
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.082 ; gain = 0.000 ; free physical = 18846 ; free virtual = 26418
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+INFO: [Common 17-83] Releasing license: Synthesis
+35 Infos, 10 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:22 ; elapsed = 00:00:22 . Memory (MB): peak = 2363.082 ; gain = 64.031 ; free physical = 19011 ; free virtual = 26582
+INFO: [Common 17-1381] The checkpoint '/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/top.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Dec 26 12:18:28 2022...

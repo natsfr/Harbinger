@@ -130,6 +130,7 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 					adsr_amp <= adsr_amp + At_inc;
 					if (trig == 1'b0) begin
 						adsr_state <= RELEASE;
+						adsr_counter <= 0;
 					end else if (adsr_counter == At_time) begin
 						adsr_state <= DECAY;
 						adsr_counter <= 0;
@@ -140,6 +141,7 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 					adsr_amp <= adsr_amp + De_inc;
 					if (trig == 1'b0) begin
 						adsr_state <= RELEASE;
+						adsr_counter <= 0;
 					end else if (adsr_counter == De_time) begin
 						adsr_state <= SUSTAIN;
 						adsr_counter <= 0;
@@ -150,6 +152,7 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 					adsr_amp <= Su_lvl;
 					if (trig == 1'b0) begin
 						adsr_state <= RELEASE;
+						adsr_counter <= 0;
 					end else if (adsr_counter == Su_time) begin
 						adsr_state <= RELEASE;
 						adsr_counter <= 0;
@@ -176,11 +179,11 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 		short_diff = next_sample - current_sample;
 		interpolation = sample_diff * fract;
 		if (amplitude != 16'd0) begin
-			amp_sample = fullamp * amplitude;
+			signed_adsramp = amplitude;
 		end else begin
 			signed_adsramp = adsr_amp[31:16];
-			amp_sample = fullamp * signed_adsramp;
 		end
+		amp_sample = fullamp * signed_adsramp;
 	end
 	/* Wavetable interpolation */
 

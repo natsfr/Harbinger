@@ -23,16 +23,20 @@ module i2s(clkin, sound, ready, mck, sck, sd, lrck);
 	assign lrck = lrck_reg;
 	assign sd = sd_reg;
 
-	SB_IO	#(
-		.PIN_TYPE(6'b0100_01)
-	) oddr(
-		.OUTPUT_CLK(clkin),
-		.CLOCK_ENABLE(1'b1),
-		.D_OUT_0(1),
-		.D_OUT_1(0),
-		.OUTPUT_ENABLE(1'b1),
-		.PACKAGE_PIN(mck)
-	);
+    `ifdef SPARTAN7
+        
+    `else // ICE40
+     	SB_IO	#(
+            .PIN_TYPE(6'b0100_01)
+        ) oddr(
+            .OUTPUT_CLK(clkin),
+            .CLOCK_ENABLE(1'b1),
+            .D_OUT_0(1),
+            .D_OUT_1(0),
+            .OUTPUT_ENABLE(1'b1),
+            .PACKAGE_PIN(mck)
+        );
+    `endif
 
 	// Beware all ratio should be integer
 	// This is the ratio between MCK and LRCK
