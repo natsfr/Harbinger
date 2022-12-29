@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Mon Dec 26 02:58:49 2022
+// Date        : Mon Dec 26 02:58:48 2022
 // Host        : Hellgate running 64-bit Ubuntu 22.04.1 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top clk_wiz_0 -prefix
+//               clk_wiz_0_ clk_wiz_0_sim_netlist.v
 // Design      : clk_wiz_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -31,7 +31,6 @@ module clk_wiz_0
         .locked(locked));
 endmodule
 
-(* ORIG_REF_NAME = "clk_wiz_0_clk_wiz" *) 
 module clk_wiz_0_clk_wiz_0_clk_wiz
    (clk_out1,
     locked,

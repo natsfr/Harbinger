@@ -24,7 +24,17 @@ module i2s(clkin, sound, ready, mck, sck, sd, lrck);
 	assign sd = sd_reg;
 
     `ifdef SPARTAN7
-        
+        ODDR #(
+            .DDR_CLK_EDGE("SAME_EDGE"), // "OPPOSITE_EDGE" or "SAME_EDGE" 
+            .INIT(1'b0),    // Initial value of Q: 1'b0 or 1'b1
+            .SRTYPE("SYNC") // Set/Reset type: "SYNC" or "ASYNC" 
+        ) ODDR_mck (
+            .Q(mck),   // 1-bit DDR output
+            .C(clkin),   // 1-bit clock input
+            .CE(1'b1), // 1-bit clock enable input
+            .D1(1'b1), // 1-bit data input (positive edge)
+            .D2(1'b0) // 1-bit data input (negative edge)
+        );
     `else // ICE40
      	SB_IO	#(
             .PIN_TYPE(6'b0100_01)

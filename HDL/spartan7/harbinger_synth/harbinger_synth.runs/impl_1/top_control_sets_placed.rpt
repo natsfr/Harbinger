@@ -1,0 +1,108 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
+| Date         : Wed Dec 28 19:23:57 2022
+| Host         : Hellgate running 64-bit Ubuntu 22.04.1 LTS
+| Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
+| Design       : top
+| Device       : xc7s25
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    30 |
+|    Minimum number of control sets                        |    30 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    85 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    30 |
+| >= 0 to < 4        |     3 |
+| >= 4 to < 6        |     3 |
+| >= 6 to < 8        |     2 |
+| >= 8 to < 10       |     3 |
+| >= 10 to < 12      |     2 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     3 |
+| >= 16              |    14 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              34 |           19 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |             259 |           82 |
+| Yes          | No                    | No                     |             208 |           69 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              46 |           15 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++--------------------------+-------------------------------------+-----------------------------------------+------------------+----------------+--------------+
+|       Clock Signal       |            Enable Signal            |             Set/Reset Signal            | Slice Load Count | Bel Load Count | Bels / Slice |
++--------------------------+-------------------------------------+-----------------------------------------+------------------+----------------+--------------+
+|  audio_clk/inst/clk_out1 | channel1/lrck_counter[15]_i_1_n_0   | channel1/lrck_reg_i_1_n_0               |                1 |              1 |         1.00 |
+|  audio_clk/inst/clk_out1 | channel1/sd_reg                     | channel1/sck_reg_i_1_n_0                |                1 |              1 |         1.00 |
+|  audio_clk/inst/clk_out1 | midi_rx/wvalid                      |                                         |                1 |              2 |         2.00 |
+|  audio_clk/inst/clk_out1 | midi_rx/bitcnt                      |                                         |                2 |              4 |         2.00 |
+|  audio_clk/inst/clk_out1 | zebrain/leds[4]_i_1_n_0             |                                         |                2 |              4 |         2.00 |
+|  audio_clk/inst/clk_out1 | channel1/bit_counter[3]_i_1_n_0     |                                         |                2 |              5 |         2.50 |
+|  audio_clk/inst/clk_out1 | zebrain/freq_1                      | zebrain/freq_1[15]_i_1_n_0              |                2 |              6 |         3.00 |
+|  audio_clk/inst/clk_out1 | zebrain/freq_0                      | zebrain/freq_0[15]_i_1_n_0              |                3 |              6 |         2.00 |
+|  audio_clk/inst/clk_out1 | zebrain/active_note[1][7]_i_2_n_0   | zebrain/active_note[1][7]_i_1_n_0       |                2 |              8 |         4.00 |
+|  audio_clk/inst/clk_out1 |                                     | midi_rx/word0                           |                3 |              8 |         2.67 |
+|  audio_clk/inst/clk_out1 | zebrain/active_note[0][7]_i_2_n_0   | zebrain/active_note[0][7]_i_1_n_0       |                2 |              9 |         4.50 |
+|  audio_clk/inst/clk_out1 | zebrain/freq_0                      |                                         |                3 |             10 |         3.33 |
+|  audio_clk/inst/clk_out1 | zebrain/freq_1                      |                                         |                4 |             10 |         2.50 |
+|  audio_clk/inst/clk_out1 | channel1/lrck_counter[15]_i_1_n_0   |                                         |                3 |             15 |         5.00 |
+|  audio_clk/inst/clk_out1 | midi_rx/counter                     | midi_rx/counter[15]_i_1_n_0             |                4 |             15 |         3.75 |
+|  audio_clk/inst/clk_out1 |                                     | channel1/lrck_counter[15]_i_1_n_0       |                4 |             15 |         3.75 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s/phasecounter[25]_i_1_n_0        |                8 |             27 |         3.38 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s2_v1/phasecounter[25]_i_1__2_n_0 |                8 |             27 |         3.38 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s2/phasecounter[25]_i_1__0_n_0    |                8 |             27 |         3.38 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s_v1/phasecounter[25]_i_1__1_n_0  |                8 |             27 |         3.38 |
+|  audio_clk/inst/clk_out1 | channel1/E[0]                       |                                         |                8 |             30 |         3.75 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s_v1/adsr_counter[31]_i_1__1_n_0  |               12 |             32 |         2.67 |
+|  audio_clk/inst/clk_out1 | testi2s2/adsr_amp[31]_i_1__0_n_0    |                                         |               11 |             32 |         2.91 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s/adsr_counter[31]_i_1_n_0        |               11 |             32 |         2.91 |
+|  audio_clk/inst/clk_out1 | testi2s_v1/adsr_amp[31]_i_1__1_n_0  |                                         |               10 |             32 |         3.20 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s2_v1/adsr_counter[31]_i_1__2_n_0 |               10 |             32 |         3.20 |
+|  audio_clk/inst/clk_out1 |                                     | testi2s2/adsr_counter[31]_i_1__0_n_0    |               10 |             32 |         3.20 |
+|  audio_clk/inst/clk_out1 | testi2s2_v1/adsr_amp[31]_i_1__2_n_0 |                                         |               12 |             32 |         2.67 |
+|  audio_clk/inst/clk_out1 | testi2s/adsr_amp[31]_i_1_n_0        |                                         |               11 |             32 |         2.91 |
+|  audio_clk/inst/clk_out1 |                                     |                                         |               19 |             34 |         1.79 |
++--------------------------+-------------------------------------+-----------------------------------------+------------------+----------------+--------------+
+
+
