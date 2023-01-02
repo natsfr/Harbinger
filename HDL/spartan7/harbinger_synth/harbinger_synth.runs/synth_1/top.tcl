@@ -72,7 +72,7 @@ proc create_report { reportName command } {
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 6
 set_param xicom.use_bs_reader 1
-set_param synth.incrementalSynthesisCache ./.Xil/Vivado-20043-Hellgate/incrSyn
+set_param synth.incrementalSynthesisCache ./.Xil/Vivado-6243-Hellgate/incrSyn
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -98,6 +98,7 @@ read_verilog -library xil_defaultlib {
   /home/nats/data/projects/Harbinger/HDL/src/midi_parser.v
   /home/nats/data/projects/Harbinger/HDL/src/operator.v
   /home/nats/data/projects/Harbinger/HDL/src/uart_rx.v
+  /home/nats/data/projects/Harbinger/HDL/src/voice.v
   /home/nats/data/projects/Harbinger/HDL/src/top.v
 }
 read_ip -quiet /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci

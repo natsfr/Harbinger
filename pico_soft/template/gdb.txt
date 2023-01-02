@@ -1,0 +1,5 @@
+gdb-multiarch
+
+
+target remote localhost:50000
+

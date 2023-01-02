@@ -51,7 +51,7 @@ module top(clk, midi_in, sck, lrck, mck, sd, leds);
 
 	i2s channel1(.clkin(clk24), .sound(sample), .ready(i2s_ready), .mck(mck), .sck(sck), .sd(sd), .lrck(lrck));
 
-	wire [15:0]sample1;
+	/*wire [15:0]sample1;
 	wire [15:0]sample2;
 
 	operator testi2s(.clk24(clk24), .trig(trig[0]), .modin(0), .phaseinc(freq[15:0]), 
@@ -75,15 +75,34 @@ module top(clk, midi_in, sck, lrck, mck, sd, leds);
 	operator testi2s2_v1(.clk24(clk24), .trig(trig[1]), .modin(sample1_v1), .phaseinc(freq[31:16]<<2), 
 		.At_time(32'd2457500), .De_time(32'd12287), .Su_time(32'd2457500), .Re_time(32'd24575),
 		.At_inc(32'd873), .De_inc(-32'd87371), .Su_lvl(32'd16384<<32'd16), .Re_inc(-32'd43689),
-		.amplitude(16'd0),  .soundout(sample2_v1));
-
+		.amplitude(16'd0),  .soundout(sample2_v1));*/
+		
+	wire signed [15:0]v0_out;
+	voice voice0(.clk24(clk24), .trig(trig[0]), .out_mix(6'b111111), 
+	   .freq0(freq[15:0]), .freq1(freq[15:0] << 2), .freq2(freq[15:0] >> 3), .freq3(freq[15:0]), .freq4(freq[15:0] << 2), .freq5(freq[15:0] >> 3),
+	   .modsel(18'h19689), 
+	   .sound_output(v0_out));
+	   
+   
+	wire signed [15:0]v1_out;
+	voice voice1(.clk24(clk24), .trig(trig[1]), .out_mix(6'b111111), 
+	   .freq0(freq[31:16]), .freq1(freq[31:16] << 2), .freq2(freq[31:16] >> 3), .freq3(freq[31:16] >> 4), .freq4(freq[31:16]), .freq5(freq[31:16] >> 3),
+	   .modsel(18'h19689), 
+	   .sound_output(v1_out));
+	
+	wire signed [15:0]v2_out;
+	voice voice2(.clk24(clk24), .trig(trig[2]), .out_mix(6'b111111), 
+	   .freq0(freq[47:32]), .freq1(freq[47:32] << 2), .freq2(freq[47:32] >> 3), .freq3(freq[47:32] >> 4), .freq4(freq[47:32]), .freq5(freq[47:32] >> 3),
+	   .modsel(18'h19689), 
+	   .sound_output(v2_out));	
+	
 	reg signed [15:0]samplemix;
 
 	always @(posedge clk24)
 	begin
 		if (i2s_ready) begin
-			samplemix <= {{2{sample2_v1[15]}}, sample2_v1[15:2]} + {{2{sample2[15]}}, sample2[15:2]};
-			sample <= {samplemix[15:0], samplemix[15:0]};
+			samplemix <= {{3{v0_out[15]}}, v0_out[15:3]} + {{3{v1_out[15]}}, v1_out[15:3]} + {{3{v2_out[15]}}, v2_out[15:3]};
+			sample <= {samplemix, samplemix};
 		end
 	end
 

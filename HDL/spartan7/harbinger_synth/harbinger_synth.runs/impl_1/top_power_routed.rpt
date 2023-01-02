@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Wed Dec 28 19:24:06 2022
+| Date             : Sat Dec 31 14:48:55 2022
 | Host             : Hellgate running 64-bit Ubuntu 22.04.1 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.179        |
+| Total On-Chip Power (W)  | 0.215        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.118        |
-| Device Static (W)        | 0.061        |
+| Dynamic (W)              | 0.153        |
+| Device Static (W)        | 0.062        |
 | Effective TJA (C/W)      | 3.7          |
-| Max Ambient (C)          | 84.3         |
-| Junction Temperature (C) | 25.7         |
+| Max Ambient (C)          | 84.2         |
+| Junction Temperature (C) | 25.8         |
 | Confidence Level         | Medium       |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,20 +52,20 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |    <0.001 |        5 |       --- |             --- |
-| Slice Logic    |     0.002 |     2184 |       --- |             --- |
-|   LUT as Logic |     0.001 |     1158 |     14600 |            7.93 |
-|   CARRY4       |    <0.001 |      252 |      3650 |            6.90 |
-|   Register     |    <0.001 |      547 |     29200 |            1.87 |
+| Clocks         |     0.003 |        5 |       --- |             --- |
+| Slice Logic    |     0.009 |     8651 |       --- |             --- |
+|   LUT as Logic |     0.007 |     4693 |     14600 |           32.14 |
+|   CARRY4       |     0.001 |     1172 |      3650 |           32.11 |
+|   Register     |    <0.001 |     2140 |     29200 |            7.33 |
 |   F7/F8 Muxes  |    <0.001 |       13 |     14600 |            0.09 |
-|   Others       |     0.000 |       25 |       --- |             --- |
-| Signals        |     0.002 |     2353 |       --- |             --- |
-| Block RAM      |     0.002 |        2 |        45 |            4.44 |
+|   Others       |     0.000 |       90 |       --- |             --- |
+| Signals        |     0.012 |    10014 |       --- |             --- |
+| Block RAM      |     0.009 |        9 |        45 |           20.00 |
 | MMCM           |     0.105 |        1 |         3 |           33.33 |
-| DSPs           |     0.003 |       16 |        80 |           20.00 |
+| DSPs           |     0.012 |       72 |        80 |           90.00 |
 | I/O            |     0.003 |       14 |       150 |            9.33 |
-| Static Power   |     0.061 |          |           |                 |
-| Total          |     0.179 |          |           |                 |
+| Static Power   |     0.062 |          |           |                 |
+| Total          |     0.215 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -75,7 +75,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.014 |       0.010 |      0.005 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.050 |       0.044 |      0.005 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.068 |       0.058 |      0.009 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -84,7 +84,7 @@ Table of Contents
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.001 |       0.001 |      0.000 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 
@@ -141,16 +141,33 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+---------------+-----------+
-| Name          | Power (W) |
-+---------------+-----------+
-| top           |     0.118 |
-|   audio_clk   |     0.105 |
-|     inst      |     0.105 |
-|   testi2s     |     0.003 |
-|   testi2s2    |     0.002 |
-|   testi2s2_v1 |     0.002 |
-|   testi2s_v1  |     0.003 |
-+---------------+-----------+
++-------------+-----------+
+| Name        | Power (W) |
++-------------+-----------+
+| top         |     0.153 |
+|   audio_clk |     0.105 |
+|     inst    |     0.105 |
+|   voice0    |     0.015 |
+|     op0     |     0.003 |
+|     op1     |     0.002 |
+|     op2     |     0.003 |
+|     op3     |     0.002 |
+|     op4     |     0.003 |
+|     op5     |     0.002 |
+|   voice1    |     0.015 |
+|     op0     |     0.003 |
+|     op1     |     0.002 |
+|     op2     |     0.003 |
+|     op3     |     0.002 |
+|     op4     |     0.003 |
+|     op5     |     0.002 |
+|   voice2    |     0.015 |
+|     op0     |     0.003 |
+|     op1     |     0.002 |
+|     op2     |     0.003 |
+|     op3     |     0.002 |
+|     op4     |     0.003 |
+|     op5     |     0.002 |
++-------------+-----------+
 
 

@@ -2,8 +2,8 @@
 # Vivado v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:47 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Wed Dec 28 19:22:59 2022
-# Process ID: 134632
+# Start of session at: Sat Dec 31 14:47:20 2022
+# Process ID: 380899
 # Current directory: /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1
 # Command line: vivado -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
 # Log file: /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/top.vds
@@ -17,14 +17,14 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s25'
 INFO: [Device 21-403] Loading part xc7s25csga225-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 134655
+INFO: [Synth 8-7075] Helper process launched with PID 380920
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2298.176 ; gain = 0.000 ; free physical = 9850 ; free virtual = 22220
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2323.992 ; gain = 0.000 ; free physical = 14646 ; free virtual = 23428
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top' [/home/nats/data/projects/Harbinger/HDL/src/top.v:3]
 	Parameter FREQ bound to: 24576000 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-134632-Hellgate/realtime/clk_wiz_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-134632-Hellgate/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-380899-Hellgate/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/.Xil/Vivado-380899-Hellgate/realtime/clk_wiz_0_stub.v:5]
 WARNING: [Synth 8-7071] port 'locked' of module 'clk_wiz_0' is unconnected for instance 'audio_clk' [/home/nats/data/projects/Harbinger/HDL/src/top.v:20]
 WARNING: [Synth 8-7023] instance 'audio_clk' of module 'clk_wiz_0' has 3 connections declared, but only 2 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:20]
 INFO: [Synth 8-6157] synthesizing module 'UART_RX' [/home/nats/data/projects/Harbinger/HDL/src/uart_rx.v:3]
@@ -83,6 +83,13 @@ WARNING: [Synth 8-7071] port 'R' of module 'ODDR' is unconnected for instance 'O
 WARNING: [Synth 8-7071] port 'S' of module 'ODDR' is unconnected for instance 'ODDR_mck' [/home/nats/data/projects/Harbinger/HDL/src/i2s.v:31]
 WARNING: [Synth 8-7023] instance 'ODDR_mck' of module 'ODDR' has 7 connections declared, but only 5 given [/home/nats/data/projects/Harbinger/HDL/src/i2s.v:31]
 INFO: [Synth 8-6155] done synthesizing module 'i2s' (5#1) [/home/nats/data/projects/Harbinger/HDL/src/i2s.v:3]
+INFO: [Synth 8-6157] synthesizing module 'voice' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:4]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:125]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:153]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:181]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:209]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/voice.v:237]
 INFO: [Synth 8-6157] synthesizing module 'operator' [/home/nats/data/projects/Harbinger/HDL/src/operator.v:3]
 	Parameter SIZE bound to: 26 - type: integer 
 	Parameter FC bound to: 26'b00000000001111111111111111 
@@ -94,36 +101,57 @@ INFO: [Synth 8-6157] synthesizing module 'operator' [/home/nats/data/projects/Ha
 INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL/src/operator.v:192]
 INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL/src/operator.v:121]
 INFO: [Synth 8-6155] done synthesizing module 'operator' (6#1) [/home/nats/data/projects/Harbinger/HDL/src/operator.v:3]
-WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:57]
-WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:57]
-WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s' [/home/nats/data/projects/Harbinger/HDL/src/top.v:57]
-WARNING: [Synth 8-7023] instance 'testi2s' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:57]
-WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:62]
-WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:62]
-WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:62]
-WARNING: [Synth 8-7023] instance 'testi2s2' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:62]
-WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:70]
-WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:70]
-WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:70]
-WARNING: [Synth 8-7023] instance 'testi2s_v1' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:70]
-WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'testi2s2_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:75]
-WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'testi2s2_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:75]
-WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'testi2s2_v1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:75]
-WARNING: [Synth 8-7023] instance 'testi2s2_v1' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:75]
-INFO: [Synth 8-6155] done synthesizing module 'top' (7#1) [/home/nats/data/projects/Harbinger/HDL/src/top.v:3]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op0' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:262]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op0' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:262]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op0' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:262]
+WARNING: [Synth 8-7023] instance 'op0' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:262]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op1' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:267]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op1' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:267]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op1' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:267]
+WARNING: [Synth 8-7023] instance 'op1' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:267]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op2' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:272]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op2' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:272]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op2' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:272]
+WARNING: [Synth 8-7023] instance 'op2' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:272]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op3' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:277]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op3' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:277]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op3' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:277]
+WARNING: [Synth 8-7023] instance 'op3' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:277]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op4' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:282]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op4' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:282]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op4' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:282]
+WARNING: [Synth 8-7023] instance 'op4' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:282]
+WARNING: [Synth 8-7071] port 'WT_write' of module 'operator' is unconnected for instance 'op5' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:287]
+WARNING: [Synth 8-7071] port 'WT_value' of module 'operator' is unconnected for instance 'op5' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:287]
+WARNING: [Synth 8-7071] port 'fullamp' of module 'operator' is unconnected for instance 'op5' [/home/nats/data/projects/Harbinger/HDL/src/voice.v:287]
+WARNING: [Synth 8-7023] instance 'op5' of module 'operator' has 17 connections declared, but only 14 given [/home/nats/data/projects/Harbinger/HDL/src/voice.v:287]
+INFO: [Synth 8-6155] done synthesizing module 'voice' (7#1) [/home/nats/data/projects/Harbinger/HDL/src/voice.v:4]
+WARNING: [Synth 8-7071] port 'write' of module 'voice' is unconnected for instance 'voice0' [/home/nats/data/projects/Harbinger/HDL/src/top.v:81]
+WARNING: [Synth 8-7071] port 'addr' of module 'voice' is unconnected for instance 'voice0' [/home/nats/data/projects/Harbinger/HDL/src/top.v:81]
+WARNING: [Synth 8-7071] port 'param' of module 'voice' is unconnected for instance 'voice0' [/home/nats/data/projects/Harbinger/HDL/src/top.v:81]
+WARNING: [Synth 8-7023] instance 'voice0' of module 'voice' has 14 connections declared, but only 11 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:81]
+WARNING: [Synth 8-7071] port 'write' of module 'voice' is unconnected for instance 'voice1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:88]
+WARNING: [Synth 8-7071] port 'addr' of module 'voice' is unconnected for instance 'voice1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:88]
+WARNING: [Synth 8-7071] port 'param' of module 'voice' is unconnected for instance 'voice1' [/home/nats/data/projects/Harbinger/HDL/src/top.v:88]
+WARNING: [Synth 8-7023] instance 'voice1' of module 'voice' has 14 connections declared, but only 11 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:88]
+WARNING: [Synth 8-7071] port 'write' of module 'voice' is unconnected for instance 'voice2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:94]
+WARNING: [Synth 8-7071] port 'addr' of module 'voice' is unconnected for instance 'voice2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:94]
+WARNING: [Synth 8-7071] port 'param' of module 'voice' is unconnected for instance 'voice2' [/home/nats/data/projects/Harbinger/HDL/src/top.v:94]
+WARNING: [Synth 8-7023] instance 'voice2' of module 'voice' has 14 connections declared, but only 11 given [/home/nats/data/projects/Harbinger/HDL/src/top.v:94]
+INFO: [Synth 8-6155] done synthesizing module 'top' (8#1) [/home/nats/data/projects/Harbinger/HDL/src/top.v:3]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2298.176 ; gain = 0.000 ; free physical = 10570 ; free virtual = 22941
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2323.992 ; gain = 0.000 ; free physical = 15365 ; free virtual = 24148
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2298.176 ; gain = 0.000 ; free physical = 10627 ; free virtual = 22998
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2323.992 ; gain = 0.000 ; free physical = 15425 ; free virtual = 24208
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2298.176 ; gain = 0.000 ; free physical = 10627 ; free virtual = 22998
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2323.992 ; gain = 0.000 ; free physical = 15425 ; free virtual = 24208
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2298.176 ; gain = 0.000 ; free physical = 10642 ; free virtual = 23012
+Netlist sorting complete. Time (s): cpu = 00:00:00.09 ; elapsed = 00:00:00.09 . Memory (MB): peak = 2323.992 ; gain = 0.000 ; free physical = 15416 ; free virtual = 24199
 INFO: [Netlist 29-17] Analyzing 1 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -138,20 +166,20 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2362.078 ; gain = 0.000 ; free physical = 10588 ; free virtual = 22959
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2387.895 ; gain = 0.000 ; free physical = 15314 ; free virtual = 24103
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2362.078 ; gain = 0.000 ; free physical = 10588 ; free virtual = 22959
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2387.895 ; gain = 0.000 ; free physical = 15314 ; free virtual = 24103
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10623 ; free virtual = 22999
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15403 ; free virtual = 24187
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga225-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10623 ; free virtual = 22999
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15403 ; free virtual = 24187
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -160,7 +188,7 @@ Applied set_property IO_BUFFER_TYPE = NONE for clk. (constraint file  /home/nats
 Applied set_property CLOCK_BUFFER_TYPE = NONE for clk. (constraint file  /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc, line 4).
 Applied set_property KEEP_HIERARCHY = SOFT for audio_clk. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10623 ; free virtual = 22998
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15403 ; free virtual = 24187
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_RX'
 ---------------------------------------------------------------------------------------------------
@@ -172,42 +200,44 @@ INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'UART_RX'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10603 ; free virtual = 22979
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15397 ; free virtual = 24182
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
-	   2 Input   44 Bit       Adders := 4     
-	   2 Input   32 Bit       Adders := 12    
-	   2 Input   26 Bit       Adders := 8     
-	   3 Input   26 Bit       Adders := 4     
-	   2 Input   16 Bit       Adders := 7     
+	   2 Input   44 Bit       Adders := 18    
+	   2 Input   32 Bit       Adders := 54    
+	   2 Input   26 Bit       Adders := 36    
+	   3 Input   26 Bit       Adders := 18    
+	   6 Input   18 Bit       Adders := 3     
+	   2 Input   16 Bit       Adders := 20    
+	   3 Input   16 Bit       Adders := 1     
 	   2 Input    8 Bit       Adders := 1     
 	   2 Input    4 Bit       Adders := 1     
 	   2 Input    3 Bit       Adders := 1     
 +---Registers : 
-	               32 Bit    Registers := 10    
-	               26 Bit    Registers := 4     
-	               18 Bit    Registers := 8     
-	               16 Bit    Registers := 21    
-	                9 Bit    Registers := 8     
-	                8 Bit    Registers := 25    
+	               32 Bit    Registers := 191   
+	               26 Bit    Registers := 18    
+	               18 Bit    Registers := 39    
+	               16 Bit    Registers := 99    
+	                9 Bit    Registers := 36    
+	                8 Bit    Registers := 81    
 	                6 Bit    Registers := 1     
-	                4 Bit    Registers := 6     
+	                4 Bit    Registers := 20    
 	                3 Bit    Registers := 1     
 	                2 Bit    Registers := 2     
 	                1 Bit    Registers := 8     
 +---ROMs : 
-	                    ROMs := 14    
+	                    ROMs := 42    
 +---Muxes : 
-	   2 Input   32 Bit        Muxes := 44    
-	   6 Input   32 Bit        Muxes := 8     
-	   2 Input   26 Bit        Muxes := 8     
-	   6 Input   26 Bit        Muxes := 4     
+	   2 Input   32 Bit        Muxes := 198   
+	   6 Input   32 Bit        Muxes := 36    
+	   2 Input   26 Bit        Muxes := 36    
+	   6 Input   26 Bit        Muxes := 18    
+	   2 Input   16 Bit        Muxes := 37    
 	   3 Input   16 Bit        Muxes := 2     
-	   2 Input   16 Bit        Muxes := 5     
 	   3 Input    8 Bit        Muxes := 1     
 	   2 Input    8 Bit        Muxes := 3     
 	   4 Input    8 Bit        Muxes := 2     
@@ -215,18 +245,18 @@ Detailed RTL Component Info :
 	   2 Input    6 Bit        Muxes := 12    
 	   4 Input    6 Bit        Muxes := 2     
 	   2 Input    5 Bit        Muxes := 1     
-	   2 Input    4 Bit        Muxes := 7     
+	   2 Input    4 Bit        Muxes := 21    
+	   6 Input    4 Bit        Muxes := 18    
 	   4 Input    4 Bit        Muxes := 1     
-	   6 Input    4 Bit        Muxes := 4     
+	   2 Input    3 Bit        Muxes := 37    
 	   3 Input    3 Bit        Muxes := 2     
-	   2 Input    3 Bit        Muxes := 9     
 	   2 Input    2 Bit        Muxes := 4     
 	   4 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 87    
+	   2 Input    1 Bit        Muxes := 310   
+	   6 Input    1 Bit        Muxes := 20    
 	   3 Input    1 Bit        Muxes := 4     
 	   4 Input    1 Bit        Muxes := 14    
 	   5 Input    1 Bit        Muxes := 1     
-	   6 Input    1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -322,8 +352,48 @@ DSP Report: register fullamp_r_reg is absorbed into DSP soundout_reg.
 DSP Report: register fullamp_reg is absorbed into DSP soundout_reg.
 DSP Report: register soundout_reg is absorbed into DSP soundout_reg.
 DSP Report: operator amp_sample0 is absorbed into DSP soundout_reg.
+DSP Report: Generating DSP interpolation0, operation Mode is: A''*B.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: (PCIN>>17)+A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP soundout_reg, operation Mode is: (A''*B)'.
+DSP Report: register fullamp_r_reg is absorbed into DSP soundout_reg.
+DSP Report: register fullamp_reg is absorbed into DSP soundout_reg.
+DSP Report: register soundout_reg is absorbed into DSP soundout_reg.
+DSP Report: operator amp_sample0 is absorbed into DSP soundout_reg.
+DSP Report: Generating DSP interpolation0, operation Mode is: A''*B.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP interpolation0, operation Mode is: (PCIN>>17)+A*B''.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: register interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
+DSP Report: Generating DSP soundout_reg, operation Mode is: (A''*B)'.
+DSP Report: register fullamp_r_reg is absorbed into DSP soundout_reg.
+DSP Report: register fullamp_reg is absorbed into DSP soundout_reg.
+DSP Report: register soundout_reg is absorbed into DSP soundout_reg.
+DSP Report: operator amp_sample0 is absorbed into DSP soundout_reg.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10568 ; free virtual = 22950
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15355 ; free virtual = 24149
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -333,7 +403,6 @@ ROM: Preliminary Mapping	Report
 +------------+-------------------------------+---------------+----------------+
 |Module Name | RTL Object                    | Depth x Width | Implemented As | 
 +------------+-------------------------------+---------------+----------------+
-|midi_fsm    | p_0_out                       | 128x16        | LUT            | 
 |operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
 |operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
 |operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
@@ -341,6 +410,12 @@ ROM: Preliminary Mapping	Report
 |operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
 |operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
 |operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel_rep | 256x8         | Block RAM      | 
+|operator    | phasecounter_reg_rep_bsel     | 256x8         | Block RAM      | 
+|top         | p_0_out                       | 128x16        | LUT            | 
 +------------+-------------------------------+---------------+----------------+
 
 
@@ -352,15 +427,23 @@ DSP: Preliminary Mapping	Report (see note below)
 |operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
-|operator    | A''*B            | 18     | 9      | -      | -      | 27     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
 |operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
-|operator    | A''*B            | 18     | 9      | -      | -      | 27     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
 |operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
-|operator    | A''*B            | 18     | 9      | -      | -      | 27     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
+|operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
+|operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
+|operator    | A''*B            | 18     | 9      | -      | -      | 48     | 2    | 0    | -    | -    | -     | 0    | 0    | 
 |operator    | A*B''            | 18     | 18     | -      | -      | 48     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (PCIN>>17)+A*B'' | 18     | 9      | -      | -      | 27     | 0    | 2    | -    | -    | -     | 0    | 0    | 
 |operator    | (A''*B)'         | 16     | 16     | -      | -      | 32     | 2    | 0    | -    | -    | -     | 1    | 0    | 
@@ -374,19 +457,19 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:18 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10425 ; free virtual = 22804
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15200 ; free virtual = 23995
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10418 ; free virtual = 22796
+Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:23 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15187 ; free virtual = 23982
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10407 ; free virtual = 22785
+Finished Technology Mapping : Time (s): cpu = 00:00:26 ; elapsed = 00:00:28 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15160 ; free virtual = 23956
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -404,37 +487,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10414 ; free virtual = 22792
+Finished IO Insertion : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15160 ; free virtual = 23956
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:19 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10414 ; free virtual = 22792
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15160 ; free virtual = 23956
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10419 ; free virtual = 22797
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15152 ; free virtual = 23948
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10419 ; free virtual = 22797
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15152 ; free virtual = 23948
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10418 ; free virtual = 22796
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15152 ; free virtual = 23947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10418 ; free virtual = 22796
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15151 ; free virtual = 23947
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -452,43 +535,43 @@ Report Cell Usage:
 |      |Cell     |Count |
 +------+---------+------+
 |1     |clk_wiz  |     1|
-|2     |CARRY4   |   252|
-|3     |DSP48E1  |    16|
-|7     |LUT1     |   191|
-|8     |LUT2     |   439|
-|9     |LUT3     |   223|
-|10    |LUT4     |   156|
-|11    |LUT5     |   265|
-|12    |LUT6     |    73|
-|13    |MUXF7    |    12|
-|14    |MUXF8    |     1|
-|15    |ODDR     |     1|
-|16    |RAMB18E1 |     4|
-|18    |FDRE     |   545|
-|19    |FDSE     |     2|
-|20    |IBUF     |     1|
-|21    |OBUF     |    12|
+|2     |CARRY4   |  1172|
+|3     |DSP48E1  |    72|
+|8     |LUT1     |    32|
+|9     |LUT2     |  2067|
+|10    |LUT3     |  1044|
+|11    |LUT4     |  1211|
+|12    |LUT5     |   634|
+|13    |LUT6     |   248|
+|14    |MUXF7    |    12|
+|15    |MUXF8    |     1|
+|16    |ODDR     |     1|
+|17    |RAMB18E1 |    18|
+|19    |FDRE     |  2152|
+|20    |FDSE     |     2|
+|21    |IBUF     |     1|
+|22    |OBUF     |    12|
 +------+---------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10418 ; free virtual = 22796
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15152 ; free virtual = 23947
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 2362.078 ; gain = 0.000 ; free physical = 10477 ; free virtual = 22855
-Synthesis Optimization Complete : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 2362.078 ; gain = 63.902 ; free physical = 10477 ; free virtual = 22855
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:27 ; elapsed = 00:00:29 . Memory (MB): peak = 2387.895 ; gain = 0.000 ; free physical = 15210 ; free virtual = 24006
+Synthesis Optimization Complete : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 2387.895 ; gain = 63.902 ; free physical = 15210 ; free virtual = 24006
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 2362.078 ; gain = 0.000 ; free physical = 10569 ; free virtual = 22946
-INFO: [Netlist 29-17] Analyzing 286 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.06 . Memory (MB): peak = 2387.895 ; gain = 0.000 ; free physical = 15300 ; free virtual = 24095
+INFO: [Netlist 29-17] Analyzing 1276 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2362.078 ; gain = 0.000 ; free physical = 10511 ; free virtual = 22889
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2387.895 ; gain = 0.000 ; free physical = 15243 ; free virtual = 24039
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-43 Infos, 21 Warnings, 0 Critical Warnings and 0 Errors encountered.
+51 Infos, 41 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:26 ; elapsed = 00:00:24 . Memory (MB): peak = 2362.078 ; gain = 64.031 ; free physical = 10683 ; free virtual = 23061
+synth_design: Time (s): cpu = 00:00:37 ; elapsed = 00:00:35 . Memory (MB): peak = 2387.895 ; gain = 64.031 ; free physical = 15424 ; free virtual = 24221
 INFO: [Common 17-1381] The checkpoint '/home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Wed Dec 28 19:23:30 2022...
+INFO: [Common 17-206] Exiting Vivado at Sat Dec 31 14:48:03 2022...

@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Wed Dec 28 19:24:06 2022
+| Date         : Sat Dec 31 14:48:54 2022
 | Host         : Hellgate running 64-bit Ubuntu 22.04.1 LTS
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
@@ -23,73 +23,283 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 12
+             Violations found: 54
 +----------+----------+-----------------+------------+
 | Rule     | Severity | Description     | Violations |
 +----------+----------+-----------------+------------+
-| SYNTH-10 | Warning  | Wide multiplier | 12         |
+| SYNTH-10 | Warning  | Wide multiplier | 54         |
 +----------+----------+-----------------+------------+
 
 2. REPORT DETAILS
 -----------------
 SYNTH-10#1 Warning
 Wide multiplier  
-Detected multiplier at testi2s/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op0/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#2 Warning
 Wide multiplier  
-Detected multiplier at testi2s/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op0/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#3 Warning
 Wide multiplier  
-Detected multiplier at testi2s/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op0/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#4 Warning
 Wide multiplier  
-Detected multiplier at testi2s2/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op1/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#5 Warning
 Wide multiplier  
-Detected multiplier at testi2s2/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op1/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#6 Warning
 Wide multiplier  
-Detected multiplier at testi2s2/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op1/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#7 Warning
 Wide multiplier  
-Detected multiplier at testi2s2_v1/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op2/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#8 Warning
 Wide multiplier  
-Detected multiplier at testi2s2_v1/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op2/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#9 Warning
 Wide multiplier  
-Detected multiplier at testi2s2_v1/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op2/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#10 Warning
 Wide multiplier  
-Detected multiplier at testi2s_v1/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op3/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#11 Warning
 Wide multiplier  
-Detected multiplier at testi2s_v1/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op3/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 SYNTH-10#12 Warning
 Wide multiplier  
-Detected multiplier at testi2s_v1/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Detected multiplier at voice0/op3/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#13 Warning
+Wide multiplier  
+Detected multiplier at voice0/op4/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#14 Warning
+Wide multiplier  
+Detected multiplier at voice0/op4/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#15 Warning
+Wide multiplier  
+Detected multiplier at voice0/op4/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#16 Warning
+Wide multiplier  
+Detected multiplier at voice0/op5/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#17 Warning
+Wide multiplier  
+Detected multiplier at voice0/op5/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#18 Warning
+Wide multiplier  
+Detected multiplier at voice0/op5/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#19 Warning
+Wide multiplier  
+Detected multiplier at voice1/op0/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#20 Warning
+Wide multiplier  
+Detected multiplier at voice1/op0/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#21 Warning
+Wide multiplier  
+Detected multiplier at voice1/op0/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#22 Warning
+Wide multiplier  
+Detected multiplier at voice1/op1/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#23 Warning
+Wide multiplier  
+Detected multiplier at voice1/op1/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#24 Warning
+Wide multiplier  
+Detected multiplier at voice1/op1/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#25 Warning
+Wide multiplier  
+Detected multiplier at voice1/op2/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#26 Warning
+Wide multiplier  
+Detected multiplier at voice1/op2/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#27 Warning
+Wide multiplier  
+Detected multiplier at voice1/op2/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#28 Warning
+Wide multiplier  
+Detected multiplier at voice1/op3/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#29 Warning
+Wide multiplier  
+Detected multiplier at voice1/op3/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#30 Warning
+Wide multiplier  
+Detected multiplier at voice1/op3/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#31 Warning
+Wide multiplier  
+Detected multiplier at voice1/op4/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#32 Warning
+Wide multiplier  
+Detected multiplier at voice1/op4/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#33 Warning
+Wide multiplier  
+Detected multiplier at voice1/op4/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#34 Warning
+Wide multiplier  
+Detected multiplier at voice1/op5/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#35 Warning
+Wide multiplier  
+Detected multiplier at voice1/op5/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#36 Warning
+Wide multiplier  
+Detected multiplier at voice1/op5/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#37 Warning
+Wide multiplier  
+Detected multiplier at voice2/op0/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#38 Warning
+Wide multiplier  
+Detected multiplier at voice2/op0/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#39 Warning
+Wide multiplier  
+Detected multiplier at voice2/op0/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#40 Warning
+Wide multiplier  
+Detected multiplier at voice2/op1/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#41 Warning
+Wide multiplier  
+Detected multiplier at voice2/op1/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#42 Warning
+Wide multiplier  
+Detected multiplier at voice2/op1/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#43 Warning
+Wide multiplier  
+Detected multiplier at voice2/op2/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#44 Warning
+Wide multiplier  
+Detected multiplier at voice2/op2/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#45 Warning
+Wide multiplier  
+Detected multiplier at voice2/op2/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#46 Warning
+Wide multiplier  
+Detected multiplier at voice2/op3/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#47 Warning
+Wide multiplier  
+Detected multiplier at voice2/op3/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#48 Warning
+Wide multiplier  
+Detected multiplier at voice2/op3/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#49 Warning
+Wide multiplier  
+Detected multiplier at voice2/op4/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#50 Warning
+Wide multiplier  
+Detected multiplier at voice2/op4/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#51 Warning
+Wide multiplier  
+Detected multiplier at voice2/op4/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#52 Warning
+Wide multiplier  
+Detected multiplier at voice2/op5/interpolation0 of size 9x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#53 Warning
+Wide multiplier  
+Detected multiplier at voice2/op5/interpolation0__0 of size 18x18, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+SYNTH-10#54 Warning
+Wide multiplier  
+Detected multiplier at voice2/op5/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
 Related violations: <none>
 
 

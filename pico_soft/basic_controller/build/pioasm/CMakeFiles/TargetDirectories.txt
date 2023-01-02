@@ -1,0 +1,3 @@
+/home/nats/data/projects/Harbinger/pico_soft/basic_controller/build/pioasm/CMakeFiles/pioasm.dir
+/home/nats/data/projects/Harbinger/pico_soft/basic_controller/build/pioasm/CMakeFiles/edit_cache.dir
+/home/nats/data/projects/Harbinger/pico_soft/basic_controller/build/pioasm/CMakeFiles/rebuild_cache.dir
