@@ -15,16 +15,21 @@
 #include "hardware/spi.h"
 #include "hardware/dma.h"
 
+#include "hardware/gpio.h"
+
+#include "hardware/pio.h"
+
 #include "midi_notes.h"
+
+#include "fast_spi.pio.h"
 
 #define LED                 25
 #define UART_RX             13
 
-#define SPI_FPGA_MOSI       19
-#define SPI_FPGA_SCK        18
+#define SPI_FPGA_SCK        16
 #define SPI_FPGA_CS         17
-
-#define FPGA_INT            16
+#define SPI_FPGA_MOSI0      18
+#define SPI_FPGA_MOSI1      19
 
 #define FPGA_TRIG0          20
 #define FPGA_TRIG1          21
@@ -100,6 +105,8 @@ volatile uint8_t midi_count = 0;
 
 uint32_t dma_tx;
 
+uint8_t led_state = 0;
+
 // Parameter calculation
 void calc_voice(uint8_t note_num) {
     int16_t freq = note_freq[notes[note_num].note];
@@ -125,6 +132,35 @@ void calc_voice(uint8_t note_num) {
     voices[note_num].omix = 0x3F;
     voices[note_num].imod = 0x19689;
     
+    // Dirty way to wait !
+    gpio_put(LED, led_state);
+    while(dma_channel_is_busy(dma_tx));
+    led_state = !led_state;
+    
+    //dma_start_channel_mask((1u << dma_tx));
+    dma_channel_set_read_addr(dma_tx, voices, true);
+    
+}
+
+// Init PIO and DMA
+void fpga_link_init () {
+    PIO pio = pio0;
+    uint32_t sm = 0;
+    uint32_t offset = pio_add_program(pio, &fast_spi_pio_program);
+    
+    pio_dspi_cs_init(pio, sm, offset, 8, SPI_FPGA_SCK, SPI_FPGA_MOSI0);
+    
+    dma_tx = dma_claim_unused_channel(true);
+    dma_channel_config c = dma_channel_get_default_config(dma_tx);
+    channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
+    
+    channel_config_set_dreq(&c, pio_get_dreq(pio, sm, true));
+    
+    dma_channel_configure(dma_tx, &c,
+                          &pio->txf[sm], // write address
+                          voices, // read address
+                          sizeof(voices), // element count (each element is of size transfer_data_size)
+                          false); // don't start yet
     
     
 }
@@ -149,11 +185,17 @@ int main() {
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
     
+    multicore_launch_core1(core1_entry);
+    
+    fpga_link_init();
+    
     // Init SPI FPGA
-    spi_init(spi0, 10e6);
+    // PL022 can't be used, too slow and CS is resetting between each word
+    /*spi_init(spi0, 10e6);
     gpio_set_function(SPI_FPGA_SCK, GPIO_FUNC_SPI);
     gpio_set_function(SPI_FPGA_MOSI, GPIO_FUNC_SPI);
     gpio_set_function(SPI_FPGA_CS, GPIO_FUNC_SPI);
+    
     
     dma_tx = dma_claim_unused_channel(true);
     dma_channel_config c = dma_channel_get_default_config(dma_tx);
@@ -161,9 +203,10 @@ int main() {
     channel_config_set_dreq(&c, spi_get_dreq(spi0, true));
     dma_channel_configure(dma_tx, &c,
                           &spi_get_hw(spi0)->dr, // write address
-                          txbuf, // read address
-                          TEST_SIZE, // element count (each element is of size transfer_data_size)
+                          voices, // read address
+                          sizeof(voices), // element count (each element is of size transfer_data_size)
                           false); // don't start yet
+                          */
     
     // Connect midi uart
     
@@ -230,8 +273,9 @@ int main() {
                             notes[current_voice].velo = midi_current;
                             notes[current_voice].trig = (midi_current != 0) ? 1 : 0;
                             note_state = FETCH_NOTE;
-                            gpio_put(LED, 1);
+                            //gpio_put(LED, 1);
                             // Send the note here
+                            calc_voice(current_voice);
                         }
                     } else if((midi_current & MIDI_CMD_MASK) == NOTE_OFF) {
                         midi_state = NOTE_OFF_STATE;
@@ -253,7 +297,7 @@ int main() {
                             notes[current_voice].velo = midi_current;
                             notes[current_voice].trig = 0;
                             note_state = FETCH_NOTE;
-                            gpio_put(LED, 0);
+                            //gpio_put(LED, 0);
                             // Send the note here
                         }
                     } else if((midi_current & MIDI_CMD_MASK) == NOTE_ON) {
