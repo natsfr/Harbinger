@@ -115,8 +115,6 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -126,7 +124,7 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 6
   set_param xicom.use_bs_reader 1
-  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-6243-Hellgate/incrSyn
+  set_param tcl.collectionResultDisplayLimit 0
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7s25csga225-1
   set_property board_part digilentinc.com:cmod-s7-25:part0:1.0 [current_project]
@@ -138,11 +136,12 @@ OPTRACE "set parameters" START { }
   set_property parent.project_path /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.xpr [current_project]
   set_property ip_output_repo /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  set_property XPM_LIBRARIES XPM_CDC [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.runs/synth_1/top.dcp
   read_ip -quiet /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci
+  read_ip -quiet /home/nats/data/projects/Harbinger/HDL/spartan7/harbinger_synth/harbinger_synth.srcs/sources_1/ip/fifo_generator_0/fifo_generator_0.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc /home/nats/data/projects/Harbinger/HDL/spartan7/pins.xdc
 OPTRACE "read constraints: implementation" END { }
@@ -309,11 +308,11 @@ set rc [catch {
   create_msg_db write_bitstream.pb
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES XPM_CDC [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
   catch { write_mem_info -force -no_partial_mmi top.mmi }
 OPTRACE "write_bitstream setup" END { }
 OPTRACE "write_bitstream" START { }
-  write_bitstream -force top.bit 
+  write_bitstream -force top.bit -raw_bitfile -bin_file
 OPTRACE "write_bitstream" END { }
 OPTRACE "write_bitstream misc" START { }
 OPTRACE "read constraints: write_bitstream_post" START { }

@@ -64,7 +64,7 @@
 #define MIDI_CMD_MASK       0xF0
 #define MIDI_MSB_MASK       0x80
 
-#define POLYPHONY           6
+#define POLYPHONY           3
 #define NB_OP               6
 
 typedef struct __attribute__((__packed__)) {
@@ -83,22 +83,25 @@ typedef struct __attribute__((__packed__)) {
     int32_t su_lvl;
     int32_t re_time;
     int32_t re_inc;
-    // Fixed Amplitude parameters (cancel ADSR settings
-    int16_t amp;
-    // Frequency based on note
-    int16_t freq;
+    // Fixed Amplitude parameters (cancel ADSR settings)
+    int32_t amp;
 } OPERATOR;
 
 typedef struct __attribute__((__packed__)) {
-    OPERATOR ops[NB_OP];
-    // Output mixer and Input modulation 2|0:6|omix
-    uint8_t omix;
-    // 14|0:18:imod
-    uint32_t imod;
-} VOICE;
+    // Frequency based on note
+    int32_t freq[NB_OP];
+} FREQPAR;
 
+typedef struct __attribute__((__packed__)) {
+    FREQPAR ops_freq[POLYPHONY]; // Set realtime frequency parameters for each op in each voice
+    OPERATOR ops[NB_OP]; // Shared parameter between operator
+    uint32_t omix; // Output mixer 26|0:6|omix   | Parameters shared by all voice
+    uint32_t imod; // 14|0:18|imod               | those represent the "algorithm"
+    uint32_t trigger; // 26|0:6|trigger
+} CONF;
+
+volatile CONF conf_voices;
 volatile NOTE notes[POLYPHONY];
-volatile VOICE voices[POLYPHONY];
 
 volatile uint8_t midi_array[256];
 volatile uint8_t midi_count = 0;
@@ -107,30 +110,45 @@ uint32_t dma_tx;
 
 uint8_t led_state = 0;
 
+volatile uint8_t op_are_set = 0;
+
 // Parameter calculation
 void calc_voice(uint8_t note_num) {
     int16_t freq = note_freq[notes[note_num].note];
     
     for (uint8_t i = 0; i < NB_OP; i++) {
-        // Need to get parameter from UI
-        voices[note_num].ops[i].amp = 0;
+        if (!op_are_set) { // Check if some operator parameter changed
+            // Need to get parameter from UI
+            conf_voices.ops[i].amp = 0;
+            
+            // Same here
+            conf_voices.ops[i].at_time = 0;
+            conf_voices.ops[i].at_inc = 0;
+            conf_voices.ops[i].de_time = 0;
+            conf_voices.ops[i].de_inc = 0;
+            conf_voices.ops[i].su_time = 24575000;
+            conf_voices.ops[i].su_lvl = 873710000;
+            conf_voices.ops[i].re_time = 0;
+            conf_voices.ops[i].re_inc = 0;
+        }
         
-        // Same here
-        voices[note_num].ops[i].at_time = 2457500;
-        voices[note_num].ops[i].at_inc = 12287;
-        voices[note_num].ops[i].de_time = 2457500;
-        voices[note_num].ops[i].de_inc = 24575;
-        voices[note_num].ops[i].su_time = 873;
-        voices[note_num].ops[i].su_lvl = 87371;
-        voices[note_num].ops[i].re_time = 0x40000000;
-        voices[note_num].ops[i].re_inc = 43689;
-        
-        voices[note_num].ops[i].freq = freq * (i + 1);
+        if(notes[note_num].trig)
+            conf_voices.ops_freq[note_num].freq[i] = (freq * (i + 1)) >> (2 * i);
+        else
+            conf_voices.ops_freq[note_num].freq[i] = 0;
     }
     
+    op_are_set = 1;
+    
     // Operator connection
-    voices[note_num].omix = 0x3F;
-    voices[note_num].imod = 0x19689;
+    conf_voices.omix = 0x3;
+    conf_voices.imod = 0x19;
+    
+    conf_voices.trigger = 0;
+    
+    for (uint8_t i = 0; i < POLYPHONY; i++) {
+        conf_voices.trigger |= notes[i].trig << i;
+    }
     
     // Dirty way to wait !
     gpio_put(LED, led_state);
@@ -138,7 +156,7 @@ void calc_voice(uint8_t note_num) {
     led_state = !led_state;
     
     //dma_start_channel_mask((1u << dma_tx));
-    dma_channel_set_read_addr(dma_tx, voices, true);
+    dma_channel_set_read_addr(dma_tx, &conf_voices, true);
     
 }
 
@@ -148,20 +166,25 @@ void fpga_link_init () {
     uint32_t sm = 0;
     uint32_t offset = pio_add_program(pio, &fast_spi_pio_program);
     
-    pio_dspi_cs_init(pio, sm, offset, 8, SPI_FPGA_SCK, SPI_FPGA_MOSI0);
+    pio_dspi_cs_init(pio, sm, offset, 32, SPI_FPGA_SCK, SPI_FPGA_MOSI0);
     
     dma_tx = dma_claim_unused_channel(true);
     dma_channel_config c = dma_channel_get_default_config(dma_tx);
-    channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
+    channel_config_set_transfer_data_size(&c, DMA_SIZE_32);
     
     channel_config_set_dreq(&c, pio_get_dreq(pio, sm, true));
     
     dma_channel_configure(dma_tx, &c,
                           &pio->txf[sm], // write address
-                          voices, // read address
-                          sizeof(voices), // element count (each element is of size transfer_data_size)
+                          &conf_voices, // read address
+                          sizeof(conf_voices)/sizeof(uint32_t), // element count (each element is of size transfer_data_size)
                           false); // don't start yet
     
+    
+}
+
+// Init screen
+void init_screen(void) {
     
 }
 
@@ -188,25 +211,6 @@ int main() {
     multicore_launch_core1(core1_entry);
     
     fpga_link_init();
-    
-    // Init SPI FPGA
-    // PL022 can't be used, too slow and CS is resetting between each word
-    /*spi_init(spi0, 10e6);
-    gpio_set_function(SPI_FPGA_SCK, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_FPGA_MOSI, GPIO_FUNC_SPI);
-    gpio_set_function(SPI_FPGA_CS, GPIO_FUNC_SPI);
-    
-    
-    dma_tx = dma_claim_unused_channel(true);
-    dma_channel_config c = dma_channel_get_default_config(dma_tx);
-    channel_config_set_transfer_data_size(&c, DMA_SIZE_8);
-    channel_config_set_dreq(&c, spi_get_dreq(spi0, true));
-    dma_channel_configure(dma_tx, &c,
-                          &spi_get_hw(spi0)->dr, // write address
-                          voices, // read address
-                          sizeof(voices), // element count (each element is of size transfer_data_size)
-                          false); // don't start yet
-                          */
     
     // Connect midi uart
     
@@ -272,14 +276,22 @@ int main() {
                         } else if (note_state == FETCH_VELO) {
                             notes[current_voice].velo = midi_current;
                             notes[current_voice].trig = (midi_current != 0) ? 1 : 0;
+                            if(midi_current == 0) notes[current_voice].note = 0;
                             note_state = FETCH_NOTE;
                             //gpio_put(LED, 1);
                             // Send the note here
                             calc_voice(current_voice);
                         }
-                    } else if((midi_current & MIDI_CMD_MASK) == NOTE_OFF) {
-                        midi_state = NOTE_OFF_STATE;
-                        note_state = FETCH_NOTE;
+                    } else if ((midi_current & MIDI_CHAN_MASK) == MIDI_CHAN) {
+                        if((midi_current & MIDI_CMD_MASK) == NOTE_OFF) {
+                            midi_state = NOTE_OFF_STATE;
+                            note_state = FETCH_NOTE;
+                        }
+                    } else if((midi_current & MIDI_CHAN_MASK) != MIDI_CHAN) {
+                        if ((midi_current & MIDI_CMD_MASK) == NOTE_ON || (midi_current & MIDI_CMD_MASK) == NOTE_OFF) {
+                            midi_state = IDLE;
+                            note_state = FETCH_NOTE;
+                        }
                     }
                     break;
                 case NOTE_OFF_STATE:
@@ -299,10 +311,18 @@ int main() {
                             note_state = FETCH_NOTE;
                             //gpio_put(LED, 0);
                             // Send the note here
+                            calc_voice(current_voice);
                         }
-                    } else if((midi_current & MIDI_CMD_MASK) == NOTE_ON) {
-                        midi_state = NOTE_ON_STATE;
-                        note_state = FETCH_NOTE;
+                    } else if ((midi_current & MIDI_CHAN_MASK) == MIDI_CHAN) {
+                        if((midi_current & MIDI_CMD_MASK) == NOTE_ON) {
+                            midi_state = NOTE_ON_STATE;
+                            note_state = FETCH_NOTE;
+                        }
+                    } else if((midi_current & MIDI_CHAN_MASK) != MIDI_CHAN) {
+                        if ((midi_current & MIDI_CMD_MASK) == NOTE_ON || (midi_current & MIDI_CMD_MASK) == NOTE_OFF) {
+                            midi_state = IDLE;
+                            note_state = FETCH_NOTE;
+                        }
                     }
                     break;
                 default:

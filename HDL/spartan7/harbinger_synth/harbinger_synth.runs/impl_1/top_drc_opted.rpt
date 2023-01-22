@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Sat Dec 31 14:48:30 2022
+| Date         : Thu Jan 12 00:04:46 2023
 | Host         : Hellgate running 64-bit Ubuntu 22.04.1 LTS
 | Command      : report_drc -file top_drc_opted.rpt -pb top_drc_opted.pb -rpx top_drc_opted.rpx
 | Design       : top
@@ -24,12 +24,13 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 19
+             Violations found: 38
 +----------+----------+-----------------------------------------------------+------------+
 | Rule     | Severity | Description                                         | Violations |
 +----------+----------+-----------------------------------------------------+------------+
 | CFGBVS-1 | Warning  | Missing CFGBVS and CONFIG_VOLTAGE Design Properties | 1          |
-| DPIP-1   | Warning  | Input pipelining                                    | 18         |
+| DPIP-1   | Warning  | Input pipelining                                    | 36         |
+| PLCK-12  | Warning  | Clock Placer Checks                                 | 1          |
 +----------+----------+-----------------------------------------------------+------------+
 
 2. REPORT DETAILS
@@ -54,87 +55,188 @@ Related violations: <none>
 
 DPIP-1#2 Warning
 Input pipelining  
-DSP voice0/op1/interpolation0 input voice0/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op0/soundout_reg input voice0/op0/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#3 Warning
 Input pipelining  
-DSP voice0/op2/interpolation0 input voice0/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op1/interpolation0 input voice0/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#4 Warning
 Input pipelining  
-DSP voice0/op3/interpolation0 input voice0/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op1/soundout_reg input voice0/op1/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#5 Warning
 Input pipelining  
-DSP voice0/op4/interpolation0 input voice0/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op2/interpolation0 input voice0/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#6 Warning
 Input pipelining  
-DSP voice0/op5/interpolation0 input voice0/op5/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op2/soundout_reg input voice0/op2/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#7 Warning
 Input pipelining  
-DSP voice1/op0/interpolation0 input voice1/op0/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op3/interpolation0 input voice0/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#8 Warning
 Input pipelining  
-DSP voice1/op1/interpolation0 input voice1/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op3/soundout_reg input voice0/op3/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#9 Warning
 Input pipelining  
-DSP voice1/op2/interpolation0 input voice1/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op4/interpolation0 input voice0/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#10 Warning
 Input pipelining  
-DSP voice1/op3/interpolation0 input voice1/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op4/soundout_reg input voice0/op4/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#11 Warning
 Input pipelining  
-DSP voice1/op4/interpolation0 input voice1/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op5/interpolation0 input voice0/op5/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#12 Warning
 Input pipelining  
-DSP voice1/op5/interpolation0 input voice1/op5/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice0/op5/soundout_reg input voice0/op5/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#13 Warning
 Input pipelining  
-DSP voice2/op0/interpolation0 input voice2/op0/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice1/op0/interpolation0 input voice1/op0/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#14 Warning
 Input pipelining  
-DSP voice2/op1/interpolation0 input voice2/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice1/op0/soundout_reg input voice1/op0/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#15 Warning
 Input pipelining  
-DSP voice2/op2/interpolation0 input voice2/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice1/op1/interpolation0 input voice1/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#16 Warning
 Input pipelining  
-DSP voice2/op3/interpolation0 input voice2/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice1/op1/soundout_reg input voice1/op1/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#17 Warning
 Input pipelining  
-DSP voice2/op4/interpolation0 input voice2/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP voice1/op2/interpolation0 input voice1/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#18 Warning
 Input pipelining  
+DSP voice1/op2/soundout_reg input voice1/op2/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#19 Warning
+Input pipelining  
+DSP voice1/op3/interpolation0 input voice1/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#20 Warning
+Input pipelining  
+DSP voice1/op3/soundout_reg input voice1/op3/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#21 Warning
+Input pipelining  
+DSP voice1/op4/interpolation0 input voice1/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#22 Warning
+Input pipelining  
+DSP voice1/op4/soundout_reg input voice1/op4/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#23 Warning
+Input pipelining  
+DSP voice1/op5/interpolation0 input voice1/op5/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#24 Warning
+Input pipelining  
+DSP voice1/op5/soundout_reg input voice1/op5/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#25 Warning
+Input pipelining  
+DSP voice2/op0/interpolation0 input voice2/op0/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#26 Warning
+Input pipelining  
+DSP voice2/op0/soundout_reg input voice2/op0/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#27 Warning
+Input pipelining  
+DSP voice2/op1/interpolation0 input voice2/op1/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#28 Warning
+Input pipelining  
+DSP voice2/op1/soundout_reg input voice2/op1/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#29 Warning
+Input pipelining  
+DSP voice2/op2/interpolation0 input voice2/op2/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#30 Warning
+Input pipelining  
+DSP voice2/op2/soundout_reg input voice2/op2/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#31 Warning
+Input pipelining  
+DSP voice2/op3/interpolation0 input voice2/op3/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#32 Warning
+Input pipelining  
+DSP voice2/op3/soundout_reg input voice2/op3/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#33 Warning
+Input pipelining  
+DSP voice2/op4/interpolation0 input voice2/op4/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#34 Warning
+Input pipelining  
+DSP voice2/op4/soundout_reg input voice2/op4/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#35 Warning
+Input pipelining  
 DSP voice2/op5/interpolation0 input voice2/op5/interpolation0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#36 Warning
+Input pipelining  
+DSP voice2/op5/soundout_reg input voice2/op5/soundout_reg/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+PLCK-12#1 Warning
+Clock Placer Checks  
+Poor placement for routing between an IO pin and BUFG. 
+Resolution: Poor placement of an IO pin and a BUFG has resulted in the router using a non-dedicated path between the two.  There are several things that could trigger this DRC, each of which can cause unpredictable clock insertion delays that result in poor timing.  This DRC could be caused by any of the following: (a) a clock port was placed on a pin that is not a CCIO-pin (b)the BUFG has not been placed in the same half of the device or SLR as the CCIO-pin (c) a single ended clock has been placed on the N-Side of a differential pair CCIO-pin.
+ This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	sck_in_IBUF_inst (IBUF.O) is locked to N15
+	sck_in_IBUF_BUFG_inst (BUFG.I) cannot be placed
+
 Related violations: <none>
 
 

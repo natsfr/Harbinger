@@ -59,14 +59,6 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 
 	always @*
 	begin
-		/*if (extmodin < -phaseinc) begin
-			modulation = -phaseinc;
-		end else if (extmodin > (17'sd65535 - phaseinc)) begin
-			modulation = (16'd65535 - phaseinc);
-		end else begin
-			modulation = modin;
-		end
-		step = phaseinc + modulation;*/
 		step = phaseinc + modin;
 	end
 
@@ -179,7 +171,7 @@ parameter FC = 26'd65535;			// 0.3662109375Hz step => 23999.6337890625kHz maximu
 		short_diff = next_sample - current_sample;
 		interpolation = sample_diff * fract;
 		if (amplitude != 16'd0) begin
-			signed_adsramp = amplitude;
+			signed_adsramp = (trig == 1'b1) ? amplitude : 0;
 		end else begin
 			signed_adsramp = adsr_amp[31:16];
 		end

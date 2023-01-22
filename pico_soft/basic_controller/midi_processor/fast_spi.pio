@@ -19,8 +19,16 @@ bitloop:
     jmp !osre bitloop  side 0x1 [1] ; Fall-through if TXF empties
 
     nop                side 0x0 [1] ; CSn back porch
+	nop                side 0x2 [1]
+    nop                side 0x3 [1] ; One more clock cycle for fpga
+    nop                side 0x2 [1] ; One more clock cycle for fpga
+    nop                side 0x3 [1] ; One more clock cycle for fpga
 public entry_point:                 ; Must set X,Y to n-2 before starting!
     pull ifempty       side 0x2 [1] ; Block with CSn high (minimum 2 cycles)
+    nop                side 0x3 [1]
+    nop                side 0x2 [1] ; One more clock cycle for fpga
+    nop                side 0x3 [1] ; One more clock cycle for fpga
+    nop                side 0x2 [1] ; One more clock cycle for fpga
 .wrap                               ; Note ifempty to avoid time-of-check race
  
 % c-sdk {

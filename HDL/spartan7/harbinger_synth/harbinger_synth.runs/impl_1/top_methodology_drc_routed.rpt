@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Sat Dec 31 14:48:54 2022
+| Date         : Thu Jan 12 00:05:22 2023
 | Host         : Hellgate running 64-bit Ubuntu 22.04.1 LTS
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
@@ -23,12 +23,13 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 54
-+----------+----------+-----------------+------------+
-| Rule     | Severity | Description     | Violations |
-+----------+----------+-----------------+------------+
-| SYNTH-10 | Warning  | Wide multiplier | 54         |
-+----------+----------+-----------------+------------+
+             Violations found: 57
++-----------+----------+-------------------------------+------------+
+| Rule      | Severity | Description                   | Violations |
++-----------+----------+-------------------------------+------------+
+| SYNTH-10  | Warning  | Wide multiplier               | 54         |
+| TIMING-18 | Warning  | Missing input or output delay | 3          |
++-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
@@ -300,6 +301,21 @@ Related violations: <none>
 SYNTH-10#54 Warning
 Wide multiplier  
 Detected multiplier at voice2/op5/interpolation0__1 of size 18x9, it is decomposed from a wide multipler into 4 DSP blocks.
+Related violations: <none>
+
+TIMING-18#1 Warning
+Missing input or output delay  
+An input delay is missing on cs_in relative to clock(s) sck_in
+Related violations: <none>
+
+TIMING-18#2 Warning
+Missing input or output delay  
+An input delay is missing on mosi0_in relative to clock(s) sck_in
+Related violations: <none>
+
+TIMING-18#3 Warning
+Missing input or output delay  
+An input delay is missing on mosi1_in relative to clock(s) sck_in
 Related violations: <none>
 
 
