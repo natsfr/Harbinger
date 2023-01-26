@@ -20,6 +20,7 @@
 #include "hardware/pio.h"
 
 #include "midi_notes.h"
+#include "sound_template.h"
 
 #include "fast_spi.pio.h"
 
@@ -67,11 +68,36 @@
 #define POLYPHONY           3
 #define NB_OP               6
 
+//
+// Internal structures used for calculation
+//
+
 typedef struct __attribute__((__packed__)) {
     uint8_t note;
     uint8_t velo;
     uint8_t trig;
 } NOTE;
+
+typedef struct __attribute__((__packed__)) {
+    int16_t freq_factor[NB_OP];
+    int32_t at_time;
+    int32_t at_inc;
+    int32_t de_time;
+    int32_t de_inc;
+    int32_t su_time;
+    int32_t su_lvl;
+    int32_t re_time;
+    int32_t re_inc;
+    int32_t amp;
+    uint32_t omix;
+    uint32_t imod;
+} OPPAR;
+
+volatile OPPAR op_parameters;
+
+// 
+// Those structures are sent over the line to the FPGA
+//
 
 typedef struct __attribute__((__packed__)) {
     // ADSR parameters
@@ -112,28 +138,53 @@ uint8_t led_state = 0;
 
 volatile uint8_t op_are_set = 0;
 
+inline int16_t fixed_SQ15_S1Q6(int16_t a, int16_t b, uint8_t oflow) {
+    int32_t c = (int32_t)a * (int32_t)b;
+    
+    int32_t d = 0xFFFF0000 & c;
+    oflow = (d != 0xFFFF0000) && (d != 0);
+    
+    c = 0x0000FFFF & (c >> 7);
+    
+    return (int16_t)c;
+}
+
+inline int16_t fixed_SQ15_S7Q4(int16_t a, int16_t b, uint8_t oflow) {
+    int32_t c = (int32_t)a * (int32_t)b;
+    
+    int32_t d = 0xF8000000 & c;
+    oflow = (d != 0xF8000000) && (d != 0);
+    
+    c = 0x0000FFFF & (c >> 11);
+    
+    return (int16_t)c;
+}
+
 // Parameter calculation
 void calc_voice(uint8_t note_num) {
     int16_t freq = note_freq[notes[note_num].note];
     
+    uint8_t oflow = 0;
+    
     for (uint8_t i = 0; i < NB_OP; i++) {
         if (!op_are_set) { // Check if some operator parameter changed
             // Need to get parameter from UI
-            conf_voices.ops[i].amp = 0;
+            conf_voices.ops[i].amp = op_parameters.amp;
             
             // Same here
-            conf_voices.ops[i].at_time = 0;
-            conf_voices.ops[i].at_inc = 0;
-            conf_voices.ops[i].de_time = 0;
-            conf_voices.ops[i].de_inc = 0;
-            conf_voices.ops[i].su_time = 24575000;
-            conf_voices.ops[i].su_lvl = 873710000;
-            conf_voices.ops[i].re_time = 0;
-            conf_voices.ops[i].re_inc = 0;
+            conf_voices.ops[i].at_time = op_parameters.at_time;
+            conf_voices.ops[i].at_inc = op_parameters.at_inc;
+            conf_voices.ops[i].de_time = op_parameters.de_time;
+            conf_voices.ops[i].de_inc = op_parameters.de_inc;
+            conf_voices.ops[i].su_time = op_parameters.su_time;
+            conf_voices.ops[i].su_lvl = op_parameters.su_lvl;
+            conf_voices.ops[i].re_time = op_parameters.re_time;
+            conf_voices.ops[i].re_inc = op_parameters.re_inc;
+            
         }
         
         if(notes[note_num].trig)
-            conf_voices.ops_freq[note_num].freq[i] = (freq * (i + 1)) >> (2 * i);
+            conf_voices.ops_freq[note_num].freq[i] = fixed_SQ15_S7Q4(freq, op_parameters.freq_factor[i], oflow);
         else
             conf_voices.ops_freq[note_num].freq[i] = 0;
     }
@@ -141,6 +192,8 @@ void calc_voice(uint8_t note_num) {
     op_are_set = 1;
     
     // Operator connection
+    /*conf_voices.omix = op_parameters.omix;
+    conf_voices.imod = op_parameters.imod;*/
     conf_voices.omix = 0x3;
     conf_voices.imod = 0x19;
     
@@ -203,6 +256,26 @@ void on_uart_rx(void) {
     }
 }
 
+// Init template
+void init_template() {
+    for (uint8_t i = 0; i < NB_OP; i++) {
+        op_parameters.freq_factor[i] = temp_freqs[i];
+    }
+    
+    op_parameters.at_time = temp_at_time;
+    op_parameters.at_inc = temp_at_inc;
+    op_parameters.de_time = temp_de_time;
+    op_parameters.de_inc = temp_de_inc;
+    op_parameters.su_time = temp_su_time;
+    op_parameters.su_lvl = temp_su_lvl;
+    op_parameters.re_time = temp_re_time;
+    op_parameters.re_inc = temp_re_inc;
+    
+    op_parameters.omix = temp_omix;
+    op_parameters.imod = temp_imod;
+    
+}
+
 int main() {
     
     gpio_init(LED);
@@ -211,6 +284,9 @@ int main() {
     multicore_launch_core1(core1_entry);
     
     fpga_link_init();
+    
+    // Init template parameters
+    init_template();
     
     // Connect midi uart
     
@@ -278,8 +354,6 @@ int main() {
                             notes[current_voice].trig = (midi_current != 0) ? 1 : 0;
                             if(midi_current == 0) notes[current_voice].note = 0;
                             note_state = FETCH_NOTE;
-                            //gpio_put(LED, 1);
-                            // Send the note here
                             calc_voice(current_voice);
                         }
                     } else if ((midi_current & MIDI_CHAN_MASK) == MIDI_CHAN) {
@@ -309,8 +383,6 @@ int main() {
                             notes[current_voice].velo = midi_current;
                             notes[current_voice].trig = 0;
                             note_state = FETCH_NOTE;
-                            //gpio_put(LED, 0);
-                            // Send the note here
                             calc_voice(current_voice);
                         }
                     } else if ((midi_current & MIDI_CHAN_MASK) == MIDI_CHAN) {
