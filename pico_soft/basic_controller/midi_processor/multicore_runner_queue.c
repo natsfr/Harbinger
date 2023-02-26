@@ -80,15 +80,15 @@ typedef struct __attribute__((__packed__)) {
 
 typedef struct __attribute__((__packed__)) {
     int16_t freq_factor[NB_OP];
-    int32_t at_time;
-    int32_t at_inc;
-    int32_t de_time;
-    int32_t de_inc;
-    int32_t su_time;
-    int32_t su_lvl;
-    int32_t re_time;
-    int32_t re_inc;
-    int32_t amp;
+    int32_t at_time[NB_OP];
+    int32_t at_inc[NB_OP];
+    int32_t de_time[NB_OP];
+    int32_t de_inc[NB_OP];
+    int32_t su_time[NB_OP];
+    int32_t su_lvl[NB_OP];
+    int32_t re_time[NB_OP];
+    int32_t re_inc[NB_OP];
+    int32_t amp[NB_OP];
     uint32_t omix;
     uint32_t imod;
 } OPPAR;
@@ -172,14 +172,14 @@ void calc_voice(uint8_t note_num) {
             conf_voices.ops[i].amp = op_parameters.amp;
             
             // Same here
-            conf_voices.ops[i].at_time = op_parameters.at_time;
-            conf_voices.ops[i].at_inc = op_parameters.at_inc;
-            conf_voices.ops[i].de_time = op_parameters.de_time;
-            conf_voices.ops[i].de_inc = op_parameters.de_inc;
-            conf_voices.ops[i].su_time = op_parameters.su_time;
-            conf_voices.ops[i].su_lvl = op_parameters.su_lvl;
-            conf_voices.ops[i].re_time = op_parameters.re_time;
-            conf_voices.ops[i].re_inc = op_parameters.re_inc;
+            conf_voices.ops[i].at_time = op_parameters.at_time[i];
+            conf_voices.ops[i].at_inc = op_parameters.at_inc[i];
+            conf_voices.ops[i].de_time = op_parameters.de_time[i];
+            conf_voices.ops[i].de_inc = op_parameters.de_inc[i];
+            conf_voices.ops[i].su_time = op_parameters.su_time[i];
+            conf_voices.ops[i].su_lvl = op_parameters.su_lvl[i];
+            conf_voices.ops[i].re_time = op_parameters.re_time[i];
+            conf_voices.ops[i].re_inc = op_parameters.re_inc[i];
             
         }
         
@@ -192,10 +192,8 @@ void calc_voice(uint8_t note_num) {
     op_are_set = 1;
     
     // Operator connection
-    /*conf_voices.omix = op_parameters.omix;
-    conf_voices.imod = op_parameters.imod;*/
-    conf_voices.omix = 0x3;
-    conf_voices.imod = 0x19;
+    conf_voices.omix = op_parameters.omix;
+    conf_voices.imod = op_parameters.imod;
     
     conf_voices.trigger = 0;
     
