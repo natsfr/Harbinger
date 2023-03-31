@@ -115,6 +115,8 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -124,7 +126,7 @@ set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 6
   set_param xicom.use_bs_reader 1
-  set_param tcl.collectionResultDisplayLimit 0
+  set_param synth.incrementalSynthesisCache ./.Xil/Vivado-103930-Hellgate/incrSyn
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7s25csga225-1
   set_property board_part digilentinc.com:cmod-s7-25:part0:1.0 [current_project]

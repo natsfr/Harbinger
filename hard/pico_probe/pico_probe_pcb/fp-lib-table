@@ -1,0 +1,8 @@
+(fp_lib_table
+  (lib (name "Module")(type "KiCad")(uri "/home/nats/data/projects/Harbinger/hard/board_proto_1/proto_cmod/local_lib/Module.pretty")(options "")(descr ""))
+  (lib (name "Connector_PinSocket_2.54mm")(type "KiCad")(uri "${KICAD6_FOOTPRINT_DIR}/Connector_PinSocket_2.54mm.pretty")(options "")(descr ""))
+  (lib (name "Connector_JST")(type "KiCad")(uri "${KICAD6_FOOTPRINT_DIR}/Connector_JST.pretty")(options "")(descr ""))
+  (lib (name "Cree")(type "KiCad")(uri "${CUSTLIB}/Pretty_Footprints/Cree.pretty")(options "")(descr ""))
+  (lib (name "General_SMD")(type "KiCad")(uri "${CUSTLIB}/Pretty_Footprints/General_SMD.pretty")(options "")(descr ""))
+  (lib (name "Mounting_Holes")(type "KiCad")(uri "${CUSTLIB}/Pretty_Footprints/Mounting_Holes.pretty")(options "")(descr ""))
+)

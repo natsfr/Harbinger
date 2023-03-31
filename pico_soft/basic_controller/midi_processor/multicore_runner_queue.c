@@ -132,9 +132,9 @@ volatile NOTE notes[POLYPHONY];
 volatile uint8_t midi_array[256];
 volatile uint8_t midi_count = 0;
 
-uint32_t dma_tx;
+volatile uint32_t dma_tx;
 
-uint8_t led_state = 0;
+volatile uint8_t led_state = 0;
 
 volatile uint8_t op_are_set = 0;
 
@@ -169,7 +169,7 @@ void calc_voice(uint8_t note_num) {
     for (uint8_t i = 0; i < NB_OP; i++) {
         if (!op_are_set) { // Check if some operator parameter changed
             // Need to get parameter from UI
-            conf_voices.ops[i].amp = op_parameters.amp;
+            conf_voices.ops[i].amp = op_parameters.amp[i];
             
             // Same here
             conf_voices.ops[i].at_time = op_parameters.at_time[i];
@@ -258,16 +258,15 @@ void on_uart_rx(void) {
 void init_template() {
     for (uint8_t i = 0; i < NB_OP; i++) {
         op_parameters.freq_factor[i] = temp_freqs[i];
+        op_parameters.at_time[i] = temp_at_time[i];
+        op_parameters.at_inc[i] = temp_at_inc[i];
+        op_parameters.de_time[i] = temp_de_time[i];
+        op_parameters.de_inc[i] = temp_de_inc[i];
+        op_parameters.su_time[i] = temp_su_time[i];
+        op_parameters.su_lvl[i] = temp_su_lvl[i];
+        op_parameters.re_time[i] = temp_re_time[i];
+        op_parameters.re_inc[i] = temp_re_inc[i];
     }
-    
-    op_parameters.at_time = temp_at_time;
-    op_parameters.at_inc = temp_at_inc;
-    op_parameters.de_time = temp_de_time;
-    op_parameters.de_inc = temp_de_inc;
-    op_parameters.su_time = temp_su_time;
-    op_parameters.su_lvl = temp_su_lvl;
-    op_parameters.re_time = temp_re_time;
-    op_parameters.re_inc = temp_re_inc;
     
     op_parameters.omix = temp_omix;
     op_parameters.imod = temp_imod;
@@ -278,6 +277,7 @@ int main() {
     
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
+    gpio_put(LED, 1);
     
     multicore_launch_core1(core1_entry);
     

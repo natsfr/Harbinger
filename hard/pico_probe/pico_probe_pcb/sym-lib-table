@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "passives")(type "KiCad")(uri "${CUSTLIB}/Passive/passives.kicad_sym")(options "")(descr ""))
+)

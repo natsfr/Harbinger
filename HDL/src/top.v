@@ -1,7 +1,8 @@
 `default_nettype none
 
 module top(clk, midi_in, sck, lrck, mck, sd, leds,
-    sck_in, cs_in, mosi0_in, mosi1_in);
+    sck_in, cs_in, mosi0_in, mosi1_in,
+    ILED, RGBLEDS);
 
 	input wire clk;
 	input wire midi_in;
@@ -16,6 +17,11 @@ module top(clk, midi_in, sck, lrck, mck, sd, leds,
 	input wire mosi0_in;
 	input wire mosi1_in;
 	
+	output wire [3:0]ILED;
+	output wire [2:0]RGBLEDS;
+	
+	assign ILED = 0;
+	assign RGBLEDS = 3'b111;
 
 	// First prototype use a 12MHz xtal
 

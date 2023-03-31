@@ -1,8 +1,8 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date         : Thu Jan 12 00:05:22 2023
-| Host         : Hellgate running 64-bit Ubuntu 22.04.1 LTS
+| Date         : Mon Mar 13 23:45:06 2023
+| Host         : Hellgate running 64-bit Ubuntu 22.04.2 LTS
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
 | Device       : xc7s25csga225-1

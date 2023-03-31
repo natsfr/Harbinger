@@ -1,0 +1,11 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Digilent_CMOD")(type "KiCad")(uri "${CUSTLIB}/FPGA/Xilinx/Digilent_CMOD.kicad_sym")(options "")(descr ""))
+  (lib (name "USB_CONNECTOR")(type "KiCad")(uri "${CUSTLIB}/Connectors/USB/USB_CONNECTOR.kicad_sym")(options "")(descr ""))
+  (lib (name "CS4344_module")(type "KiCad")(uri "${CUSTLIB}/Audio/CS4344_module.kicad_sym")(options "")(descr ""))
+  (lib (name "midi")(type "KiCad")(uri "${CUSTLIB}/Connectors/MIDI_DIN41524/midi.kicad_sym")(options "")(descr ""))
+  (lib (name "Device")(type "KiCad")(uri "${KICAD7_SYMBOL_DIR}/Device.kicad_sym")(options "")(descr ""))
+  (lib (name "Cherry_MX")(type "Legacy")(uri "${CUSTLIB}/Switch/Cherry_MX.lib")(options "")(descr ""))
+  (lib (name "BJT_NPN")(type "Legacy")(uri "${CUSTLIB}/Transistors/BJT_NPN.lib")(options "")(descr ""))
+  (lib (name "NMOS")(type "KiCad")(uri "${CUSTLIB}/Transistors/NMOS.kicad_sym")(options "")(descr ""))
+)
