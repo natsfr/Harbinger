@@ -21,12 +21,12 @@
 
 ili9341_config_t ili9341_config = {
 	.port = spi0,
-	.pin_miso = 4,
-	.pin_cs = 5,
-	.pin_sck = 6,
-	.pin_mosi = 7,
-	.pin_reset = 8,
-	.pin_dc = 9
+	.pin_miso = 0,
+	.pin_cs = 1,
+	.pin_sck = 2,
+	.pin_mosi = 5,
+	.pin_reset = 5,
+	.pin_dc = 4
 };
 
 static inline void cs_select() {
