@@ -2,7 +2,9 @@ add_executable(multicore_runner_queue)
 
 pico_generate_pio_header(multicore_runner_queue ${CMAKE_CURRENT_LIST_DIR}/fast_spi.pio)
         
-target_sources(multicore_runner_queue PRIVATE multicore_runner_queue.c)
+target_sources(multicore_runner_queue PRIVATE
+	multicore_runner_queue.c
+	screen.c)
 
 target_link_libraries(multicore_runner_queue PRIVATE 
         pico_multicore

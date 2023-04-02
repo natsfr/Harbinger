@@ -24,6 +24,8 @@
 
 #include "fast_spi.pio.h"
 
+#include "screen.h"
+
 #define LED                 25
 #define UART_RX             13
 
@@ -279,6 +281,8 @@ int main() {
     gpio_set_dir(LED, GPIO_OUT);
     gpio_put(LED, 1);
     
+    ili9341_init();
+
     multicore_launch_core1(core1_entry);
     
     fpga_link_init();
@@ -305,12 +309,16 @@ int main() {
     
     uart_set_irq_enables(uart0, true, false);
 
+
+	mode2_init();
+    
     uint8_t midi_state = IDLE;
     uint8_t note_state = FETCH_NOTE;
     uint8_t midi_index = 0;
     
     uint32_t midi_timecount = 0;
     uint8_t led_tick = 0;
+    uint16_t x = 0;
     
     for (uint8_t i = 0; i < POLYPHONY; i++) {
         notes[i].note = 0;
@@ -321,6 +329,11 @@ int main() {
     uint8_t current_voice = 0;
     
     while(1) {
+        mode2_clear();
+        mode2_rect(x, 40, 40, 80, 0xFF00);
+        mode2_render();
+        x = (x + 1) % 280;
+
         if (midi_index != midi_count) {
             uint8_t midi_current = midi_array[midi_index];
             midi_index++;
@@ -399,6 +412,7 @@ int main() {
                     
                     break;
             }
+
             if(midi_current == TIME_CLOCK) {
                 midi_timecount++;
                 if(midi_timecount == 23) {
