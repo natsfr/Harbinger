@@ -293,6 +293,8 @@ void on_uart_rx(void) {
     }
 }
 
+volatile int prevKey = 0;
+
 // Init template
 void init_template() {
     for (uint8_t i = 0; i < NB_OP; i++) {
@@ -369,16 +371,15 @@ int main() {
     
     while(1) {
         mode2_clear();
-        mode2_rect(x, 40, 40, 80, 0xFF00);
+        mode2_rect(x, 0, 30, 2, 0xFFF0);
         mode2_render();
-        x = (x + 1) % 280;
+        x = (x + 2) % (ILI9341_TFTWIDTH + 30);
 
-        /*
         int key = queryKeyState();
         if (key != 0) {
-            mode2_rect(x * 40, 80, 40, 40, 0x0FF0);
+            mode2_rect(key * 20, 80, 40, 40, 0xFFFF);
         }
-        // */
+
 
         if (midi_index != midi_count) {
             uint8_t midi_current = midi_array[midi_index];
