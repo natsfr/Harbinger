@@ -24,7 +24,7 @@ ili9341_config_t ili9341_config = {
 	.pin_miso = 0,
 	.pin_cs = 1,
 	.pin_sck = 2,
-	.pin_mosi = 5,
+	.pin_mosi = 3,
 	.pin_reset = 5,
 	.pin_dc = 4
 };
@@ -172,7 +172,7 @@ void mode2_init() {
 }
 
 void mode2_clear() {
-    memset(mode2_buffer, 0x1515, SIZE*sizeof(uint16_t));
+    memset(mode2_buffer, 0x0000, SIZE*sizeof(uint16_t));
 }
 
 void mode2_rect(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color) {

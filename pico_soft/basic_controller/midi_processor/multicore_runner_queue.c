@@ -248,6 +248,43 @@ void core1_entry(void) {
     }
 }
 
+typedef enum Gpio {
+    Col_0 = 6,
+    Col_1 = 7,
+
+    Row_0 = 20,
+    Row_1 = 21
+} Gpio;
+
+void initKeys() {
+    gpio_init(Row_0);
+    gpio_set_dir(Row_0, GPIO_OUT);
+
+    gpio_init(Row_1);
+    gpio_set_dir(Row_1, GPIO_OUT);
+
+    gpio_init(Col_0);
+    gpio_set_dir(Col_0, GPIO_IN);
+    gpio_pull_down(Col_0);
+
+    gpio_init(Col_1);
+    gpio_set_dir(Col_1, GPIO_IN);
+    gpio_pull_down(Col_1);
+}
+
+int queryKeyState() {
+    static volatile int flipFlop = 0;
+
+    gpio_put(Row_0, flipFlop);
+    gpio_put(Row_1, !flipFlop);
+
+    flipFlop = !flipFlop;
+
+    int c0 = gpio_get(Col_0);
+    int c1 = gpio_get(Col_1);
+    return (c0 << 1 | c1) & 3;
+}
+
 // RX interrupt handler
 void on_uart_rx(void) {
     while (uart_is_readable(uart0)) {
@@ -280,6 +317,8 @@ int main() {
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
     gpio_put(LED, 1);
+
+    initKeys();
     
     ili9341_init();
 
@@ -333,6 +372,13 @@ int main() {
         mode2_rect(x, 40, 40, 80, 0xFF00);
         mode2_render();
         x = (x + 1) % 280;
+
+        /*
+        int key = queryKeyState();
+        if (key != 0) {
+            mode2_rect(x * 40, 80, 40, 40, 0x0FF0);
+        }
+        // */
 
         if (midi_index != midi_count) {
             uint8_t midi_current = midi_array[midi_index];
