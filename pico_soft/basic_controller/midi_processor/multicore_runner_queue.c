@@ -273,7 +273,7 @@ void initKeys() {
 }
 
 int queryKeyState() {
-    static volatile int flipFlop = 0;
+    int flipFlop = 0;
 
     gpio_put(Row_0, flipFlop);
     gpio_put(Row_1, !flipFlop);
@@ -282,7 +282,16 @@ int queryKeyState() {
 
     int c0 = gpio_get(Col_0);
     int c1 = gpio_get(Col_1);
-    return (c0 << 1 | c1) & 3;
+
+    gpio_put(Row_0, flipFlop);
+    gpio_put(Row_1, !flipFlop);
+
+    flipFlop = !flipFlop;
+
+    int c2 = gpio_get(Col_0);
+    int c3 = gpio_get(Col_1);
+
+    return (c0 << 3 | c1 << 2 | c2 << 1 | c3);
 }
 
 // RX interrupt handler
@@ -372,13 +381,19 @@ int main() {
     while(1) {
         mode2_clear();
         mode2_rect(x, 0, 30, 2, 0xFFF0);
-        mode2_render();
         x = (x + 2) % (ILI9341_TFTWIDTH + 30);
 
         int key = queryKeyState();
         if (key != 0) {
-            mode2_rect(key * 20, 80, 40, 40, 0xFFFF);
+            mode2_rect(key * 20, 120, 4, 4, 0xFFFF);
+            prevKey = key;
         }
+
+        if (prevKey != 0) {
+            mode2_rect(prevKey * 20, 80, 4, 4, 0xFF00);
+        }
+
+        mode2_render();
 
 
         if (midi_index != midi_count) {
