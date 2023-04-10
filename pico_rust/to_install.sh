@@ -1,0 +1,3 @@
+
+cargo intall probe-run
+
