@@ -179,8 +179,11 @@ dependencies = [
  "cortex-m",
  "cortex-m-rt",
  "embedded-hal",
+ "fugit",
+ "nb 1.1.0",
  "panic-halt",
  "rp-pico",
+ "rp2040-hal",
 ]
 
 [[package]]
