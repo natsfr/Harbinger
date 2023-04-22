@@ -5,9 +5,9 @@ use fugit::ExtU32;
 use fugit::RateExtU32;
 use embedded_hal::digital::v2::OutputPin;
 use rp2040_hal::gpio::FunctionSpi;
+use rp2040_hal::gpio::PinId;
 use rp2040_hal::spi;
 use rp2040_hal::spi::Spi;
-use rp_pico::Pins;
 use rp_pico::hal::gpio::{Pin, PushPull, Output};
 use rp_pico::hal::gpio::bank0::{
     Gpio1,
@@ -17,13 +17,17 @@ use rp_pico::hal::gpio::bank0::{
     Gpio5,
     Gpio4
 };
-use rp_pico::pac::{Peripherals, SPI0};
+use rp_pico::pac::RESETS;
+use rp_pico::pac::TIMER;
+use rp_pico::pac::SPI0;
+
+use crate::frame_buffer::Drawer;
 
 /// ILI9341 max TFT width
-const Width : u32 = 240;
+pub const Width : usize = 240;
 
 /// ILI9341 max TFT height
-const Height : u32 = 320;
+pub const Height : usize = 320;
 
 /// Commands that can be sent to the screen via SPI
 enum Commands {
@@ -100,6 +104,7 @@ pub struct Screen {
 }
 
 impl Screen {
+    /*
     pub fn init(pins : Pins, mut peripherals : Peripherals) -> Screen {
         let spi =
             Spi::<_, _, 8>::new(peripherals.SPI0)
@@ -119,12 +124,51 @@ impl Screen {
             dc: pins.gpio4.into_push_pull_output()
         };
 
-        scr.cs.set_low().unwrap();
-        scr.reset.set_high().unwrap();
-        scr.dc.set_low().unwrap();
+        scr.init_script(&mut peripherals);
+
+        scr
+    } */
+
+    pub fn init_partial(
+        gpio0 : Pin<Gpio0, <Gpio0 as PinId>::Reset>,
+        gpio1 : Pin<Gpio1, <Gpio1 as PinId>::Reset>,
+        gpio2 : Pin<Gpio2, <Gpio2 as PinId>::Reset>,
+        gpio3 : Pin<Gpio3, <Gpio3 as PinId>::Reset>,
+        gpio4 : Pin<Gpio4, <Gpio4 as PinId>::Reset>,
+        gpio5 : Pin<Gpio5, <Gpio5 as PinId>::Reset>,
+        spi : SPI0,
+        resets : &mut RESETS,
+        timer : TIMER) -> Screen {
+        let spi =
+            Spi::<_, _, 8>::new(spi)
+                .init(
+                    resets,
+                    (500 * 1_000).Hz(), 
+                    (75_000 * 1000).Hz(),
+                    &embedded_hal::spi::MODE_0);
+
+        let mut scr = Screen {
+            spi: spi,
+            cs: gpio1.into_push_pull_output(),
+            miso: gpio0.into_mode::<FunctionSpi>(),
+            mosi: gpio3.into_mode::<FunctionSpi>(),
+            sck: gpio2.into_mode::<FunctionSpi>(),
+            reset: gpio5.into_push_pull_output(),
+            dc: gpio4.into_push_pull_output()
+        };
+
+        scr.init_script(timer, resets);
+
+        scr
+    }
+
+    fn init_script(&mut self, timer: TIMER, resets : &mut RESETS) {
+        self.cs.set_low().unwrap();
+        self.reset.set_high().unwrap();
+        self.dc.set_low().unwrap();
 
 
-        let timer = rp2040_hal::Timer::new(peripherals.TIMER, &mut peripherals.RESETS);
+        let timer = rp2040_hal::Timer::new(timer, resets);
         let mut count_down = timer.count_down();
 
         let mut sleep_ms = |ms:u32| {
@@ -133,50 +177,48 @@ impl Screen {
         };
 
         sleep_ms(10);
-        scr.reset.set_low().unwrap();
+        self.reset.set_low().unwrap();
         sleep_ms(10);
-        scr.reset.set_high().unwrap();
+        self.reset.set_high().unwrap();
 
-        scr.set_command(Commands::SoftwareReset);
+        self.set_command(Commands::SoftwareReset);
         sleep_ms(100);
 
-        scr.set_command(Commands::GammaSet);
-        scr.command_param(0x01);
+        self.set_command(Commands::GammaSet);
+        self.command_param(0x01);
 
-        scr.set_command(Commands::GMCTRP1);
-        scr.write_data(&PositiveGammaConf);
+        self.set_command(Commands::GMCTRP1);
+        self.write_data(&PositiveGammaConf);
 
-        scr.set_command(Commands::GMCTRN1);
-        scr.write_data(&negativeGammaConf);
+        self.set_command(Commands::GMCTRN1);
+        self.write_data(&negativeGammaConf);
 
-        scr.set_command(Commands::MADCTL);
-        scr.command_param(0x48);
+        self.set_command(Commands::MADCTL);
+        self.command_param(0x48);
 
-        scr.set_command(Commands::PIXFMT);
-        scr.command_param(0x55);
+        self.set_command(Commands::PIXFMT);
+        self.command_param(0x55);
 
-        scr.set_command(Commands::FRMCTR1);
-        scr.command_param(0x00);
-        scr.command_param(0x1B);
+        self.set_command(Commands::FRMCTR1);
+        self.command_param(0x00);
+        self.command_param(0x1B);
 
-        scr.set_command(Commands::SLPOUT);
+        self.set_command(Commands::SLPOUT);
 
-        scr.set_command(Commands::DISPON);
+        self.set_command(Commands::DISPON);
 
-        scr.set_command(Commands::CASET);
-        scr.command_param(0);
-        scr.command_param(0); // start column
-        scr.command_param(0);
-        scr.command_param((Width - 1) as u8);
+        self.set_command(Commands::CASET);
+        self.command_param(0);
+        self.command_param(0); // start column
+        self.command_param(0);
+        self.command_param((Width - 1) as u8);
 
-        scr.command_param(0);
-        scr.command_param(0); // start page
-        scr.command_param(0);
-        scr.command_param((Height - 1) as u8);
+        self.command_param(0);
+        self.command_param(0); // start page
+        self.command_param(0);
+        self.command_param((Height - 1) as u8);
 
-        scr.set_command(Commands::RAMWR);
-
-        scr
+        self.set_command(Commands::RAMWR);
     }
 
     fn select(&mut self) {
@@ -215,6 +257,9 @@ impl Screen {
 
     pub fn push_frame(&mut self) {
         self.select();
+        unsafe {
+            self.write_data(core::intrinsics::transmute(Drawer::buffer()));
+        }
         self.deselect();
     }
 }

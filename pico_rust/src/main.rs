@@ -14,7 +14,12 @@
 extern crate nb;
 
 mod ili9341screen;
+mod fpga;
+mod frame_buffer;
+mod keys;
 
+use frame_buffer::Drawer;
+use ili9341screen::Screen;
 // The macro for our start-up function
 use rp_pico::entry;
 
@@ -85,12 +90,39 @@ fn main() -> ! {
     // Set the LED to be an output
     let mut led_pin = pins.led.into_push_pull_output();
 
+    let mut screen = Screen::init_partial(
+        pins.gpio0,
+        pins.gpio1,
+        pins.gpio2,
+        pins.gpio3,
+        pins.gpio4,
+        pins.gpio5,
+        pac.SPI0,
+        &mut pac.RESETS,
+        pac.TIMER);
+
+    let mut x : usize = 0;
+    let mut prev_key : usize = 0;
+
     // Blink the LED at 1 Hz
     loop {
-        led_pin.set_high().unwrap();
-        delay.delay_ms(500);
-        led_pin.set_low().unwrap();
-        delay.delay_ms(500);
+        Drawer::clear();
+
+        Drawer::rect(x, 0, 30, 2, 0xFFF0);
+        x = (x + 2) % (ili9341screen::Width + 30);
+
+        let key = queryKeyState();
+        if key != 0 {
+            Drawer::rect(key * 20, 120, 4, 4, 0xFFFF);
+            prev_key = key;
+        }
+
+        if prev_key != 0 {
+            Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
+        }
+
+        screen.push_frame();
+
     }
 }
 
