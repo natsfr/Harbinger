@@ -3,6 +3,7 @@ use core::slice;
 
 use cortex_m::prelude::{_embedded_hal_blocking_spi_Write, _embedded_hal_timer_CountDown};
 use fugit::ExtU32;
+use fugit::HertzU32;
 use fugit::RateExtU32;
 use embedded_hal::digital::v2::OutputPin;
 use rp2040_hal::gpio::FunctionSpi;
@@ -137,6 +138,7 @@ impl Screen {
         gpio3 : Pin<Gpio3, <Gpio3 as PinId>::Reset>,
         gpio4 : Pin<Gpio4, <Gpio4 as PinId>::Reset>,
         gpio5 : Pin<Gpio5, <Gpio5 as PinId>::Reset>,
+        freq: HertzU32,
         spi : SPI0,
         resets : &mut RESETS,
         timer : TIMER) -> Screen {
@@ -144,7 +146,8 @@ impl Screen {
             Spi::<_, _, 8>::new(spi)
                 .init(
                     resets,
-                    (500 * 1_000).Hz(), 
+                    // (500 * 1_000).Hz(), 
+                    freq,
                     (75_000 * 1000).Hz(),
                     &embedded_hal::spi::MODE_0);
 
@@ -212,13 +215,14 @@ impl Screen {
         self.command_param(0);
         self.command_param(0); // start column
         self.command_param(0);
-        self.command_param((Width - 1) as u8);
+        self.command_param(0xef);
 
         self.set_command(Commands::PASET);
+        let h = Height - 1;
         self.command_param(0);
         self.command_param(0); // start page
-        self.command_param(0);
-        self.command_param((Height - 1) as u8);
+        self.command_param(1);
+        self.command_param(0x3F);
 
         self.set_command(Commands::RAMWR);
     }

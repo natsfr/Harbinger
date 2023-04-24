@@ -88,6 +88,7 @@ fn main() -> ! {
         &mut pac.RESETS,
     );
 
+    let rate  = clocks.peripheral_clock.freq();
     // Set the LED to be an output
     let mut led_pin = pins.led.into_push_pull_output();
 
@@ -98,6 +99,7 @@ fn main() -> ! {
         pins.gpio3,
         pins.gpio4,
         pins.gpio5,
+        rate,
         pac.SPI0,
         &mut pac.RESETS,
         pac.TIMER);
@@ -111,9 +113,9 @@ fn main() -> ! {
     let mut x : usize = 0;
     let mut prev_key : usize = 0;
 
+    Drawer::clear();
     // Blink the LED at 1 Hz
     loop {
-        Drawer::clear();
 
 /*
         Drawer::rect(x, 0, 30, 2, 0xFFF0);
