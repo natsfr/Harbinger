@@ -20,6 +20,7 @@ mod keys;
 
 use frame_buffer::Drawer;
 use ili9341screen::Screen;
+use keys::Keys;
 // The macro for our start-up function
 use rp_pico::entry;
 
@@ -101,6 +102,12 @@ fn main() -> ! {
         &mut pac.RESETS,
         pac.TIMER);
 
+    let mut keys = Keys::init_partial(
+        pins.gpio6,
+        pins.gpio7,
+        pins.gpio20,
+        pins.gpio21);
+
     let mut x : usize = 0;
     let mut prev_key : usize = 0;
 
@@ -108,19 +115,20 @@ fn main() -> ! {
     loop {
         Drawer::clear();
 
+/*
         Drawer::rect(x, 0, 30, 2, 0xFFF0);
         x = (x + 2) % (ili9341screen::Width + 30);
 
-        let key = queryKeyState();
+        let key = keys.read_all();
         if key != 0 {
-            Drawer::rect(key * 20, 120, 4, 4, 0xFFFF);
-            prev_key = key;
+            Drawer::rect(key as usize * 20, 120, 4, 4, 0xFFFF);
+            prev_key = key as usize;
         }
 
         if prev_key != 0 {
             Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
         }
-
+ */
         screen.push_frame();
 
     }

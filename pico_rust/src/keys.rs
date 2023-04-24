@@ -1,3 +1,4 @@
+use embedded_hal::digital::v2::{OutputPin, InputPin};
 use rp2040_hal::gpio::{Pin, bank0::{Gpio20, Gpio21, Gpio6, Gpio7}, Output, PushPull, PinId, Input, PullDown};
 
 
@@ -27,5 +28,24 @@ impl Keys {
 
     fn set_row(&mut self, flip : bool) {
 
+            if flip { self.row0.set_high().unwrap() }
+            else { self.row0.set_low().unwrap() }
+
+            if flip { self.row1.set_low().unwrap() }
+            else { self.row1.set_high().unwrap() }
+    }
+
+    fn read_col(&mut self) -> u8 {
+        let c0 = self.col0.is_high().unwrap() as u8;
+        let c1 = self.col1.is_high().unwrap() as u8;
+        c0 | c1 << 1
+    }
+
+    pub fn read_all(&mut self) -> u8 {
+        self.set_row(true);
+        let c01 = self.read_col();
+        self.set_row(false);
+        let c23 = self.read_col();
+        c01 | c23 << 2
     }
 }

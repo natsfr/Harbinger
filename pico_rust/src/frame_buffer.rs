@@ -9,7 +9,7 @@ pub struct Drawer {
 
 impl Drawer {
     /// Reset the buffer to black
-    pub fn clear() { buffer.fill(0) }
+    pub fn clear() { buffer.fill(0xFFFF) }
 
     pub fn buffer() -> &'static [u16] {
         &buffer

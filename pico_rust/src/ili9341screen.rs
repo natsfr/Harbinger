@@ -1,4 +1,5 @@
 use core::arch::asm;
+use core::slice;
 
 use cortex_m::prelude::{_embedded_hal_blocking_spi_Write, _embedded_hal_timer_CountDown};
 use fugit::ExtU32;
@@ -213,6 +214,7 @@ impl Screen {
         self.command_param(0);
         self.command_param((Width - 1) as u8);
 
+        self.set_command(Commands::PASET);
         self.command_param(0);
         self.command_param(0); // start page
         self.command_param(0);
@@ -257,8 +259,11 @@ impl Screen {
 
     pub fn push_frame(&mut self) {
         self.select();
+        let buff = Drawer::buffer(); 
         unsafe {
-            self.write_data(core::intrinsics::transmute(Drawer::buffer()));
+            let casted =
+                slice::from_raw_parts(buff.as_ptr() as *const u8, buff.len() * 2);
+            self.write_data(casted);
         }
         self.deselect();
     }
