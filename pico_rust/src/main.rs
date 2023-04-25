@@ -113,11 +113,10 @@ fn main() -> ! {
     let mut x : usize = 0;
     let mut prev_key : usize = 0;
 
-    Drawer::clear();
     // Blink the LED at 1 Hz
     loop {
+        Drawer::clear();
 
-/*
         Drawer::rect(x, 0, 30, 2, 0xFFF0);
         x = (x + 2) % (ili9341screen::Width + 30);
 
@@ -130,7 +129,6 @@ fn main() -> ! {
         if prev_key != 0 {
             Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
         }
- */
         screen.push_frame();
 
     }
