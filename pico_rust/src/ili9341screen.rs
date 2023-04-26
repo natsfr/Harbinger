@@ -146,8 +146,8 @@ impl Screen {
             Spi::<_, _, 8>::new(spi)
                 .init(
                     resets,
-                    (500 * 1_000).Hz(), 
-                    (75_000 * 1000).Hz(),
+                    freq, 
+                    (20_000 * 1000).Hz(),
                     &embedded_hal::spi::MODE_0);
 
         let mut scr = Screen {
