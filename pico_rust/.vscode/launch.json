@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // We should certainly add the building task here
+      //"preLaunchTask": "${defaultBuildTask}",
+      "type": "probe-rs-debug",
+      "request": "launch",
+      "name": "probe_rs Executable Test",
+      "chip": "RP2040", //!MODIFY
+      "coreConfigs": [
+        {
+          "programBinary": "target/thumbv6m-none-eabi/debug/pico_rust" //!MODIFY
+        }
+      ]
+    }
+  ]
+}
