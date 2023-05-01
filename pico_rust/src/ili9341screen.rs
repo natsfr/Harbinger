@@ -3,13 +3,13 @@ use core::slice;
 
 use cortex_m::prelude::{_embedded_hal_blocking_spi_Write, _embedded_hal_timer_CountDown};
 use fugit::ExtU32;
-use fugit::HertzU32;
-use fugit::RateExtU32;
 use embedded_hal::digital::v2::OutputPin;
+use rp2040_hal::Timer;
 use rp2040_hal::gpio::FunctionSpi;
 use rp2040_hal::gpio::PinId;
 use rp2040_hal::spi;
 use rp2040_hal::spi::Spi;
+use rp2040_hal::spi::SpiDevice;
 use rp_pico::hal::gpio::{Pin, PushPull, Output};
 use rp_pico::hal::gpio::bank0::{
     Gpio1,
@@ -19,14 +19,11 @@ use rp_pico::hal::gpio::bank0::{
     Gpio5,
     Gpio4
 };
-use rp_pico::pac::RESETS;
-use rp_pico::pac::TIMER;
-use rp_pico::pac::SPI0;
 
 use crate::frame_buffer::Drawer;
 
 /// ILI9341 max TFT width
-pub const Width : usize = 240;
+pub const WIDTH : usize = 240;
 
 /// ILI9341 max TFT height
 pub const Height : usize = 320;
@@ -83,8 +80,8 @@ const PositiveGammaConf : [u8; 15] =
 const negativeGammaConf : [u8; 15] =
     [0x00, 0x0e, 0x14, 0x03, 0x11, 0x07, 0x31, 0xc1, 0x48, 0x08, 0x0f, 0x0c, 0x31, 0x36, 0x0f];
 
-pub struct Screen {
-    spi : Spi<spi::Enabled, SPI0, 8>,
+pub struct Screen<SPIPort : SpiDevice> {
+    spi : Spi<spi::Enabled, SPIPort, 8>,
 
     /// LCD chip select signal, low level enable
     cs : Pin<Gpio1, Output<PushPull>>,
@@ -105,7 +102,7 @@ pub struct Screen {
     dc : Pin<Gpio4, Output<PushPull>>
 }
 
-impl Screen {
+impl<SPIPort : SpiDevice> Screen<SPIPort> {
     /*
     pub fn init(pins : Pins, mut peripherals : Peripherals) -> Screen {
         let spi =
@@ -138,17 +135,8 @@ impl Screen {
         gpio3 : Pin<Gpio3, <Gpio3 as PinId>::Reset>,
         gpio4 : Pin<Gpio4, <Gpio4 as PinId>::Reset>,
         gpio5 : Pin<Gpio5, <Gpio5 as PinId>::Reset>,
-        freq: HertzU32,
-        spi : SPI0,
-        resets : &mut RESETS,
-        timer : TIMER) -> Screen {
-        let spi =
-            Spi::<_, _, 8>::new(spi)
-                .init(
-                    resets,
-                    freq, 
-                    (20_000 * 1000).Hz(),
-                    &embedded_hal::spi::MODE_0);
+        spi : Spi<spi::Enabled, SPIPort, 8>,
+        timer : &mut Timer) -> Screen<SPIPort> {
 
         let mut scr = Screen {
             spi: spi,
@@ -160,19 +148,16 @@ impl Screen {
             dc: gpio4.into_push_pull_output()
         };
 
-        scr.init_script(timer, resets);
-
+        scr.init_script(timer);
         scr
     }
 
-    fn init_script(&mut self, timer: TIMER, resets : &mut RESETS) {
+    fn init_script(&mut self, hal_timer: &mut Timer) {
         self.cs.set_low().unwrap();
         self.reset.set_high().unwrap();
         self.dc.set_low().unwrap();
 
-
-        let timer = rp2040_hal::Timer::new(timer, resets);
-        let mut count_down = timer.count_down();
+        let mut count_down = hal_timer.count_down();
 
         let mut sleep_ms = |ms:u32| {
             count_down.start(ms.millis());

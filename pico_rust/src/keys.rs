@@ -1,3 +1,4 @@
+use core::arch::asm;
 use embedded_hal::digital::v2::{OutputPin, InputPin};
 use rp2040_hal::gpio::{Pin, bank0::{Gpio20, Gpio21, Gpio6, Gpio7}, Output, PushPull, PinId, Input, PullDown};
 
@@ -7,7 +8,11 @@ pub struct Keys {
     col1 : Pin<Gpio7, Input<PullDown>>,
 
     row0 : Pin<Gpio20, Output<PushPull>>,
-    row1 : Pin<Gpio21, Output<PushPull>>
+    row1 : Pin<Gpio21, Output<PushPull>>,
+
+    c01 : u8,
+    c23 : u8,
+    side: bool
 }
 
 impl Keys {
@@ -22,17 +27,30 @@ impl Keys {
             col1: gpio7.into_pull_down_input(),
 
             row0: gpio20.into_push_pull_output(),
-            row1: gpio21.into_push_pull_output()
+            row1: gpio21.into_push_pull_output(),
+
+            c01: 0,
+            c23: 0,
+            side: false
         }
     }
 
+    pub fn actual(&self) -> u8 {
+        self.c01 | (self.c23 << 2)
+    }
+
     fn set_row(&mut self, flip : bool) {
-
-            if flip { self.row0.set_high().unwrap() }
-            else { self.row0.set_low().unwrap() }
-
-            if flip { self.row1.set_low().unwrap() }
-            else { self.row1.set_high().unwrap() }
+        if flip {
+            self.row0.set_high().unwrap();
+            self.row1.set_low().unwrap();
+        }
+        else {
+            self.row0.set_low().unwrap();
+            self.row1.set_high().unwrap();
+        }
+        unsafe {
+            asm!("nop", "nop", "nop");
+        }
     }
 
     fn read_col(&mut self) -> u8 {
@@ -41,11 +59,15 @@ impl Keys {
         c0 | c1 << 1
     }
 
-    pub fn read_all(&mut self) -> u8 {
-        self.set_row(true);
-        let c01 = self.read_col();
-        self.set_row(false);
-        let c23 = self.read_col();
-        c01 | c23 << 2
+    pub fn read_all(&mut self) {
+        self.set_row(self.side);
+        let value = self.read_col();
+        if self.side {
+            self.c01 = value;
+        } else {
+            self.c23 = value;
+        }
+
+        self.side = !self.side;
     }
 }
