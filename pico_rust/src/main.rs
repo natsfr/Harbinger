@@ -17,6 +17,7 @@ mod ili9341screen;
 mod fpga;
 mod frame_buffer;
 mod keys;
+mod rgb_led;
 
 use core::cell::RefCell;
 use fugit::RateExtU32;
@@ -24,9 +25,13 @@ use cortex_m::interrupt::Mutex;
 use frame_buffer::Drawer;
 use fugit::MicrosDurationU32;
 use hal::Spi;
+use hal::pwm::FreeRunning;
+use hal::pwm::InputHighRunning;
+use hal::pwm::Slices;
 use hal::timer::Alarm;
 use ili9341screen::Screen;
 use keys::Keys;
+use rgb_led::RgbLed;
 // The macro for our start-up function
 use rp_pico::entry;
 use hal::pac::interrupt;
@@ -46,7 +51,9 @@ use rp_pico::hal::pac;
 // higher-level drivers.
 use rp_pico::hal;
 
-const KEY_POL_RATE: MicrosDurationU32 = MicrosDurationU32::millis(10);
+const KEY_POL_RATE: MicrosDurationU32 =
+    MicrosDurationU32::millis(500);
+    // MicrosDurationU32::millis(10);
 
 /// Store the key abstraction to be regularly queried
 static G_KEYS: Mutex<RefCell<Option<Keys>>> = Mutex::new(RefCell::new(None));
@@ -76,6 +83,13 @@ fn read_last_key() -> Option<u8>{
     out
 }
 
+fn setup_pwm<PWM : hal::pwm::SliceId>(mut pwm : hal::pwm::Slice<PWM, FreeRunning>)
+    -> hal::pwm::Slice<PWM, FreeRunning>{
+    pwm.set_ph_correct();
+    pwm.enable();
+    pwm
+}
+
 /// Entry point to our bare-metal application.
 ///
 /// The `#[entry]` macro ensures the Cortex-M start-up code calls this function
@@ -89,7 +103,7 @@ fn main() -> ! {
 
     // Grab our singleton objects
     let mut pac = pac::Peripherals::take().unwrap();
-    let core = pac::CorePeripherals::take().unwrap();
+    // let core = pac::CorePeripherals::take().unwrap();
 
     // Set up the watchdog driver - needed by the clock setup code
     let mut watchdog = hal::Watchdog::new(pac.WATCHDOG);
@@ -134,6 +148,10 @@ fn main() -> ! {
                 (20_000 * 1000).Hz(),
                 &embedded_hal::spi::MODE_0);
 
+
+    // Init PWMs
+    let pwm_slices = Slices::new(pac.PWM, &mut pac.RESETS);
+
     let mut timer = rp2040_hal::Timer::new(pac.TIMER, &mut pac.RESETS);
     let mut screen = Screen::init_partial(
         pins.gpio0,
@@ -146,12 +164,20 @@ fn main() -> ! {
         &mut timer);
 
     let mut alarm0 = timer.alarm_0().unwrap();
+    let rgbled = RgbLed::init(
+        setup_pwm(pwm_slices.pwm6),
+        setup_pwm(pwm_slices.pwm5),
+        pins.gpio26,
+        pins.gpio27,
+        pins.gpio28);
 
-    let mut keys = Keys::init_partial(
+    let keys = Keys::init_partial(
         pins.gpio6,
         pins.gpio7,
         pins.gpio20,
-        pins.gpio21);
+        pins.gpio21,
+        rgbled
+    );
 
     cortex_m::interrupt::free(|cs| {
         G_KEYS.borrow(cs).replace(Some(keys))

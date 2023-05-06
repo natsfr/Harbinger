@@ -2,6 +2,8 @@ use core::arch::asm;
 use embedded_hal::digital::v2::{OutputPin, InputPin};
 use rp2040_hal::gpio::{Pin, bank0::{Gpio20, Gpio21, Gpio6, Gpio7}, Output, PushPull, PinId, Input, PullDown};
 
+use crate::rgb_led::RgbLed;
+
 
 pub struct Keys {
     col0 : Pin<Gpio6, Input<PullDown>>,
@@ -12,7 +14,8 @@ pub struct Keys {
 
     c01 : u8,
     c23 : u8,
-    side: bool
+    side: bool,
+    rgb_led: RgbLed
 }
 
 impl Keys {
@@ -20,7 +23,9 @@ impl Keys {
         gpio6 : Pin<Gpio6, <Gpio6 as PinId>::Reset>,
         gpio7 : Pin<Gpio7, <Gpio7 as PinId>::Reset>,
         gpio20 : Pin<Gpio20, <Gpio20 as PinId>::Reset>,
-        gpio21 : Pin<Gpio21, <Gpio21 as PinId>::Reset>) -> Keys {
+        gpio21 : Pin<Gpio21, <Gpio21 as PinId>::Reset>,
+        rgb_led: RgbLed
+    ) -> Keys {
 
         Keys {
             col0: gpio6.into_pull_down_input(),
@@ -31,7 +36,8 @@ impl Keys {
 
             c01: 0,
             c23: 0,
-            side: false
+            side: false,
+            rgb_led: rgb_led
         }
     }
 
@@ -60,6 +66,8 @@ impl Keys {
     }
 
     pub fn read_all(&mut self) {
+        self.rgb_led.tick();
+
         self.set_row(self.side);
         let value = self.read_col();
         if self.side {
