@@ -26,7 +26,6 @@ use frame_buffer::Drawer;
 use fugit::MicrosDurationU32;
 use hal::Spi;
 use hal::pwm::FreeRunning;
-use hal::pwm::InputHighRunning;
 use hal::pwm::Slices;
 use hal::timer::Alarm;
 use ili9341screen::Screen;
@@ -52,7 +51,7 @@ use rp_pico::hal::pac;
 use rp_pico::hal;
 
 const KEY_POL_RATE: MicrosDurationU32 =
-    MicrosDurationU32::millis(500);
+    MicrosDurationU32::millis(500 * 2 * 5);
     // MicrosDurationU32::millis(10);
 
 /// Store the key abstraction to be regularly queried
@@ -163,7 +162,6 @@ fn main() -> ! {
         spi,
         &mut timer);
 
-    let mut alarm0 = timer.alarm_0().unwrap();
     let mut rgbled = RgbLed::init(
         setup_pwm(pwm_slices.pwm6),
         setup_pwm(pwm_slices.pwm5),
@@ -177,26 +175,24 @@ fn main() -> ! {
         pins.gpio7,
         pins.gpio20,
         pins.gpio21,
-        None
+        Some(rgbled)
     );
 
     cortex_m::interrupt::free(|cs| {
         G_KEYS.borrow(cs).replace(Some(keys))
     });
 
-    // Unmask the timer0 IRQ so that it will generate an interrupt
-    unsafe {
-        pac::NVIC::unmask(pac::Interrupt::TIMER_IRQ_0);
-    }
-
-    alarm0.schedule(KEY_POL_RATE).unwrap();
-
     let mut x : usize = 0;
     let mut prev_key : usize = 0;
 
-    let mut r : u16 = 0;
+    // Unmask the timer0 IRQ so that it will generate an interrupt
+    let mut alarm0 = timer.alarm_0().unwrap();
+    alarm0.schedule(KEY_POL_RATE).unwrap();
+    alarm0.enable_interrupt();
 
-    // Blink the LED at 1 Hz
+    unsafe {
+        pac::NVIC::unmask(pac::Interrupt::TIMER_IRQ_0);
+    }
     loop {
         Drawer::clear();
 
@@ -212,8 +208,6 @@ fn main() -> ! {
         if prev_key != 0 {
             Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
         }
-        rgbled.rgb(r, 0, 0);
-        r += 1000;
         screen.push_frame();
     }
 }
