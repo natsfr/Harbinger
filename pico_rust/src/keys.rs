@@ -1,4 +1,4 @@
-use core::arch::asm;
+use core::{arch::asm, borrow::BorrowMut};
 use embedded_hal::digital::v2::{OutputPin, InputPin};
 use rp2040_hal::gpio::{Pin, bank0::{Gpio20, Gpio21, Gpio6, Gpio7}, Output, PushPull, PinId, Input, PullDown};
 
@@ -15,7 +15,7 @@ pub struct Keys {
     c01 : u8,
     c23 : u8,
     side: bool,
-    rgb_led: RgbLed
+    rgb_led: Option<RgbLed>
 }
 
 impl Keys {
@@ -24,7 +24,7 @@ impl Keys {
         gpio7 : Pin<Gpio7, <Gpio7 as PinId>::Reset>,
         gpio20 : Pin<Gpio20, <Gpio20 as PinId>::Reset>,
         gpio21 : Pin<Gpio21, <Gpio21 as PinId>::Reset>,
-        rgb_led: RgbLed
+        rgb_led: Option<RgbLed>
     ) -> Keys {
 
         Keys {
@@ -66,7 +66,9 @@ impl Keys {
     }
 
     pub fn read_all(&mut self) {
-        self.rgb_led.tick();
+        if let Some(rgb) = self.rgb_led.borrow_mut() {
+            rgb.tick();
+        }
 
         self.set_row(self.side);
         let value = self.read_col();

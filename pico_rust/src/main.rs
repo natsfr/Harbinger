@@ -164,19 +164,20 @@ fn main() -> ! {
         &mut timer);
 
     let mut alarm0 = timer.alarm_0().unwrap();
-    let rgbled = RgbLed::init(
+    let mut rgbled = RgbLed::init(
         setup_pwm(pwm_slices.pwm6),
         setup_pwm(pwm_slices.pwm5),
         pins.gpio26,
         pins.gpio27,
         pins.gpio28);
 
+    rgbled.low();
     let keys = Keys::init_partial(
         pins.gpio6,
         pins.gpio7,
         pins.gpio20,
         pins.gpio21,
-        rgbled
+        None
     );
 
     cortex_m::interrupt::free(|cs| {
@@ -192,6 +193,8 @@ fn main() -> ! {
 
     let mut x : usize = 0;
     let mut prev_key : usize = 0;
+
+    let mut r : u16 = 0;
 
     // Blink the LED at 1 Hz
     loop {
@@ -209,6 +212,8 @@ fn main() -> ! {
         if prev_key != 0 {
             Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
         }
+        rgbled.rgb(r, 0, 0);
+        r += 1000;
         screen.push_frame();
     }
 }
