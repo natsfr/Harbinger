@@ -103,31 +103,6 @@ pub struct Screen<SPIPort : SpiDevice> {
 }
 
 impl<SPIPort : SpiDevice> Screen<SPIPort> {
-    /*
-    pub fn init(pins : Pins, mut peripherals : Peripherals) -> Screen {
-        let spi =
-            Spi::<_, _, 8>::new(peripherals.SPI0)
-                .init(
-                    &mut peripherals.RESETS,
-                    (500 * 1_000).Hz(), 
-                    (75_000 * 1000).Hz(),
-                    &embedded_hal::spi::MODE_0);
-
-        let mut scr = Screen {
-            spi: spi,
-            cs: pins.gpio1.into_push_pull_output(),
-            miso: pins.gpio0.into_mode::<FunctionSpi>(),
-            mosi: pins.gpio3.into_mode::<FunctionSpi>(),
-            sck: pins.gpio2.into_mode::<FunctionSpi>(),
-            reset: pins.gpio5.into_push_pull_output(),
-            dc: pins.gpio4.into_push_pull_output()
-        };
-
-        scr.init_script(&mut peripherals);
-
-        scr
-    } */
-
     pub fn init_partial(
         gpio0 : Pin<Gpio0, <Gpio0 as PinId>::Reset>,
         gpio1 : Pin<Gpio1, <Gpio1 as PinId>::Reset>,

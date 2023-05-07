@@ -60,7 +60,7 @@ impl RgbLed {
     /// For debugging
     pub fn tick(&mut self) {
         let mut st = self.state << 1;
-        if st == 0 { st = 1 }
+        if st == 0 || st >= 8 { st = 1 }
         self.state = st;
         
         let high_duty = 0xFFFF as u16;

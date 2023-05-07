@@ -28,6 +28,7 @@ use hal::Spi;
 use hal::pwm::FreeRunning;
 use hal::pwm::Slices;
 use hal::timer::Alarm;
+use hal::timer::Alarm0;
 use ili9341screen::Screen;
 use keys::Keys;
 use rgb_led::RgbLed;
@@ -51,11 +52,11 @@ use rp_pico::hal::pac;
 use rp_pico::hal;
 
 const KEY_POL_RATE: MicrosDurationU32 =
-    MicrosDurationU32::millis(500 * 2 * 5);
-    // MicrosDurationU32::millis(10);
+    MicrosDurationU32::millis(10);
 
 /// Store the key abstraction to be regularly queried
 static G_KEYS: Mutex<RefCell<Option<Keys>>> = Mutex::new(RefCell::new(None));
+static mut G_ALARM0 : Option<Alarm0> = None;
 
 #[interrupt]
 fn TIMER_IRQ_0() {
@@ -64,6 +65,12 @@ fn TIMER_IRQ_0() {
 
         if let Some(keys) = g_keys.as_mut() {
             keys.read_all()
+        }
+
+        unsafe {
+            if let Some(alarm0) = G_ALARM0.as_mut() {
+                alarm0.clear_interrupt();
+            }
         }
     });
 }
@@ -192,6 +199,7 @@ fn main() -> ! {
 
     unsafe {
         pac::NVIC::unmask(pac::Interrupt::TIMER_IRQ_0);
+        G_ALARM0 = Some(alarm0);
     }
     loop {
         Drawer::clear();
@@ -209,6 +217,15 @@ fn main() -> ! {
             Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
         }
         screen.push_frame();
+        cortex_m::interrupt::free(|cs| {
+            unsafe {
+                if let Some(alarm0) = G_ALARM0.as_mut() {
+                    if alarm0.finished() {
+                        alarm0.schedule(KEY_POL_RATE).unwrap();
+                    }
+                }
+            }
+        });
     }
 }
 
