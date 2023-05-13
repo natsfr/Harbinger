@@ -18,6 +18,7 @@ mod fpga;
 mod frame_buffer;
 mod keys;
 mod rgb_led;
+mod midi;
 
 use core::cell::RefCell;
 use fugit::RateExtU32;
