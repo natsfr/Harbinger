@@ -1,0 +1,2 @@
+SPI_FIFO.v,verilog,xil_defaultlib,../../../../harb_v2.gen/sources_1/ip/SPI_FIFO/sim/SPI_FIFO.v,
+glbl.v,Verilog,xil_defaultlib,glbl.v
