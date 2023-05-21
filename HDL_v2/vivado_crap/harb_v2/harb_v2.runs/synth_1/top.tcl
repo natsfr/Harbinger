@@ -71,6 +71,7 @@ proc create_report { reportName command } {
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param chipscope.maxJobs 6
+set_param xicom.use_bs_reader 1
 set_msg_config -id {Synth 8-256} -limit 10000
 set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
@@ -91,7 +92,6 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
-  /home/nats/data/projects/Harbinger/HDL_v2/src/fsm.sv
   /home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv
   /home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv
 }
@@ -120,7 +120,7 @@ set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top top -part xc7s25csga225-1 -flatten_hierarchy full -gated_clock_conversion auto -bufg 24 -directive AreaOptimized_high -retiming -control_set_opt_threshold 1
+synth_design -top top -part xc7s25csga225-1 -flatten_hierarchy none -gated_clock_conversion auto -bufg 24 -retiming
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"

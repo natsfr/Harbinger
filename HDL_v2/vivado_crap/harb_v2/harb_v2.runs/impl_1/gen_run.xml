@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1684493586">
+<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1684690021">
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <File Type="BITSTR-SYSDEF" Name="top.sysdef"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
@@ -91,13 +91,6 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../../src/fsm.sv">
-      <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
     <File Path="$PPRDIR/../../src/voice.sv">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -107,22 +100,6 @@
     </File>
     <File Path="$PPRDIR/../../src/top_harbv2.sv">
       <FileInfo>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../../src/phase_acc.sv">
-      <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
-        <Attr Name="UsedIn" Val="synthesis"/>
-        <Attr Name="UsedIn" Val="implementation"/>
-        <Attr Name="UsedIn" Val="simulation"/>
-      </FileInfo>
-    </File>
-    <File Path="$PPRDIR/../../src/output_mixer.sv">
-      <FileInfo SFType="Verilog">
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -154,17 +131,15 @@
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Area_ExploreWithRemap" Flow="Vivado Implementation 2020"/>
+    <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2020"/>
     <Step Id="init_design"/>
-    <Step Id="opt_design">
-      <Option Id="Directive">6</Option>
-    </Step>
+    <Step Id="opt_design"/>
     <Step Id="power_opt_design"/>
     <Step Id="place_design">
       <Option Id="Directive">0</Option>
     </Step>
     <Step Id="post_place_power_opt_design"/>
-    <Step Id="phys_opt_design" EnableStepBool="0">
+    <Step Id="phys_opt_design">
       <Option Id="Directive">2</Option>
     </Step>
     <Step Id="route_design">
@@ -173,7 +148,11 @@
     <Step Id="post_route_phys_opt_design">
       <Option Id="Directive">1</Option>
     </Step>
-    <Step Id="write_bitstream"/>
+    <Step Id="write_bitstream">
+      <Option Id="RawbitFileBool">1</Option>
+      <Option Id="MaskFileBool">1</Option>
+      <Option Id="BinFile">1</Option>
+    </Step>
   </Strategy>
   <BlockFileSet Type="BlockSrcs" Name="SPI_FIFO"/>
 </GenRun>

@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-// Date        : Tue May 16 22:11:12 2023
+// Date        : Sat May 20 12:36:00 2023
 // Host        : Hellgate running 64-bit Ubuntu 22.04.2 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.gen/sources_1/ip/SPI_FIFO/SPI_FIFO_stub.v

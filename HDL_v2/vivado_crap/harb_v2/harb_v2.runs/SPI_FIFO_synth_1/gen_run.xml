@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="SPI_FIFO_synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1684267825">
+<GenRun Id="SPI_FIFO_synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1684578916">
   <File Type="REPORTS-TCL" Name="SPI_FIFO_reports.tcl"/>
   <File Type="PA-TCL" Name="SPI_FIFO.tcl"/>
   <File Type="RDS-DCP" Name="SPI_FIFO.dcp"/>
