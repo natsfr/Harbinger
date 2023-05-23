@@ -1,3 +1,9 @@
+use rp2040_hal::{
+    uart::{UartPeripheral, DataBits, UartConfig, StopBits, Enabled}, gpio::{PinId, bank0::Gpio13, Pin, FunctionUart},
+    pac::{RESETS, UART0}};
+
+use fugit::{RateExtU32, HertzU32};
+
 enum ChannelMessagePrefix {
     NONE = 0x00,
     NoteOff = 0x80,
@@ -140,6 +146,35 @@ impl IncrementalMidiParser {
                 ChannelMessagePrefix::ChannelPresure => { None }
                 _ => None
             }
+        }
+    }
+}
+
+pub struct MidiUart {
+    midi_uart : UartPeripheral<Enabled, UART0, ((), Pin<Gpio13, FunctionUart>)>
+}
+
+impl MidiUart {
+    pub fn init(
+        uart0 : UART0,
+        gpio : Pin<Gpio13, <Gpio13 as PinId>::Reset>,
+        freq : HertzU32,
+        resets: &mut RESETS
+    ) -> MidiUart {
+
+        // Set up UART on GP0 and GP1 (Pico pins 1 and 2)
+        let pins = ((), gpio.into_mode::<FunctionUart>());
+
+        let conf =
+            UartConfig::new(2400.Hz(), DataBits::Eight, None, StopBits::One);
+
+        // Need to perform clock init before using UART or it will freeze.
+        let uart = UartPeripheral::new(uart0, pins, resets)
+            .enable(conf, freq)
+            .unwrap();
+
+        MidiUart {
+            midi_uart: uart
         }
     }
 }

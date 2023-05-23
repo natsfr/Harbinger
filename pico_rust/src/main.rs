@@ -32,6 +32,7 @@ use hal::timer::Alarm;
 use hal::timer::Alarm0;
 use ili9341screen::Screen;
 use keys::Keys;
+use midi::MidiUart;
 use rgb_led::RgbLed;
 // The macro for our start-up function
 use rp_pico::entry;
@@ -169,6 +170,13 @@ fn main() -> ! {
         pins.gpio5,
         spi,
         &mut timer);
+
+    let mut midiUart =
+        MidiUart::init(
+            pac.UART0,
+            pins.gpio13,
+            rate,
+            &mut pac.RESETS);
 
     let mut rgbled = RgbLed::init(
         setup_pwm(pwm_slices.pwm6),
