@@ -171,7 +171,7 @@ fn main() -> ! {
         spi,
         &mut timer);
 
-    let mut midiUart =
+    let mut midi_uart =
         MidiUart::init(
             pac.UART0,
             pins.gpio13,
@@ -211,6 +211,15 @@ fn main() -> ! {
         G_ALARM0 = Some(alarm0);
     }
     loop {
+        midi_uart.feed_data_into_parser();
+
+        while let Some(midiCommand) = midi_uart.try_read_command() {
+            // TODO : do something with the midi commands here
+            //        more than likely send it to the "voice manager"
+            //        somewhere
+
+        }
+
         Drawer::clear();
 
         Drawer::rect(x, 0, 30, 2, 0xFFF0);

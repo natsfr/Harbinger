@@ -1,3 +1,4 @@
+use embedded_hal::serial::Read;
 use rp2040_hal::{
     uart::{UartPeripheral, DataBits, UartConfig, StopBits, Enabled}, gpio::{PinId, bank0::Gpio13, Pin, FunctionUart},
     pac::{RESETS, UART0}};
@@ -151,7 +152,8 @@ impl IncrementalMidiParser {
 }
 
 pub struct MidiUart {
-    midi_uart : UartPeripheral<Enabled, UART0, ((), Pin<Gpio13, FunctionUart>)>
+    midi_uart : UartPeripheral<Enabled, UART0, ((), Pin<Gpio13, FunctionUart>)>,
+    parser : IncrementalMidiParser 
 }
 
 impl MidiUart {
@@ -162,7 +164,6 @@ impl MidiUart {
         resets: &mut RESETS
     ) -> MidiUart {
 
-        // Set up UART on GP0 and GP1 (Pico pins 1 and 2)
         let pins = ((), gpio.into_mode::<FunctionUart>());
 
         let conf =
@@ -174,7 +175,23 @@ impl MidiUart {
             .unwrap();
 
         MidiUart {
-            midi_uart: uart
+            midi_uart: uart,
+            parser : IncrementalMidiParser::new()
         }
+    }
+
+    /// Push data into the MIDI parser
+    pub fn feed_data_into_parser(&mut self) {
+        while self.midi_uart.uart_is_readable() {
+            // we skip on error, who knows what can happen in here
+            match self.midi_uart.read() {
+                Err(_) => {}
+                Ok(val) => self.parser.push(val)
+            }
+        }
+    }
+
+    pub fn try_read_command(&mut self) -> Option<Message> {
+        self.parser.pull()
     }
 }
