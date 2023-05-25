@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.        -->
 
 <hwsession version="1" minor="2">
-  <device name="xc7s25_0" gui_info="dashboard1=hw_ila_1[xc7s25_0/hw_ila_1/Capture Setup=ILA_CAPTURE_1;xc7s25_0/hw_ila_1/Status=ILA_STATUS_1;xc7s25_0/hw_ila_1/Trigger Setup=ILA_TRIGGER_1;xc7s25_0/hw_ila_1/Waveform=ILA_WAVE_1;xc7s25_0/hw_ila_1/Settings=ILA_SETTINGS_1;]"/>
+  <device name="xc7s25_0" gui_info=""/>
   <ObjectList object_type="hw_cfgmem" gui_info="">
     <Object name="" gui_info="">
       <Properties Property="PROGRAM.ADDRESS_RANGE" value="use_file"/>
@@ -22,7 +22,7 @@
     <Object name="xc7s25_0" gui_info="">
       <Properties Property="FULL_PROBES.FILE" value=""/>
       <Properties Property="PROBES.FILE" value=""/>
-      <Properties Property="PROGRAM.HW_BITSTREAM" value="/home/nats/data/Xilinx/Vivado/2020.2/data/xicom/cfgmem/bitfile/spi_xc7s25_pullnone.bit"/>
+      <Properties Property="PROGRAM.HW_BITSTREAM" value="$_project_name_.runs/impl_1/top.bit"/>
       <Properties Property="PROGRAM.HW_CFGMEM_PART" value="mx25l3233f-spi-x1_x2_x4"/>
       <Properties Property="SLR.COUNT" value="1"/>
     </Object>
@@ -47,9 +47,10 @@
   <ObjectList object_type="hw_probe" gui_info="">
     <Object name="param_valid" gui_info="Trigger Setup=0"/>
     <Object name="rxing_param" gui_info="Trigger Setup=0"/>
+    <Object name="voice0/fcmd\\.cmd_data_valid" gui_info="Trigger Setup=0"/>
     <Object name="voice0/sample_ready" gui_info=""/>
     <Object name="voice0/trig_debug" gui_info="Trigger Setup=0"/>
-    <Object name="voice0/trigged" gui_info="Trigger Setup=0"/>
+    <Object name="voice0/trigged" gui_info=""/>
     <Object name="voice1/fcmd\\.cmd_data_valid" gui_info=""/>
     <Object name="voice1/trig_debug" gui_info="Trigger Setup=0"/>
   </ObjectList>
@@ -229,7 +230,7 @@
         <net name="td"/>
       </nets>
     </probe>
-    <probe type="ila_data" busType="net" source="netlist" spec="ILA_DATA_V2_RT">
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
@@ -291,7 +292,7 @@
         <net name="voice0/cmd_lock"/>
       </nets>
     </probe>
-    <probe type="ila_data" busType="net" source="netlist" spec="ILA_DATA_V2_RT">
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
@@ -319,7 +320,7 @@
     <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="CAPTURE_COMPARE_VALUE" value="eq1&apos;bX"/>
-        <Option Id="COMPARE_VALUE.0" value="eq1&apos;bX"/>
+        <Option Id="COMPARE_VALUE.0" value="eq1&apos;bF"/>
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
         <Option Id="DISPLAY_RADIX" value="HEX"/>
@@ -330,7 +331,7 @@
         <Option Id="NAME.CUSTOM" value=""/>
         <Option Id="NAME.SELECT" value="Long"/>
         <Option Id="SOURCE" value="netlist"/>
-        <Option Id="TRIGGER_COMPARE_VALUE" value="eq1&apos;bX"/>
+        <Option Id="TRIGGER_COMPARE_VALUE" value="eq1&apos;bF"/>
         <Option Id="WAVEFORM_STYLE" value="Digital"/>
       </probeOptions>
       <nets>
@@ -386,7 +387,7 @@
         <net name="voice0/interpolation[0]"/>
       </nets>
     </probe>
-    <probe type="ila_data" busType="net" source="netlist" spec="ILA_DATA_V2_RT">
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
@@ -411,7 +412,7 @@
         <net name="voice0/interpolation[28]"/>
       </nets>
     </probe>
-    <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
+    <probe type="ila" busType="bus" source="netlist" spec="ILA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="CAPTURE_COMPARE_VALUE" value="eq16&apos;hXXXX"/>
         <Option Id="COMPARE_VALUE.0" value="eq16&apos;hXXXX"/>
@@ -447,7 +448,105 @@
         <net name="voice0/mix_out[3]"/>
       </nets>
     </probe>
-    <probe type="ila_data" busType="net" source="netlist" spec="ILA_DATA_V2_RT">
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
+      <probeOptions Id="DebugProbeParams">
+        <Option Id="DISPLAY_AS_ENUM" value="1"/>
+        <Option Id="DISPLAY_HINT" value=""/>
+        <Option Id="DISPLAY_RADIX" value="SIGNED"/>
+        <Option Id="DISPLAY_VISIBILITY" value=""/>
+        <Option Id="HW_ILA" value="hw_ila_1"/>
+        <Option Id="LINK_TO_WAVEFORM" value="1"/>
+        <Option Id="MAP" value="probe5[31:0]"/>
+        <Option Id="NAME.CUSTOM" value=""/>
+        <Option Id="NAME.SELECT" value="Long"/>
+        <Option Id="SOURCE" value="netlist"/>
+        <Option Id="WAVEFORM_STYLE" value="Digital"/>
+      </probeOptions>
+      <nets>
+        <net name="voice0/mod_amp[31]"/>
+        <net name="voice0/mod_amp[30]"/>
+        <net name="voice0/mod_amp[29]"/>
+        <net name="voice0/mod_amp[28]"/>
+        <net name="voice0/mod_amp[27]"/>
+        <net name="voice0/mod_amp[26]"/>
+        <net name="voice0/mod_amp[25]"/>
+        <net name="voice0/mod_amp[24]"/>
+        <net name="voice0/mod_amp[23]"/>
+        <net name="voice0/mod_amp[22]"/>
+        <net name="voice0/mod_amp[21]"/>
+        <net name="voice0/mod_amp[20]"/>
+        <net name="voice0/mod_amp[19]"/>
+        <net name="voice0/mod_amp[18]"/>
+        <net name="voice0/mod_amp[17]"/>
+        <net name="voice0/mod_amp[16]"/>
+        <net name="voice0/mod_amp[15]"/>
+        <net name="voice0/mod_amp[14]"/>
+        <net name="voice0/mod_amp[13]"/>
+        <net name="voice0/mod_amp[12]"/>
+        <net name="voice0/mod_amp[11]"/>
+        <net name="voice0/mod_amp[10]"/>
+        <net name="voice0/mod_amp[9]"/>
+        <net name="voice0/mod_amp[8]"/>
+        <net name="voice0/mod_amp[7]"/>
+        <net name="voice0/mod_amp[6]"/>
+        <net name="voice0/mod_amp[5]"/>
+        <net name="voice0/mod_amp[4]"/>
+        <net name="voice0/mod_amp[3]"/>
+        <net name="voice0/mod_amp[2]"/>
+        <net name="voice0/mod_amp[1]"/>
+        <net name="voice0/mod_amp[0]"/>
+      </nets>
+    </probe>
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
+      <probeOptions Id="DebugProbeParams">
+        <Option Id="DISPLAY_AS_ENUM" value="1"/>
+        <Option Id="DISPLAY_HINT" value=""/>
+        <Option Id="DISPLAY_RADIX" value="SIGNED"/>
+        <Option Id="DISPLAY_VISIBILITY" value=""/>
+        <Option Id="HW_ILA" value="hw_ila_1"/>
+        <Option Id="LINK_TO_WAVEFORM" value="1"/>
+        <Option Id="MAP" value="probe4[31:0]"/>
+        <Option Id="NAME.CUSTOM" value=""/>
+        <Option Id="NAME.SELECT" value="Long"/>
+        <Option Id="SOURCE" value="netlist"/>
+        <Option Id="WAVEFORM_STYLE" value="Digital"/>
+      </probeOptions>
+      <nets>
+        <net name="voice0/modulated_out[31]"/>
+        <net name="voice0/modulated_out[30]"/>
+        <net name="voice0/modulated_out[29]"/>
+        <net name="voice0/modulated_out[28]"/>
+        <net name="voice0/modulated_out[27]"/>
+        <net name="voice0/modulated_out[26]"/>
+        <net name="voice0/modulated_out[25]"/>
+        <net name="voice0/modulated_out[24]"/>
+        <net name="voice0/modulated_out[23]"/>
+        <net name="voice0/modulated_out[22]"/>
+        <net name="voice0/modulated_out[21]"/>
+        <net name="voice0/modulated_out[20]"/>
+        <net name="voice0/modulated_out[19]"/>
+        <net name="voice0/modulated_out[18]"/>
+        <net name="voice0/modulated_out[17]"/>
+        <net name="voice0/modulated_out[16]"/>
+        <net name="voice0/modulated_out[15]"/>
+        <net name="voice0/modulated_out[14]"/>
+        <net name="voice0/modulated_out[13]"/>
+        <net name="voice0/modulated_out[12]"/>
+        <net name="voice0/modulated_out[11]"/>
+        <net name="voice0/modulated_out[10]"/>
+        <net name="voice0/modulated_out[9]"/>
+        <net name="voice0/modulated_out[8]"/>
+        <net name="voice0/modulated_out[7]"/>
+        <net name="voice0/modulated_out[6]"/>
+        <net name="voice0/modulated_out[5]"/>
+        <net name="voice0/modulated_out[4]"/>
+        <net name="voice0/modulated_out[3]"/>
+        <net name="voice0/modulated_out[2]"/>
+        <net name="voice0/modulated_out[1]"/>
+        <net name="voice0/modulated_out[0]"/>
+      </nets>
+    </probe>
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
@@ -594,7 +693,7 @@
         <net name="voice0/op_pcount[0]__0[0]"/>
       </nets>
     </probe>
-    <probe type="ila_data" busType="net" source="netlist" spec="ILA_DATA_V2_RT">
+    <probe type="ila_data" busType="bus" source="netlist" spec="ILA_DATA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
@@ -742,7 +841,7 @@
     <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="CAPTURE_COMPARE_VALUE" value="eq1&apos;bX"/>
-        <Option Id="COMPARE_VALUE.0" value="eq1&apos;bR"/>
+        <Option Id="COMPARE_VALUE.0" value="eq1&apos;bX"/>
         <Option Id="DISPLAY_AS_ENUM" value="1"/>
         <Option Id="DISPLAY_HINT" value=""/>
         <Option Id="DISPLAY_RADIX" value="HEX"/>
@@ -753,7 +852,7 @@
         <Option Id="NAME.CUSTOM" value=""/>
         <Option Id="NAME.SELECT" value="Long"/>
         <Option Id="SOURCE" value="netlist"/>
-        <Option Id="TRIGGER_COMPARE_VALUE" value="eq1&apos;bR"/>
+        <Option Id="TRIGGER_COMPARE_VALUE" value="eq1&apos;bX"/>
         <Option Id="WAVEFORM_STYLE" value="Digital"/>
       </probeOptions>
       <nets>

@@ -252,9 +252,9 @@
           <Option Id="Directive">1</Option>
         </Step>
         <Step Id="write_bitstream">
+          <Option Id="RawbitFileBool">1</Option>
           <Option Id="MaskFileBool">1</Option>
           <Option Id="BinFile">1</Option>
-          <Option Id="RawbitFileBool">1</Option>
         </Step>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>

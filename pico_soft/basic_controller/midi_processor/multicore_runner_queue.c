@@ -179,6 +179,7 @@ void set_freqs(uint8_t voice) {
     }
     
     freqs[voice].cmd_voice = 0x03 << CMD | (1 << voice) << VOICES;
+    freqs[voice].ampmod = (notes[voice].velo * 258) << 16; // We scale the 127 velocity level to a 16 bit 0x7FFF Yeah an other crappy code ! :D
     send_freqs(&freqs[voice]);
     send_nop(&nop); // Synchro problem on the FPGA side
 }
@@ -320,7 +321,7 @@ int main() {
                             notes[current_voice].velo = midi_current;
                             notes[current_voice].trig = (midi_current != 0) ? 1 : 0;
                             if(midi_current == 0) notes[current_voice].note = 0;
-                            note_state = FETCH_NOTE;led_state = !led_state;
+                            note_state = FETCH_NOTE;
                             set_freqs(current_voice);
                             trig_voices();
                         }

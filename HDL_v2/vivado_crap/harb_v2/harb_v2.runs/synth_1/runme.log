@@ -16,9 +16,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s25'
 INFO: [Device 21-403] Loading part xc7s25csga225-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 407648
+INFO: [Synth 8-7075] Helper process launched with PID 770399
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2300.129 ; gain = 0.000 ; free physical = 5347 ; free virtual = 17816
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 2300.164 ; gain = 0.000 ; free physical = 497 ; free virtual = 14252
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top' [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:13]
 	Parameter IDLE bound to: 4'b0000 
@@ -111,8 +111,8 @@ WARNING: [Synth 8-7071] port 'CLKOUT6' of module 'MMCME2_BASE' is unconnected fo
 WARNING: [Synth 8-7023] instance 'MMCME2_147' of module 'MMCME2_BASE' has 18 connections declared, but only 8 given [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:104]
 INFO: [Synth 8-6157] synthesizing module 'dual_fast_spi' [/home/nats/data/projects/Harbinger/HDL_v2/src/dual_fast_spi.v:4]
 	Parameter NB_BIT bound to: 32 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'SPI_FIFO' [/home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.runs/synth_1/.Xil/Vivado-407630-Hellgate/realtime/SPI_FIFO_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'SPI_FIFO' (3#1) [/home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.runs/synth_1/.Xil/Vivado-407630-Hellgate/realtime/SPI_FIFO_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'SPI_FIFO' [/home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.runs/synth_1/.Xil/Vivado-770361-Hellgate/realtime/SPI_FIFO_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'SPI_FIFO' (3#1) [/home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.runs/synth_1/.Xil/Vivado-770361-Hellgate/realtime/SPI_FIFO_stub.v:6]
 INFO: [Synth 8-6155] done synthesizing module 'dual_fast_spi' (4#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/dual_fast_spi.v:4]
 INFO: [Synth 8-6157] synthesizing module 'FSM_CMD' [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:3]
 INFO: [Synth 8-6155] done synthesizing module 'FSM_CMD' (4#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:3]
@@ -146,13 +146,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice' [/home/nats/data/projects/Harbi
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'voice__parameterized0' [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 	Parameter VOICE_NUM bound to: 1 - type: integer 
@@ -183,13 +183,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice__parameterized0' [/home/nats/dat
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice__parameterized0' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'voice__parameterized1' [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 	Parameter VOICE_NUM bound to: 2 - type: integer 
@@ -220,13 +220,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice__parameterized1' [/home/nats/dat
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice__parameterized1' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'voice__parameterized2' [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 	Parameter VOICE_NUM bound to: 3 - type: integer 
@@ -257,13 +257,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice__parameterized2' [/home/nats/dat
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice__parameterized2' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'voice__parameterized3' [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 	Parameter VOICE_NUM bound to: 4 - type: integer 
@@ -294,13 +294,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice__parameterized3' [/home/nats/dat
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice__parameterized3' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'voice__parameterized4' [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 	Parameter VOICE_NUM bound to: 5 - type: integer 
@@ -331,13 +331,13 @@ INFO: [Synth 8-6157] synthesizing module 'voice__parameterized4' [/home/nats/dat
 	Parameter GET_WAVE bound to: 1 - type: integer 
 	Parameter CALC bound to: 2 - type: integer 
 	Parameter STORE bound to: 3 - type: integer 
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:383]
-INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:384]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:90]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:112]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:87]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:278]
-INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:263]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:408]
+INFO: [Synth 8-3876] $readmem data file 'ram.data' is read successfully [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:409]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:97]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:124]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:94]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:302]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:283]
 INFO: [Synth 8-6155] done synthesizing module 'voice__parameterized4' (5#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/voice.sv:4]
 INFO: [Synth 8-6157] synthesizing module 'i2s' [/home/nats/data/projects/Harbinger/HDL_v2/src/i2s.v:3]
 	Parameter ENABLE_SCK bound to: 1'b1 
@@ -358,18 +358,18 @@ INFO: [Synth 8-6155] done synthesizing module 'i2s' (7#1) [/home/nats/data/proje
 INFO: [Synth 8-155] case statement is not full and has no default [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:177]
 INFO: [Synth 8-6155] done synthesizing module 'top' (8#1) [/home/nats/data/projects/Harbinger/HDL_v2/src/top_harbv2.sv:13]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:04 . Memory (MB): peak = 2300.129 ; gain = 0.000 ; free physical = 6099 ; free virtual = 18569
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2300.164 ; gain = 0.000 ; free physical = 1273 ; free virtual = 14985
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2300.129 ; gain = 0.000 ; free physical = 6106 ; free virtual = 18576
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2300.164 ; gain = 0.000 ; free physical = 1269 ; free virtual = 14981
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2300.129 ; gain = 0.000 ; free physical = 6106 ; free virtual = 18576
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 2300.164 ; gain = 0.000 ; free physical = 1269 ; free virtual = 14981
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.06 . Memory (MB): peak = 2300.129 ; gain = 0.000 ; free physical = 6086 ; free virtual = 18556
+Netlist sorting complete. Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.05 . Memory (MB): peak = 2300.164 ; gain = 0.000 ; free physical = 1260 ; free virtual = 14972
 INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -387,28 +387,28 @@ Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl
 INFO: [Timing 38-2] Deriving generated clocks
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2363.984 ; gain = 0.000 ; free physical = 5990 ; free virtual = 18461
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2364.020 ; gain = 0.000 ; free physical = 1160 ; free virtual = 14873
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 2 instances were transformed.
   MMCME2_BASE => MMCME2_ADV: 2 instances
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2363.984 ; gain = 0.000 ; free physical = 5990 ; free virtual = 18462
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2364.020 ; gain = 0.000 ; free physical = 1160 ; free virtual = 14873
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 6070 ; free virtual = 18542
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1299 ; free virtual = 15012
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s25csga225-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 6070 ; free virtual = 18541
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1299 ; free virtual = 15012
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property KEEP_HIERARCHY = SOFT for cmd_input/cc_fifo. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 6070 ; free virtual = 18541
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1299 ; free virtual = 15012
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'top'
 ---------------------------------------------------------------------------------------------------
@@ -419,7 +419,7 @@ INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'top'
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'top'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 6040 ; free virtual = 18516
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1272 ; free virtual = 14984
 ---------------------------------------------------------------------------------
 INFO: Gated Clock Conversion is not possible as flatten_hierarchy is auto or none
 ---------------------------------------------------------------------------------
@@ -437,16 +437,16 @@ Detailed RTL Component Info :
 	   2 Input    3 Bit       Adders := 1     
 +---Registers : 
 	               57 Bit    Registers := 6     
-	               32 Bit    Registers := 39    
-	               30 Bit    Registers := 6     
-	               19 Bit    Registers := 42    
-	               16 Bit    Registers := 8     
+	               32 Bit    Registers := 45    
+	               31 Bit    Registers := 6     
+	               19 Bit    Registers := 36    
+	               16 Bit    Registers := 14    
 	               12 Bit    Registers := 6     
 	                8 Bit    Registers := 8     
-	                6 Bit    Registers := 42    
+	                6 Bit    Registers := 48    
 	                4 Bit    Registers := 13    
 	                3 Bit    Registers := 7     
-	                1 Bit    Registers := 31    
+	                1 Bit    Registers := 37    
 +---Multipliers : 
 	              25x32  Multipliers := 6     
 +---RAMs : 
@@ -463,18 +463,21 @@ Detailed RTL Component Info :
 	   4 Input   16 Bit        Muxes := 6     
 	   3 Input   16 Bit        Muxes := 1     
 	   2 Input    8 Bit        Muxes := 2     
-	   2 Input    6 Bit        Muxes := 6     
+	   2 Input    6 Bit        Muxes := 36    
+	   6 Input    6 Bit        Muxes := 12    
+	   4 Input    6 Bit        Muxes := 6     
 	   7 Input    4 Bit        Muxes := 6     
 	   2 Input    4 Bit        Muxes := 44    
 	   6 Input    4 Bit        Muxes := 6     
 	   2 Input    3 Bit        Muxes := 6     
 	   4 Input    3 Bit        Muxes := 6     
 	   3 Input    3 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 152   
+	   2 Input    1 Bit        Muxes := 158   
 	   4 Input    1 Bit        Muxes := 108   
 	  11 Input    1 Bit        Muxes := 24    
-	  14 Input    1 Bit        Muxes := 54    
+	   5 Input    1 Bit        Muxes := 6     
 	  15 Input    1 Bit        Muxes := 12    
+	  14 Input    1 Bit        Muxes := 54    
 	   6 Input    1 Bit        Muxes := 36    
 	  12 Input    1 Bit        Muxes := 6     
 	  10 Input    1 Bit        Muxes := 6     
@@ -503,6 +506,9 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP interpolation0, operation Mode is: A*B.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
@@ -513,6 +519,9 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP interpolation0, operation Mode is: A*B.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
@@ -523,6 +532,9 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP interpolation0, operation Mode is: A*B.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
@@ -533,6 +545,9 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP interpolation0, operation Mode is: A*B.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
@@ -543,6 +558,9 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP interpolation0, operation Mode is: A*B.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
 DSP Report: operator interpolation0 is absorbed into DSP interpolation0.
@@ -553,13 +571,16 @@ DSP Report: operator interpolation0 is absorbed into DSP interpolation_reg.
 DSP Report: Generating DSP p_0_out, operation Mode is: A*B2.
 DSP Report: register sign_adsr_amp_reg is absorbed into DSP p_0_out.
 DSP Report: operator p_0_out is absorbed into DSP p_0_out.
+DSP Report: Generating DSP modulated_out, operation Mode is: A2*B.
+DSP Report: register modulated_out is absorbed into DSP modulated_out.
+DSP Report: operator modulated_out is absorbed into DSP modulated_out.
 DSP Report: Generating DSP p_1_out, operation Mode is: C+A:B.
 DSP Report: operator p_1_out is absorbed into DSP p_1_out.
 DSP Report: Generating DSP samp_acc_reg, operation Mode is: PCIN+(P or A:B).
 DSP Report: register samp_acc_reg is absorbed into DSP samp_acc_reg.
 DSP Report: operator p_1_out is absorbed into DSP samp_acc_reg.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:55 ; elapsed = 00:00:57 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5736 ; free virtual = 18284
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:57 ; elapsed = 00:00:59 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1296 ; free virtual = 15019
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -695,21 +716,27 @@ DSP: Preliminary Mapping	Report (see note below)
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | A*B             | 25     | 18     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
 |voice       | (PCIN>>17)+A*B  | 25     | 15     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 |voice       | A*B2            | 16     | 16     | -      | -      | 32     | 0    | 1    | -    | -    | -     | 0    | 0    | 
+|voice       | A2*B            | 16     | 16     | -      | -      | 32     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |top         | C+A:B           | 30     | 18     | 19     | -      | 19     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
 |top         | PCIN+(P or A:B) | 30     | 18     | -      | -      | 19     | 0    | 0    | -    | -    | -     | 0    | 1    | 
 +------------+-----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
@@ -722,13 +749,13 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:00 ; elapsed = 00:01:02 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5581 ; free virtual = 18127
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:02 ; elapsed = 00:01:04 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1152 ; free virtual = 14873
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:01:04 ; elapsed = 00:01:06 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5562 ; free virtual = 18109
+Finished Timing Optimization : Time (s): cpu = 00:01:06 ; elapsed = 00:01:08 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1135 ; free virtual = 14862
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -894,7 +921,7 @@ INFO: [Synth 8-5816] Retiming module `top' done
 
 
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:11 ; elapsed = 00:01:13 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5620 ; free virtual = 18169
+Finished Technology Mapping : Time (s): cpu = 00:01:13 ; elapsed = 00:01:15 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1190 ; free virtual = 14915
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -913,19 +940,19 @@ End Gated Clock Conversion
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:14 ; elapsed = 00:01:16 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5631 ; free virtual = 18165
+Finished IO Insertion : Time (s): cpu = 00:01:15 ; elapsed = 00:01:18 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1205 ; free virtual = 14932
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:14 ; elapsed = 00:01:16 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5631 ; free virtual = 18165
+Finished Renaming Generated Instances : Time (s): cpu = 00:01:15 ; elapsed = 00:01:18 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1205 ; free virtual = 14932
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:15 ; elapsed = 00:01:17 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5618 ; free virtual = 18152
+Finished Handling Custom Attributes : Time (s): cpu = 00:01:16 ; elapsed = 00:01:19 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1205 ; free virtual = 14932
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -951,37 +978,37 @@ Report Cell Usage:
 |1     |SPI_FIFO    |     1|
 |2     |BUFG        |     4|
 |3     |CARRY4      |   724|
-|4     |DSP48E1     |    20|
-|9     |LUT1        |    35|
-|10    |LUT2        |  1116|
-|11    |LUT3        |   210|
-|12    |LUT4        |  1271|
-|13    |LUT5        |  2305|
-|14    |LUT6        |  2905|
-|15    |MMCME2_BASE |     2|
-|16    |MUXF7       |   135|
-|17    |MUXF8       |    61|
-|18    |ODDR        |     1|
-|19    |RAM16X1S    |   600|
-|20    |RAM32M      |   360|
-|21    |FDRE        |  2239|
-|22    |FDSE        |     2|
-|23    |IBUF        |     5|
-|24    |OBUF        |    19|
+|4     |DSP48E1     |    26|
+|10    |LUT1        |    40|
+|11    |LUT2        |  1128|
+|12    |LUT3        |   223|
+|13    |LUT4        |  1254|
+|14    |LUT5        |  2366|
+|15    |LUT6        |  2978|
+|16    |MMCME2_BASE |     2|
+|17    |MUXF7       |   135|
+|18    |MUXF8       |    61|
+|19    |ODDR        |     1|
+|20    |RAM16X1S    |   600|
+|21    |RAM32M      |   360|
+|22    |FDRE        |  2184|
+|23    |FDSE        |     2|
+|24    |IBUF        |     5|
+|25    |OBUF        |    19|
 +------+------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:15 ; elapsed = 00:01:17 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5619 ; free virtual = 18152
+Finished Writing Synthesis Report : Time (s): cpu = 00:01:16 ; elapsed = 00:01:19 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1205 ; free virtual = 14932
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:12 ; elapsed = 00:01:15 . Memory (MB): peak = 2363.984 ; gain = 0.000 ; free physical = 5683 ; free virtual = 18217
-Synthesis Optimization Complete : Time (s): cpu = 00:01:15 ; elapsed = 00:01:17 . Memory (MB): peak = 2363.984 ; gain = 63.855 ; free physical = 5683 ; free virtual = 18217
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:13 ; elapsed = 00:01:17 . Memory (MB): peak = 2364.020 ; gain = 0.000 ; free physical = 1272 ; free virtual = 14999
+Synthesis Optimization Complete : Time (s): cpu = 00:01:17 ; elapsed = 00:01:19 . Memory (MB): peak = 2364.020 ; gain = 63.855 ; free physical = 1272 ; free virtual = 14999
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00.08 ; elapsed = 00:00:00.08 . Memory (MB): peak = 2363.984 ; gain = 0.000 ; free physical = 5773 ; free virtual = 18307
-INFO: [Netlist 29-17] Analyzing 1903 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.07 . Memory (MB): peak = 2364.020 ; gain = 0.000 ; free physical = 1360 ; free virtual = 15087
+INFO: [Netlist 29-17] Analyzing 1909 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2386.938 ; gain = 0.000 ; free physical = 5735 ; free virtual = 18269
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2394.980 ; gain = 0.000 ; free physical = 1312 ; free virtual = 15041
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 962 instances were transformed.
   MMCME2_BASE => MMCME2_ADV: 2 instances
@@ -991,7 +1018,9 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 111 Infos, 28 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:24 ; elapsed = 00:01:23 . Memory (MB): peak = 2386.938 ; gain = 86.984 ; free physical = 5915 ; free virtual = 18446
+synth_design: Time (s): cpu = 00:01:25 ; elapsed = 00:01:24 . Memory (MB): peak = 2394.980 ; gain = 94.992 ; free physical = 1491 ; free virtual = 15220
+INFO: [Common 17-600] The following parameters have non-default value.
+tcl.collectionResultDisplayLimit
 INFO: [Common 17-1381] The checkpoint '/home/nats/data/projects/Harbinger/HDL_v2/vivado_crap/harb_v2/harb_v2.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun May 21 19:28:34 2023...
+INFO: [Common 17-206] Exiting Vivado at Thu May 25 03:00:28 2023...

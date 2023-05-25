@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date             : Sun May 21 19:29:53 2023
+| Date             : Thu May 25 03:01:47 2023
 | Host             : Hellgate running 64-bit Ubuntu 22.04.2 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.308        |
+| Total On-Chip Power (W)  | 0.311        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.246        |
+| Dynamic (W)              | 0.250        |
 | Device Static (W)        | 0.061        |
 | Effective TJA (C/W)      | 3.7          |
 | Max Ambient (C)          | 83.9         |
@@ -53,19 +53,19 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.006 |        9 |       --- |             --- |
-| Slice Logic              |     0.010 |    15857 |       --- |             --- |
-|   LUT as Logic           |     0.007 |     6160 |     14600 |           42.19 |
+| Slice Logic              |     0.011 |    15949 |       --- |             --- |
+|   LUT as Logic           |     0.008 |     6283 |     14600 |           43.03 |
 |   LUT as Distributed RAM |     0.002 |     2744 |      5000 |           54.88 |
 |   CARRY4                 |    <0.001 |      732 |      3650 |           20.05 |
 |   F7/F8 Muxes            |    <0.001 |      292 |     14600 |            2.00 |
-|   Register               |    <0.001 |     2498 |     29200 |            8.55 |
+|   Register               |    <0.001 |     2443 |     29200 |            8.37 |
 |   Others                 |     0.000 |       65 |       --- |             --- |
-| Signals                  |     0.017 |    13278 |       --- |             --- |
+| Signals                  |     0.018 |    13530 |       --- |             --- |
 | MMCM                     |     0.204 |        2 |         3 |           66.67 |
-| DSPs                     |     0.005 |       20 |        80 |           25.00 |
+| DSPs                     |     0.008 |       26 |        80 |           32.50 |
 | I/O                      |     0.004 |       24 |       150 |           16.00 |
 | Static Power             |     0.061 |          |           |                 |
-| Total                    |     0.308 |          |           |                 |
+| Total                    |     0.311 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -75,7 +75,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.044 |       0.039 |      0.005 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.047 |       0.043 |      0.005 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.123 |       0.113 |      0.009 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.002 |       0.001 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -147,16 +147,16 @@ Table of Contents
 +-------------+-----------+
 | Name        | Power (W) |
 +-------------+-----------+
-| top         |     0.246 |
+| top         |     0.250 |
 |   cmd_input |     0.006 |
 |     cc_fifo |     0.005 |
 |       U0    |     0.005 |
-|   voice0    |     0.005 |
-|   voice1    |     0.005 |
-|   voice2    |     0.005 |
-|   voice3    |     0.005 |
-|   voice4    |     0.005 |
-|   voice5    |     0.005 |
+|   voice0    |     0.006 |
+|   voice1    |     0.006 |
+|   voice2    |     0.006 |
+|   voice3    |     0.006 |
+|   voice4    |     0.006 |
+|   voice5    |     0.006 |
 +-------------+-----------+
 
 

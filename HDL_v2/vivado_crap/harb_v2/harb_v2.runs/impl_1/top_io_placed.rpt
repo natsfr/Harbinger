@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2020.2 (lin64) Build 3064766 Wed Nov 18 09:12:47 MST 2020
-| Date                      : Sun May 21 19:29:22 2023
+| Date                      : Thu May 25 03:01:16 2023
 | Host                      : Hellgate running 64-bit Ubuntu 22.04.2 LTS
 | Command                   : report_io -file top_io_placed.rpt
 | Design                    : top

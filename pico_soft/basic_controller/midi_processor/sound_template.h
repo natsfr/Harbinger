@@ -14,5 +14,5 @@ int32_t temp_amp[NB_OP] = { 0, 0, 0, 0, 0, 0 };
 //uint32_t temp_modin_1 = 0x4802C3;
 //uint32_t temp_modin_2 = 0xFC0;
 
-uint32_t temp_modin_1 = 0xFF;
-uint32_t temp_modin_2 = 0xFFF;
+uint32_t temp_modin_1 = 0x0;
+uint32_t temp_modin_2 = 0xFC0;

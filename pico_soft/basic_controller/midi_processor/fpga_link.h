@@ -56,8 +56,8 @@ typedef struct __attribute__((__packed__)) {
 
 // cmd_voice: |31 24|23 16|15 0|
 //            |cmd  |voice|rsvd|
-// modin_1: |31 30|29 24|23 18|17 12|11  6|5   0|
-//          |rsvd |modi4|modi3|modi2|modi1|modi0|
+// modin_1: |31   |   30|29 24|23 18|17 12|11  6|5   0|
+//          |rsvd |OShot|modi4|modi3|modi2|modi1|modi0|
 // modin_2: |31                   12|11  6|5   0|
 //          |rsvd                   |muxo |modi0|
 
@@ -68,6 +68,7 @@ typedef struct __attribute__((__packed__)) {
 typedef struct __attribute__((__packed__)) {
     uint32_t cmd_voice;
 	int32_t freq[6];
+	int32_t ampmod;
 } SET_FREQ;
 
 /* ================================== */

@@ -29,10 +29,16 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
 	logic signed [31:0]re_inc[0:5]; // Release level step
 	logic signed [31:0]amplitude[0:5]; // Override the ADSR for an operator (usefull for internal operator)
 	
+	logic signed [31:0]mod_amp;
+	
 	logic [31:0]modin_1;
 	logic [31:0]modin_2;
 	
 	logic [5:0]modin_op[0:5];
+	
+	logic oneshot;
+	logic [5:0]shot = 0;
+	logic reset_shot = 0;
 	
 	always_ff @(posedge clk37)
 	begin
@@ -42,6 +48,7 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
         modin_op[3] <= modin_1[23:18];
         modin_op[4] <= modin_1[29:24];
         modin_op[5] <= modin_2[5:0];
+        oneshot <= modin_1[30];
 	end
 	
 	logic [5:0]outmix = modin_2[11:6];
@@ -97,6 +104,11 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
                         TOGGLE_VC: begin
                             if (cmd_lock == 0) begin
                                 trig <= (cmd_voices[VOICE_NUM] == 1) ? 1 : 0;
+                                if (cmd_voices[VOICE_NUM] == 0) begin
+                                    reset_shot <= 1;
+                                end else begin
+                                    reset_shot <= 0;
+                                end
                             end
                         end
                         SET_FREQ_CMD: begin
@@ -190,8 +202,13 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
                 end
                 SETF: begin
                     counter <= counter + 1;
-                    freq[counter] <= fcmd.cmd_data;
-                    if (counter == 5) begin
+                    
+                    if(counter == 6) begin
+                        mod_amp <= fcmd.cmd_data;
+                    end else if(counter < 6) begin
+                        freq[counter] <= fcmd.cmd_data;
+                    end
+                    if (counter == 6) begin
                         state <= IDLE;
                         counter <= 0;
                         cmd_detect <= 0;
@@ -212,7 +229,10 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
 	logic signed [15:0]reg_samples[0:5];
 	logic signed [18:0]mix_out;
 	
-	assign sample = mix_out[18:3];
+	logic signed [31:0]modulated_out;
+	
+	assign modulated_out = $signed(mix_out[18:3]) * $signed(mod_amp[31:16]);
+	assign sample = modulated_out[31:16];
 	
 	logic [31:0]op_adsr_count[0:5];
 	logic signed [31:0]op_adsr_amp[0:5];
@@ -275,11 +295,16 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
                 
                 op_pcount[op_selector] <= op_pcount[op_selector] + (freq[op_selector] + op_modin[op_selector]);
                 
+                if (trigged == 0) begin
+                    shot[op_selector] <= 0;
+                end
+                
                 case(op_state[op_selector])
                     IDLE: begin
                         op_pcount[op_selector] <= 0;
-                        if (trigged) begin
+                        if (trigged && !(oneshot && shot[op_selector])) begin
                             op_state[op_selector] <= ATTACK;
+                            shot[op_selector] <= 1;
                         end
                     end
                     ATTACK: begin
@@ -333,7 +358,7 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
             end
             GET_WAVE: begin
                 current_sample <= wavetable[wrpointer];
-                next_sample <= wavetable2[wrpointer_next];
+                //next_sample <= wavetable2[wrpointer_next];
                 
                 /*fract <= { {8{1'b0}}, op_pcount[op_selector][23:16]};
                 interpolation <= {next_sample, {8{1'd0}}} - {current_sample, {8{1'd0}}} * fract;*/
@@ -341,9 +366,9 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
                 interpolation <= $signed({wavetable2[wrpointer_next], {24{1'd0}}} - {wavetable[wrpointer], {24{1'd0}}}) * $signed({ {8{1'b0}}, op_pcount[op_selector][23:0]});
                 
                 if (amplitude[op_selector] != 0) begin
-                    sign_adsr_amp <= (trigged == 1'b1) ? amplitude[op_selector][31:16] : 0;
+                    sign_adsr_amp <= (trigged == 1'b1) ? (amplitude[op_selector][31:16]) : 0;
                 end else begin
-                    sign_adsr_amp <= op_adsr_amp[op_selector][31:16];
+                    sign_adsr_amp <=  op_adsr_amp[op_selector][31:16];
                 end
                 calc_state <= CALC;
             end
@@ -374,7 +399,7 @@ module voice(input wire clk37, FSM_CMD fcmd, input wire cmd_lock, output wire si
 	
     /*generate
         if (VOICE_NUM == 0) begin
-           ila_0 deb(.clk(clk37), .probe0(trig_debug), .probe1(calc_state), .probe2(op_state[0]), .probe3(current_sample), .probe4(samples[0]), .probe5(op_pcount[0]), .probe6(fcmd.cmd_data_valid), .probe7(interpolation[35:28]), .probe8(op_adsr_amp[0]), .probe9(mix_out[18:3]));
+           ila_0 deb(.clk(clk37), .probe0(trig_debug), .probe1(calc_state), .probe2(op_state[0]), .probe3(current_sample), .probe4(modulated_out), .probe5(mod_amp), .probe6(fcmd.cmd_data_valid), .probe7(interpolation[35:28]), .probe8(op_adsr_amp[0]), .probe9(mix_out[18:3]));
         end
     endgenerate*/
 	
