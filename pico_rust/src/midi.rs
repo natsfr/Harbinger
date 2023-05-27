@@ -52,11 +52,16 @@ pub struct IncrementalMidiParser {
     running_status: ChannelMessagePrefix
 }
 
-type MidiChannel = u8;
+pub type MidiChannel = u8;
 
+#[derive(Clone, Copy)]
 pub struct MidiNote {
-    note: u8,
-    velocity: u8
+    pub note: u8,
+    pub velocity: u8
+}
+
+impl Default for MidiNote {
+    fn default() -> Self { Self { note: 0, velocity: 0 } }
 }
 
 pub enum Message {

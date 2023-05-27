@@ -1,4 +1,5 @@
 pub const NB_OP : usize = 6;
+pub const POLYPHONY : usize = 6;
 
 /// Bitfield describing operator inputs
 #[repr(packed(1))]
@@ -38,6 +39,21 @@ impl ModulationInputs {
         }
     }
 
+    /// Target all voice/operators
+    pub fn all() -> ModulationInputs {
+        ModulationInputs { input_bit_field: (1 << NB_OP) - 1 }
+    }
+
+    /// Targetting no voice
+    pub fn none() -> ModulationInputs {
+        ModulationInputs { input_bit_field: 0 }
+    }
+
+    /// Targetting a single operator/voice
+    pub fn singleton(n : usize) -> ModulationInputs {
+        ModulationInputs { input_bit_field: 1 << n }
+    }
+
     /// Move the content to a given position. Can't have extra
     /// bits by construction
     pub fn shift(self, shift : usize) -> u32 {
@@ -63,8 +79,10 @@ impl VoiceCommand {
 #[derive(Copy, Clone)]
 pub struct Nop { cmd_voice : VoiceCommand }
 
-impl Nop {
-
+impl Default for Nop {
+    fn default() -> Self {
+        Self { cmd_voice: VoiceCommand::mk(CommandCodes::Nop, ModulationInputs::none()) }
+    }
 }
 
 /// Set a bit at a given position (we hope this is inlined and optimized)
@@ -130,13 +148,79 @@ pub struct SetVoice {
     pub mod_matrix : ModMatrix
 }
 
+impl SetVoice {
+    pub fn default_of_voice(voice : usize) -> SetVoice {
+        SetVoice {
+            cmd_voice: VoiceCommand::mk(CommandCodes::SetVoice, ModulationInputs::singleton(voice)),
+            at_time: [ 2457500, 2457500, 2457500, 2457500, 2457500, 2457500 ],
+            at_inc: [ 873, 873, 873, 873, 873, 873 ],
+            de_time: [ 24575, 24575, 24575, 24575, 24575, 24575 ],
+            de_inc: [ -10, -10, -10, -10, -10, -10 ],
+            su_time: [ 2457500, 2457500, 2457500, 2457500, 2457500, 2457500 ],
+            su_lvl: [ 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF ],
+            re_time: [ 100000, 100000, 100000, 100000, 100000, 100000 ],
+            re_inc: [ -21474, -21474, -21474, -21474, -21474, -21474 ],
+            amplitude: [ 0, 0, 0, 0, 0, 0 ],
+            mod_matrix: ModMatrix::new(
+                ModulationInputs::none(),
+                ModulationInputs::none(),
+                ModulationInputs::none(),
+                ModulationInputs::none(),
+                ModulationInputs::none(),
+                ModulationInputs::none(),
+                ModulationInputs::all())
+        }
+    }
+}
+
 #[repr(packed(1))]
 pub struct Trig {
     pub cmd_voice : VoiceCommand
+}
+
+impl Trig {
+    pub fn of_inputs(modi : ModulationInputs) -> Self {
+        Self {
+            cmd_voice: VoiceCommand::mk(CommandCodes::TrigVoice, modi)
+        }
+    }
 }
 
 #[repr(packed(1))]
 pub struct SetFreq {
     pub cmd_voice : VoiceCommand,
     pub freqs : [i32; 6]
+}
+
+impl SetFreq {
+    pub fn default_of_voice(voice : usize) -> Self {
+        Self {
+            cmd_voice: VoiceCommand::mk(
+                CommandCodes::SetFreq,
+                ModulationInputs::singleton(voice)),
+            freqs: [0; 6]
+        }
+    }
+}
+
+pub struct FpgaLink {
+    /* To be defined ... */
+}
+
+impl FpgaLink {
+    pub fn send_set_voice(&mut self, set_voice: &SetVoice) {
+        todo!()
+    }
+
+    pub fn send_set_freq(&mut self, set_freq: &SetFreq) {
+        todo!()
+    }
+
+    pub fn send_nop(&mut self, set_freq: &Nop) {
+        todo!()
+    }
+
+    pub fn send_trig(&mut self, trig: &Trig) {
+        todo!()
+    }
 }
