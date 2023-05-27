@@ -22,6 +22,7 @@ mod midi;
 mod voices;
 
 use core::cell::RefCell;
+use fpga::FpgaLink;
 use fugit::RateExtU32;
 use cortex_m::interrupt::Mutex;
 use frame_buffer::Drawer;
@@ -53,6 +54,7 @@ use rp_pico::hal::pac;
 // A shorter alias for the Hardware Abstraction Layer, which provides
 // higher-level drivers.
 use rp_pico::hal;
+use voices::VoiceManager;
 
 const KEY_POL_RATE: MicrosDurationU32 =
     MicrosDurationU32::millis(10);
@@ -97,6 +99,28 @@ fn setup_pwm<PWM : hal::pwm::SliceId>(mut pwm : hal::pwm::Slice<PWM, FreeRunning
     pwm.set_ph_correct();
     pwm.enable();
     pwm
+}
+
+/// basic screen drawing to at least display somthing, move elsewhere, do something
+/// else with it completly
+fn stupid_screen_draw() {
+    let mut x : usize = 0;
+    let mut prev_key : usize = 0;
+
+    Drawer::clear();
+
+    Drawer::rect(x, 0, 30, 2, 0xFFF0);
+    x = (x + 4) % (ili9341screen::WIDTH + 30);
+
+    let key = read_last_key().unwrap();
+    if key != 0 {
+        Drawer::rect(key as usize * 20, 120, 4, 4, 0xFFFF);
+        prev_key = key as usize;
+    }
+
+    if prev_key != 0 {
+        Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
+    }
 }
 
 /// Entry point to our bare-metal application.
@@ -199,42 +223,31 @@ fn main() -> ! {
         G_KEYS.borrow(cs).replace(Some(keys))
     });
 
-    let mut x : usize = 0;
-    let mut prev_key : usize = 0;
-
     // Unmask the timer0 IRQ so that it will generate an interrupt
     let mut alarm0 = timer.alarm_0().unwrap();
     alarm0.schedule(KEY_POL_RATE).unwrap();
     alarm0.enable_interrupt();
 
+    // we create a voice manager on midi channel 0
+    let mut voice_manager =
+        VoiceManager::default_on_midi_channel(0);
+    let mut fpga_link = FpgaLink::new();
+
     unsafe {
         pac::NVIC::unmask(pac::Interrupt::TIMER_IRQ_0);
         G_ALARM0 = Some(alarm0);
     }
+
+    // we draw at least once
+    stupid_screen_draw();
+
     loop {
         midi_uart.feed_data_into_parser();
 
-        while let Some(midiCommand) = midi_uart.try_read_command() {
-            // TODO : do something with the midi commands here
-            //        more than likely send it to the "voice manager"
-            //        somewhere
-
+        while let Some(midi_command) = midi_uart.try_read_command() {
+            voice_manager.handle_midi_command(&mut fpga_link, midi_command)
         }
 
-        Drawer::clear();
-
-        Drawer::rect(x, 0, 30, 2, 0xFFF0);
-        x = (x + 4) % (ili9341screen::WIDTH + 30);
-
-        let key = read_last_key().unwrap();
-        if key != 0 {
-            Drawer::rect(key as usize * 20, 120, 4, 4, 0xFFFF);
-            prev_key = key as usize;
-        }
-
-        if prev_key != 0 {
-            Drawer::rect(prev_key * 20, 80, 4, 4, 0xFF00);
-        }
         screen.push_frame();
         cortex_m::interrupt::free(|cs| {
             unsafe {

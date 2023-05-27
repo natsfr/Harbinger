@@ -189,7 +189,8 @@ impl Trig {
 #[repr(packed(1))]
 pub struct SetFreq {
     pub cmd_voice : VoiceCommand,
-    pub freqs : [i32; 6]
+    pub freqs : [i32; 6],
+	pub ampmod : i32
 }
 
 impl SetFreq {
@@ -198,7 +199,8 @@ impl SetFreq {
             cmd_voice: VoiceCommand::mk(
                 CommandCodes::SetFreq,
                 ModulationInputs::singleton(voice)),
-            freqs: [0; 6]
+            freqs: [0; 6],
+            ampmod: 0
         }
     }
 }
@@ -208,6 +210,10 @@ pub struct FpgaLink {
 }
 
 impl FpgaLink {
+    pub fn new() -> Self {
+        Self {}
+    }
+
     pub fn send_set_voice(&mut self, set_voice: &SetVoice) {
         todo!()
     }
