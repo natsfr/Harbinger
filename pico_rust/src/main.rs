@@ -28,6 +28,7 @@ use cortex_m::interrupt::Mutex;
 use frame_buffer::Drawer;
 use fugit::MicrosDurationU32;
 use hal::Spi;
+use hal::gpio::{FunctionPio0, Pin};
 use hal::pwm::FreeRunning;
 use hal::pwm::Slices;
 use hal::timer::Alarm;
@@ -37,7 +38,7 @@ use keys::Keys;
 use midi::MidiUart;
 use rgb_led::RgbLed;
 // The macro for our start-up function
-use rp_pico::entry;
+//use rp_pico::entry;
 use hal::pac::interrupt;
 
 // Ensure we halt the program on panic (if we don't mention this crate it won't
@@ -55,6 +56,10 @@ use rp_pico::hal::pac;
 // higher-level drivers.
 use rp_pico::hal;
 use voices::VoiceManager;
+
+// Using PIO for custom fast spi
+use hal::pio::{PIOExt, ShiftDirection};
+use hal::dma::{double_buffer, single_buffer, DMAExt};
 
 const KEY_POL_RATE: MicrosDurationU32 =
     MicrosDurationU32::millis(10);
@@ -130,7 +135,7 @@ fn stupid_screen_draw() {
 ///
 /// The function configures the RP2040 peripherals, then blinks the LED in an
 /// infinite loop.
-#[entry]
+#[rp2040_hal::entry]
 fn main() -> ! {
     unsafe { cortex_m::interrupt::enable(); }
 
@@ -164,7 +169,14 @@ fn main() -> ! {
     let sio = hal::Sio::new(pac.SIO);
 
     // Set the pins up according to their function on this particular board
-    let pins = rp_pico::Pins::new(
+    /* what that shit example are not giving the same ! */
+    /*let pins = rp_pico::Pins::new(
+        pac.IO_BANK0,
+        pac.PADS_BANK0,
+        sio.gpio_bank0,
+        &mut pac.RESETS,
+    );*/
+    let pins = hal::gpio::Pins::new(
         pac.IO_BANK0,
         pac.PADS_BANK0,
         sio.gpio_bank0,
@@ -219,6 +231,8 @@ fn main() -> ! {
         Some(rgbled)
     );
 
+    
+
     cortex_m::interrupt::free(|cs| {
         G_KEYS.borrow(cs).replace(Some(keys))
     });
@@ -232,6 +246,62 @@ fn main() -> ! {
     let mut voice_manager =
         VoiceManager::default_on_midi_channel(0);
     let mut fpga_link = FpgaLink::new();
+    /* NATS TESTS */
+    let program = pio_proc::pio_asm!(
+            ".side_set 2			; side 0: clk | side 1: cs",
+            ".wrap_target",
+            "bitloop:",
+            "out pins, 2        side 0x0 [1]",
+            "jmp x-- bitloop    side 0x1 [1]",
+            "out pins, 2        side 0x0",
+            "mov x, y           side 0x0     ; Reload bit counter from Y",
+            "jmp !osre bitloop  side 0x1 [1] ; Fall-through if TXF empties",
+            "nop                side 0x0 [1] ; CSn back porch",
+            "nop                side 0x2 [1]",
+            "nop                side 0x3 [1] ; One more clock cycle for fpga",
+            "nop                side 0x2 [1] ; One more clock cycle for fpga",
+            "nop                side 0x3 [1] ; One more clock cycle for fpga",
+        "public entry_point:                 ; Must set X,Y to n-2 before starting!",
+            "pull ifempty       side 0x2 [1] ; Block with CSn high (minimum 2 cycles)",
+            "nop                side 0x3 [1]",
+            "nop                side 0x2 [1] ; One more clock cycle for fpga",
+            "nop                side 0x3 [1] ; One more clock cycle for fpga",
+            "nop                side 0x2 [1] ; One more clock cycle for fpga",
+            ".wrap                           ; Note ifempty to avoid time-of-check race",
+    );
+
+    // Because those dumbass break everything everyday I still use old way
+    //let fpga_clk: hal::gpio::Pin<_, FunctionPio0, _> = pins.gpio16.into_function();
+    let fpga_clk: Pin<_, FunctionPio0> = pins.gpio16.into_mode();
+    let fpga_clk_id = 16;
+    let fpga_cs: Pin<_, FunctionPio0> = pins.gpio17.into_mode();
+    let fpga_cs_id = 17;
+    let fpga_mosi0: Pin<_, FunctionPio0> = pins.gpio18.into_mode();
+    let fpga_mosi0_id = 18;
+    let fpga_mosi1: Pin<_, FunctionPio0> = pins.gpio19.into_mode();
+    let fpga_mosi1_id = 19;
+
+    let (mut pio, sm0, _, _, _) = pac.PIO0.split(&mut pac.RESETS);
+
+    let installed_program = pio.install(&program.program).unwrap();
+
+    let (mut sm, rx, tx) = rp2040_hal::pio::PIOBuilder::from_program(installed_program)
+        .out_pins(fpga_mosi0_id, 2)
+        .clock_divisor_fixed_point(1, 0)
+        .autopull(false)
+        .autopush(true)
+        .push_threshold(32)
+        .out_shift_direction(ShiftDirection::Left)
+        .side_set_pin_base(fpga_clk_id)
+        .build(sm0);
+
+    sm.set_pindirs([(fpga_clk_id, hal::pio::PinDir::Output), (fpga_cs_id, hal::pio::PinDir::Output), (fpga_mosi0_id, hal::pio::PinDir::Output), (fpga_mosi1_id, hal::pio::PinDir::Output)]);
+    sm.start();
+
+    let dma = pac.DMA.split(&mut pac.RESETS);
+
+    // We use single buffer for this one triggered by note send and configuration of voice
+
 
     unsafe {
         pac::NVIC::unmask(pac::Interrupt::TIMER_IRQ_0);

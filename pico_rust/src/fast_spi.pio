@@ -1,0 +1,60 @@
+.program fast_spi_pio
+.side_set 2			; side 0: clk | side 1: cs
+
+;.wrap_target
+;	pull ifempty side 0x2 [3] 	; We stale if the fifo is empty while keeping CS high (at least 4 cycle)
+;	bitsend:
+;		out pins 0x2 side 0x0 		; We push 2 bit of data on MOSI0 and MOSI1 (one bit each)
+;		jmp x-- bitsend side 0x1	; We jump to next bit while toggling clock to 1
+;		mov x y side 0x1			; Reload the X register as a bit counter
+;.wrap
+
+.wrap_target
+bitloop:
+    out pins, 2        side 0x0 [1]
+    jmp x-- bitloop    side 0x1 [1]
+
+    out pins, 2        side 0x0
+    mov x, y           side 0x0     ; Reload bit counter from Y
+    jmp !osre bitloop  side 0x1 [1] ; Fall-through if TXF empties
+
+    nop                side 0x0 [1] ; CSn back porch
+	nop                side 0x2 [1]
+    nop                side 0x3 [1] ; One more clock cycle for fpga
+    nop                side 0x2 [1] ; One more clock cycle for fpga
+    nop                side 0x3 [1] ; One more clock cycle for fpga
+public entry_point:                 ; Must set X,Y to n-2 before starting!
+    pull ifempty       side 0x2 [1] ; Block with CSn high (minimum 2 cycles)
+    nop                side 0x3 [1]
+    nop                side 0x2 [1] ; One more clock cycle for fpga
+    nop                side 0x3 [1] ; One more clock cycle for fpga
+    nop                side 0x2 [1] ; One more clock cycle for fpga
+.wrap                               ; Note ifempty to avoid time-of-check race
+ 
+% c-sdk {
+	#include "hardware/gpio.h"
+	
+	static inline void pio_dspi_cs_init(PIO pio, uint32_t sm, uint32_t offset, uint8_t spi_word_size, uint32_t sck_pin, uint32_t mosi0_pin) {
+		pio_sm_config c = fast_spi_pio_program_get_default_config(offset);
+		sm_config_set_out_pins(&c, mosi0_pin, 2);
+		sm_config_set_sideset(&c, 2, false, false);
+		sm_config_set_sideset_pins(&c, sck_pin);
+		sm_config_set_out_shift(&c, false, true, spi_word_size);
+		
+		uint32_t cs_pin = sck_pin + 1;
+		uint32_t mosi1_pin = mosi0_pin + 1;
+		
+		pio_sm_set_pins_with_mask(pio, sm, (1u << cs_pin), (1u << cs_pin) | (1u << sck_pin) | (1u << mosi1_pin) | (1u << mosi0_pin));
+		pio_sm_set_pindirs_with_mask(pio, sm,(1u << cs_pin) | (1u << sck_pin) | (1u << mosi1_pin) | (1u << mosi0_pin), (1u << cs_pin) | (1u << sck_pin) | (1u << mosi1_pin) | (1u << mosi0_pin));
+		pio_gpio_init(pio, cs_pin);
+		pio_gpio_init(pio, sck_pin);
+		pio_gpio_init(pio, mosi1_pin);
+		pio_gpio_init(pio, mosi0_pin);
+		
+		uint entry_point = offset + fast_spi_pio_offset_entry_point;
+		pio_sm_init(pio, sm, entry_point, &c);
+		pio_sm_exec(pio, sm, pio_encode_set(pio_x, spi_word_size/2 - 2));
+		pio_sm_exec(pio, sm, pio_encode_set(pio_y, spi_word_size/2 - 2));
+		pio_sm_set_enabled(pio, sm, true);
+	}
+%}
