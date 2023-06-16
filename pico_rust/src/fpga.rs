@@ -1,3 +1,6 @@
+use pio::{ProgramWithDefines, Program};
+use rp2040_hal::{gpio::{bank0::{Gpio16, Gpio17, Gpio18, Gpio19}, PinId, Pin, FunctionPio0}, pio::{PIO, ShiftDirection, PinDir, StateMachine, SM0, Stopped, UninitStateMachine}, pac::PIO0, dma::Channels};
+
 pub const NB_OP : usize = 6;
 pub const POLYPHONY : usize = 6;
 
@@ -206,12 +209,72 @@ impl SetFreq {
 }
 
 pub struct FpgaLink {
-    /* To be defined ... */
+    channel : Channels
 }
 
 impl FpgaLink {
-    pub fn new() -> Self {
-        Self {}
+    pub fn new(
+        mut pio : PIO<PIO0>,
+        sm0: UninitStateMachine<(PIO0, SM0)>,
+        channel: Channels,
+        fpga_clk : Pin<Gpio16, <Gpio16 as PinId>::Reset>,
+        fpga_cs : Pin<Gpio17, <Gpio17 as PinId>::Reset>,
+        fpga_mosi0 : Pin<Gpio18, <Gpio18 as PinId>::Reset>,
+        fpga_mosi1 : Pin<Gpio19, <Gpio19 as PinId>::Reset>,
+    ) -> Self {
+
+        let program = pio_proc::pio_asm!(
+                ".side_set 2			; side 0: clk | side 1: cs",
+                ".wrap_target",
+                "bitloop:",
+                "out pins, 2        side 0x0 [1]",
+                "jmp x-- bitloop    side 0x1 [1]",
+                "out pins, 2        side 0x0",
+                "mov x, y           side 0x0     ; Reload bit counter from Y",
+                "jmp !osre bitloop  side 0x1 [1] ; Fall-through if TXF empties",
+                "nop                side 0x0 [1] ; CSn back porch",
+                "nop                side 0x2 [1]",
+                "nop                side 0x3 [1] ; One more clock cycle for fpga",
+                "nop                side 0x2 [1] ; One more clock cycle for fpga",
+                "nop                side 0x3 [1] ; One more clock cycle for fpga",
+            "public entry_point:                 ; Must set X,Y to n-2 before starting!",
+                "pull ifempty       side 0x2 [1] ; Block with CSn high (minimum 2 cycles)",
+                "nop                side 0x3 [1]",
+                "nop                side 0x2 [1] ; One more clock cycle for fpga",
+                "nop                side 0x3 [1] ; One more clock cycle for fpga",
+                "nop                side 0x2 [1] ; One more clock cycle for fpga",
+                ".wrap                           ; Note ifempty to avoid time-of-check race",
+        );
+
+        let installed_program = pio.install(&program.program).unwrap();
+
+        let fpga_clk: Pin<_, FunctionPio0> = fpga_clk.into_mode();
+        let fpga_cs: Pin<_, FunctionPio0> = fpga_cs.into_mode();
+        let fpga_mosi0: Pin<_, FunctionPio0> = fpga_mosi0.into_mode();
+        let fpga_mosi1: Pin<_, FunctionPio0> = fpga_mosi1.into_mode();
+
+        let (mut sm, rx, tx) = rp2040_hal::pio::PIOBuilder::from_program(installed_program)
+            .out_pins(fpga_mosi0.id().num, 2)
+            .clock_divisor_fixed_point(1, 0)
+            .autopull(false)
+            .autopush(true)
+            .push_threshold(32)
+            .out_shift_direction(ShiftDirection::Left)
+            .side_set_pin_base(fpga_clk.id().num)
+            .build(sm0);
+
+        sm.set_pindirs([
+            (fpga_clk.id().num, PinDir::Output),
+            (fpga_cs.id().num, PinDir::Output),
+            (fpga_mosi0.id().num, PinDir::Output),
+            (fpga_mosi1.id().num, PinDir::Output)
+        ]);
+
+        sm.start();
+
+        FpgaLink {
+            channel: channel
+        }
     }
 
     pub fn send_set_voice(&mut self, set_voice: &SetVoice) {
