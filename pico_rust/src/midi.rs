@@ -232,10 +232,16 @@ impl IncrementalMidiParser {
     }
 
     pub fn pull(&mut self) -> Option<Message> {
+        // no data available
+        if self.read_cursor == self.write_cursor { return None }
+
         let byte = self.buffer[self.read_cursor];
+        // we consume the byte
+        self.read_cursor = (self.read_cursor + 1) & (MIDI_BUFFER_SIZE - 1);
 
         // new command
         if (byte & MIDI_COMMAND_BIT) != 0 {
+
             let status = match byte & MIDI_CMD_MASK {
                 0x80 => ChannelMessagePrefix::NoteOff,
                 0x90 => ChannelMessagePrefix::NoteOn,
@@ -255,6 +261,7 @@ impl IncrementalMidiParser {
 
         } else if self.running_status != ChannelMessagePrefix::NONE {
             // remember the seen byte
+            self.read_cursor = (self.read_cursor + 1) & (MIDI_BUFFER_SIZE - 1);
             self.command_scratch[self.scratch_index] = byte;
             self.scratch_index = (self.scratch_index + 1) % SCRATCH_BUFFER_SIZE;
 
