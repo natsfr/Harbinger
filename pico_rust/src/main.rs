@@ -208,13 +208,6 @@ fn main() -> ! {
         spi,
         &mut timer);
 
-    let mut midi_uart =
-        MidiUart::init(
-            pac.UART0,
-            pins.gpio13,
-            rate,
-            &mut pac.RESETS);
-
     let mut rgbled = RgbLed::init(
         setup_pwm(pwm_slices.pwm6),
         setup_pwm(pwm_slices.pwm5),
@@ -223,12 +216,22 @@ fn main() -> ! {
         pins.gpio28);
 
     rgbled.low();
+
+    let mut midi_uart =
+        MidiUart::init(
+            pac.UART0,
+            pins.gpio13,
+            rate,
+            &mut pac.RESETS,
+            Some(rgbled));
+
+
     let keys = Keys::init_partial(
         pins.gpio6,
         pins.gpio7,
         pins.gpio20,
         pins.gpio21,
-        Some(rgbled)
+        None
     );
 
     cortex_m::interrupt::free(|cs| {
@@ -274,7 +277,7 @@ fn main() -> ! {
             voice_manager.handle_midi_command(&mut fpga_link, midi_command)
         }
 
-        screen.push_frame();
+        // screen.push_frame();
         cortex_m::interrupt::free(|cs| {
             unsafe {
                 if let Some(alarm0) = G_ALARM0.as_mut() {

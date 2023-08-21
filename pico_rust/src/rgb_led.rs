@@ -63,7 +63,9 @@ impl RgbLed {
         if st == 0 || st >= 8 { st = 1 }
         self.state = st;
         
-        let high_duty = 0xFFFF as u16;
+        // let high_duty = 0xFFFF as u16;
+        let high_duty = 0xFF as u16;
+
         self.pwm_b.channel_a.set_duty(if (st & 1) != 0 { high_duty } else { 0 });
         self.pwm_rg.channel_a.set_duty(if (st & 2) != 0 { high_duty } else { 0 });
         self.pwm_rg.channel_b.set_duty(if (st & 4) != 0 { high_duty } else { 0 });

@@ -1,9 +1,13 @@
+use core::borrow::BorrowMut;
+
 use embedded_hal::serial::Read;
 use rp2040_hal::{
     uart::{UartPeripheral, DataBits, UartConfig, StopBits, Enabled}, gpio::{PinId, bank0::Gpio13, Pin, FunctionUart},
     pac::{RESETS, UART0}};
 
 use fugit::{RateExtU32, HertzU32};
+
+use crate::rgb_led::RgbLed;
 
 
 pub const NOTE_FREQ : [i32; 128] = [
@@ -137,6 +141,7 @@ pub const NOTE_FREQ : [i32; 128] = [
     0x217344A
 ];
 
+#[derive(PartialEq)]
 enum ChannelMessagePrefix {
     NONE = 0x00,
     NoteOff = 0x80,
@@ -181,7 +186,10 @@ pub struct IncrementalMidiParser {
     channel : u8,
 
     /// Currently running status
-    running_status: ChannelMessagePrefix
+    running_status: ChannelMessagePrefix,
+
+    /// blink on note on
+    debug_led: Option<RgbLed>
 }
 
 pub type MidiChannel = u8;
@@ -202,8 +210,9 @@ pub enum Message {
     ControlChange(MidiChannel, u8)
 }
 
+        
 impl IncrementalMidiParser {
-    pub fn new() -> IncrementalMidiParser {
+    pub fn new(rgb_led: Option<RgbLed>) -> IncrementalMidiParser {
         IncrementalMidiParser {
             buffer: [0; MIDI_BUFFER_SIZE],
             command_scratch: [0; SCRATCH_BUFFER_SIZE],
@@ -211,7 +220,8 @@ impl IncrementalMidiParser {
             write_cursor: 0,
             read_cursor: 0,
             channel: 0,
-            running_status: ChannelMessagePrefix::NONE
+            running_status: ChannelMessagePrefix::NONE,
+            debug_led: rgb_led
         }
     }
 
@@ -243,7 +253,7 @@ impl IncrementalMidiParser {
             self.channel = byte & MIDI_CHAN_MASK;
             None
 
-        } else {
+        } else if self.running_status != ChannelMessagePrefix::NONE {
             // remember the seen byte
             self.command_scratch[self.scratch_index] = byte;
             self.scratch_index = (self.scratch_index + 1) % SCRATCH_BUFFER_SIZE;
@@ -269,6 +279,10 @@ impl IncrementalMidiParser {
                         velocity: self.command_scratch[1]
                     };
 
+                    if let Some(rgb) = self.debug_led.borrow_mut() {
+                        rgb.tick();
+                    }
+
                     Some(Message::NoteOn(self.channel, note))
                 }
 
@@ -284,6 +298,8 @@ impl IncrementalMidiParser {
                 ChannelMessagePrefix::ChannelPresure => { None }
                 _ => None
             }
+        }  else {
+            None
         }
     }
 }
@@ -298,13 +314,14 @@ impl MidiUart {
         uart0 : UART0,
         gpio : Pin<Gpio13, <Gpio13 as PinId>::Reset>,
         freq : HertzU32,
-        resets: &mut RESETS
+        resets: &mut RESETS,
+        rgb_led: Option<RgbLed>
     ) -> MidiUart {
 
         let pins = ((), gpio.into_mode::<FunctionUart>());
 
         let conf =
-            UartConfig::new(2400.Hz(), DataBits::Eight, None, StopBits::One);
+            UartConfig::new(31500.Hz(), DataBits::Eight, None, StopBits::One);
 
         // Need to perform clock init before using UART or it will freeze.
         let uart = UartPeripheral::new(uart0, pins, resets)
@@ -313,7 +330,7 @@ impl MidiUart {
 
         MidiUart {
             midi_uart: uart,
-            parser : IncrementalMidiParser::new()
+            parser : IncrementalMidiParser::new(rgb_led)
         }
     }
 
@@ -321,9 +338,8 @@ impl MidiUart {
     pub fn feed_data_into_parser(&mut self) {
         while self.midi_uart.uart_is_readable() {
             // we skip on error, who knows what can happen in here
-            match self.midi_uart.read() {
-                Err(_) => {}
-                Ok(val) => self.parser.push(val)
+            if let Ok(val) = self.midi_uart.read() {
+                self.parser.push(val)
             }
         }
     }
