@@ -1,5 +1,4 @@
-use pio::{ProgramWithDefines, Program};
-use rp2040_hal::{gpio::{bank0::{Gpio16, Gpio17, Gpio18, Gpio19}, PinId, Pin, FunctionPio0}, pio::{PIO, ShiftDirection, PinDir, StateMachine, SM0, Stopped, UninitStateMachine}, pac::PIO0, dma::Channels};
+use rp2040_hal::{dma::Channels, gpio::{bank0::{Gpio16, Gpio17, Gpio18, Gpio19}, FunctionNull, FunctionPio0, Pin, PinId, PullDown}, pac::PIO0, pio::{PinDir, ShiftDirection, StateMachine, Stopped, UninitStateMachine, PIO, SM0}};
 
 pub const NB_OP : usize = 6;
 pub const POLYPHONY : usize = 6;
@@ -217,10 +216,10 @@ impl FpgaLink {
         mut pio : PIO<PIO0>,
         sm0: UninitStateMachine<(PIO0, SM0)>,
         channel: Channels,
-        fpga_clk : Pin<Gpio16, <Gpio16 as PinId>::Reset>,
-        fpga_cs : Pin<Gpio17, <Gpio17 as PinId>::Reset>,
-        fpga_mosi0 : Pin<Gpio18, <Gpio18 as PinId>::Reset>,
-        fpga_mosi1 : Pin<Gpio19, <Gpio19 as PinId>::Reset>,
+        fpga_clk : Pin<Gpio16, FunctionNull, PullDown>,
+        fpga_cs : Pin<Gpio17, FunctionNull, PullDown>,
+        fpga_mosi0 : Pin<Gpio18, FunctionNull, PullDown>,
+        fpga_mosi1 : Pin<Gpio19, FunctionNull, PullDown>
     ) -> Self {
 
         let program = pio_proc::pio_asm!(
@@ -248,10 +247,10 @@ impl FpgaLink {
 
         let installed_program = pio.install(&program.program).unwrap();
 
-        let fpga_clk: Pin<_, FunctionPio0> = fpga_clk.into_mode();
-        let fpga_cs: Pin<_, FunctionPio0> = fpga_cs.into_mode();
-        let fpga_mosi0: Pin<_, FunctionPio0> = fpga_mosi0.into_mode();
-        let fpga_mosi1: Pin<_, FunctionPio0> = fpga_mosi1.into_mode();
+        let fpga_clk: Pin<_, FunctionPio0, PullDown> = fpga_clk.reconfigure();
+        let fpga_cs: Pin<_, FunctionPio0, PullDown> = fpga_cs.reconfigure();
+        let fpga_mosi0: Pin<_, FunctionPio0, PullDown> = fpga_mosi0.reconfigure();
+        let fpga_mosi1: Pin<_, FunctionPio0, PullDown> = fpga_mosi1.reconfigure();
 
         let (mut sm, rx, tx) = rp2040_hal::pio::PIOBuilder::from_program(installed_program)
             .out_pins(fpga_mosi0.id().num, 2)
@@ -277,19 +276,19 @@ impl FpgaLink {
         }
     }
 
-    pub fn send_set_voice(&mut self, set_voice: &SetVoice) {
+    pub fn send_set_voice(&mut self, _set_voice: &SetVoice) {
         todo!()
     }
 
-    pub fn send_set_freq(&mut self, set_freq: &SetFreq) {
+    pub fn send_set_freq(&mut self, _set_freq: &SetFreq) {
         todo!()
     }
 
-    pub fn send_nop(&mut self, set_freq: &Nop) {
+    pub fn send_nop(&mut self, _set_freq: &Nop) {
         todo!()
     }
 
-    pub fn send_trig(&mut self, trig: &Trig) {
+    pub fn send_trig(&mut self, _trig: &Trig) {
         todo!()
     }
 }

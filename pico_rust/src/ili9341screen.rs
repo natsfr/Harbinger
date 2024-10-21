@@ -1,16 +1,16 @@
 use core::arch::asm;
 use core::slice;
 
-use cortex_m::prelude::{_embedded_hal_blocking_spi_Write, _embedded_hal_timer_CountDown};
+use cortex_m::prelude::{_embedded_hal_timer_CountDown};
 use fugit::ExtU32;
-use embedded_hal::digital::v2::OutputPin;
+use rp2040_hal::gpio::FunctionNull;
+use rp2040_hal::gpio::PullDown;
 use rp2040_hal::Timer;
 use rp2040_hal::gpio::FunctionSpi;
-use rp2040_hal::gpio::PinId;
+use rp2040_hal::gpio::Pin;
 use rp2040_hal::spi;
 use rp2040_hal::spi::Spi;
 use rp2040_hal::spi::SpiDevice;
-use rp_pico::hal::gpio::{Pin, PushPull, Output};
 use rp_pico::hal::gpio::bank0::{
     Gpio1,
     Gpio0,
@@ -26,7 +26,7 @@ use crate::frame_buffer::Drawer;
 pub const WIDTH : usize = 240;
 
 /// ILI9341 max TFT height
-pub const Height : usize = 320;
+pub const HEIGHT : usize = 320;
 
 /// Commands that can be sent to the screen via SPI
 enum Commands {
@@ -74,26 +74,26 @@ enum Commands {
     RAMRD         = 0x2E 
 }
 
-const PositiveGammaConf : [u8; 15] =
+const POSITIVE_GAMMA_CONF : [u8; 15] =
     [0x0f, 0x31, 0x2b, 0x0c, 0x0e, 0x08, 0x4e, 0xf1, 0x37, 0x07, 0x10, 0x03, 0x0e, 0x09, 0x00];
 
-const negativeGammaConf : [u8; 15] =
+const NEGATIVE_GAMMA_CONF : [u8; 15] =
     [0x00, 0x0e, 0x14, 0x03, 0x11, 0x07, 0x31, 0xc1, 0x48, 0x08, 0x0f, 0x0c, 0x31, 0x36, 0x0f];
 
 pub struct Screen<SPIPort : SpiDevice> {
     spi : Spi<spi::Enabled, SPIPort, 8>,
 
     /// LCD chip select signal, low level enable
-    cs : Pin<Gpio1, Output<PushPull>>,
+    cs : Pin<Gpio1, Output, PushPull>,
 
     /// (SDI) SPI bus read data signal; optional
-    miso : Pin<Gpio0, FunctionSpi>,
+    miso : Pin<Gpio0, FunctionSpi, PullPull>,
 
     /// (SDO) SPI bus write data signal
-    mosi : Pin<Gpio3, FunctionSpi>,
+    mosi : Pin<Gpio3, FunctionSpi, PushPull>,
 
     /// SPI bus clock signal
-    sck : Pin<Gpio2, FunctionSpi>,
+    sck : Pin<Gpio2, FunctionSpi, PulPull>,
 
     /// LCD reset signal, low level reset
     reset : Pin<Gpio5, Output<PushPull>>,
@@ -104,12 +104,12 @@ pub struct Screen<SPIPort : SpiDevice> {
 
 impl<SPIPort : SpiDevice> Screen<SPIPort> {
     pub fn init_partial(
-        gpio0 : Pin<Gpio0, <Gpio0 as PinId>::Reset>,
-        gpio1 : Pin<Gpio1, <Gpio1 as PinId>::Reset>,
-        gpio2 : Pin<Gpio2, <Gpio2 as PinId>::Reset>,
-        gpio3 : Pin<Gpio3, <Gpio3 as PinId>::Reset>,
-        gpio4 : Pin<Gpio4, <Gpio4 as PinId>::Reset>,
-        gpio5 : Pin<Gpio5, <Gpio5 as PinId>::Reset>,
+        gpio0 : Pin<Gpio0, FunctionNull, PullDown>,
+        gpio1 : Pin<Gpio1, FunctionNull, PullDown>,
+        gpio2 : Pin<Gpio2, FunctionNull, PullDown>,
+        gpio3 : Pin<Gpio3, FunctionNull, PullDown>,
+        gpio4 : Pin<Gpio4, FunctionNull, PullDown>,
+        gpio5 : Pin<Gpio5, FunctionNull, PullDown>,
         spi : Spi<spi::Enabled, SPIPort, 8>,
         timer : &mut Timer) -> Screen<SPIPort> {
 
@@ -151,10 +151,10 @@ impl<SPIPort : SpiDevice> Screen<SPIPort> {
         self.command_param(0x01);
 
         self.set_command(Commands::GMCTRP1);
-        self.write_data(&PositiveGammaConf);
+        self.write_data(&POSITIVE_GAMMA_CONF);
 
         self.set_command(Commands::GMCTRN1);
-        self.write_data(&negativeGammaConf);
+        self.write_data(&NEGATIVE_GAMMA_CONF);
 
         self.set_command(Commands::MADCTL);
         self.command_param(0x48);
@@ -177,7 +177,7 @@ impl<SPIPort : SpiDevice> Screen<SPIPort> {
         self.command_param(0xef);
 
         self.set_command(Commands::PASET);
-        let h = Height - 1;
+        let h = HEIGHT - 1;
         self.command_param(0);
         self.command_param(0); // start page
         self.command_param(1);

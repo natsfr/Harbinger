@@ -2,8 +2,7 @@ use core::borrow::BorrowMut;
 
 use embedded_hal::serial::Read;
 use rp2040_hal::{
-    uart::{UartPeripheral, DataBits, UartConfig, StopBits, Enabled}, gpio::{PinId, bank0::Gpio13, Pin, FunctionUart},
-    pac::{RESETS, UART0}};
+    gpio::{bank0::Gpio13, FunctionNull, FunctionUart, Pin, PinId, PullDown}, pac::{RESETS, UART0}, uart::{DataBits, Enabled, StopBits, UartConfig, UartPeripheral}};
 
 use fugit::{RateExtU32, HertzU32};
 
@@ -312,20 +311,20 @@ impl IncrementalMidiParser {
 }
 
 pub struct MidiUart {
-    midi_uart : UartPeripheral<Enabled, UART0, ((), Pin<Gpio13, FunctionUart>)>,
+    midi_uart : UartPeripheral<Enabled, UART0, ((), Pin<Gpio13, FunctionUart, PullDown>)>,
     parser : IncrementalMidiParser 
 }
 
 impl MidiUart {
     pub fn init(
         uart0 : UART0,
-        gpio : Pin<Gpio13, <Gpio13 as PinId>::Reset>,
+        gpio : Pin<Gpio13, FunctionNull, PullDown>,
         freq : HertzU32,
         resets: &mut RESETS,
         rgb_led: Option<RgbLed>
     ) -> MidiUart {
 
-        let pins = ((), gpio.into_mode::<FunctionUart>());
+        let pins = ((), gpio.into_function::<FunctionUart>());
 
         let conf =
             UartConfig::new(31500.Hz(), DataBits::Eight, None, StopBits::One);
